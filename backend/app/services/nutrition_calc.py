@@ -35,10 +35,7 @@ def summarize_items(items: List[Dict]):
         grams = float(it.get("grams", 0))
         found = lookup_food(name)
         if not found:
-            summary.append({
-                "name": name, "grams": grams, "matched": False,
-                "kcal": None, "protein_g": None, "fat_g": None, "carb_g": None
-            })
+            summary.append({"name": name, "grams": grams, "matched": False, "kcal": None, "protein_g": None, "fat_g": None, "carb_g": None})
             continue
         kcal = found["kcal_per_100g"] * grams / 100.0
         protein = found["protein_g_per_100g"] * grams / 100.0

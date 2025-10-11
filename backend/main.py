@@ -8,11 +8,17 @@ from app.routers import analyze, notion, nutrition, upload
 
 load_dotenv()
 
-app = FastAPI(title="Eatlyze Taiwan — MVP API (no pandas)", version="0.2.0")
+app = FastAPI(title="Eatlyze Taiwan — MVP API (CORS fixed)", version="0.2.1")
+
+ALLOWED_ORIGINS = os.getenv(
+    "ALLOWED_ORIGINS",
+    "http://localhost:5173,https://eatlyze-mvp-frontend.onrender.com"
+)
+origins = [o.strip() for o in ALLOWED_ORIGINS.split(",") if o.strip()]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,4 +35,4 @@ app.include_router(notion.router, prefix="/notion", tags=["Notion"])
 
 @app.get("/health")
 async def health():
-    return {"status": "ok"}
+    return {"status": "ok", "origins": origins}

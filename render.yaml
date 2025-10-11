@@ -6,3 +6,6 @@ services:
   buildCommand: pip install --upgrade pip && pip install --no-cache-dir -r backend/requirements.txt
   startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
   autoDeploy: true
+  envVars:
+    - key: ALLOWED_ORIGINS
+      value: http://localhost:5173,https://eatlyze-mvp-frontend.onrender.com

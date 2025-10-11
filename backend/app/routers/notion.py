@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import Dict
-
 from app.services.notion_client import create_food_log
 
 router = APIRouter()
