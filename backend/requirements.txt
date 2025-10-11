@@ -2,7 +2,6 @@ fastapi==0.112.0
 uvicorn==0.30.6
 python-multipart==0.0.9
 pydantic==2.9.2
-pandas==2.2.2
 openai==1.47.0
 notion-client==2.2.1
 python-dotenv==1.0.1

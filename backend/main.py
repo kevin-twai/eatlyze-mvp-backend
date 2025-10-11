@@ -1,4 +1,3 @@
-
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,7 +8,7 @@ from app.routers import analyze, notion, nutrition, upload
 
 load_dotenv()
 
-app = FastAPI(title="Eatlyze Taiwan — MVP API", version="0.1.1")
+app = FastAPI(title="Eatlyze Taiwan — MVP API (no pandas)", version="0.2.0")
 
 app.add_middleware(
     CORSMiddleware,

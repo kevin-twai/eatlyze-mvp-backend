@@ -1,4 +1,3 @@
-
 import os
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from app.services.openai_client import analyze_food_image

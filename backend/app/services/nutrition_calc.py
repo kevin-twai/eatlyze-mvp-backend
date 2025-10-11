@@ -1,18 +1,31 @@
-
-import os
-import pandas as pd
+import os, csv
 from typing import List, Dict
 
 DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "data", "foods_tw.csv")
-DF = pd.read_csv(DATA_PATH)
+
+def _load_foods():
+    foods = []
+    with open(DATA_PATH, newline='', encoding='utf-8') as f:
+        for row in csv.DictReader(f):
+            row['unit_g'] = float(row['unit_g'])
+            row['kcal_per_100g'] = float(row['kcal_per_100g'])
+            row['protein_g_per_100g'] = float(row['protein_g_per_100g'])
+            row['fat_g_per_100g'] = float(row['fat_g_per_100g'])
+            row['carb_g_per_100g'] = float(row['carb_g_per_100g'])
+            foods.append(row)
+    return foods
+
+FOODS = _load_foods()
 
 def lookup_food(name: str):
-    row = DF[DF["name"] == name]
-    if row.empty:
-        row = DF[DF["name"].str.contains(name, case=False, na=False)]
-    if row.empty:
-        return None
-    return row.iloc[0].to_dict()
+    for r in FOODS:
+        if r['name'] == name:
+            return r
+    low = name.lower()
+    for r in FOODS:
+        if low in r['name'].lower():
+            return r
+    return None
 
 def summarize_items(items: List[Dict]):
     summary = []
@@ -39,8 +52,10 @@ def summarize_items(items: List[Dict]):
 
         summary.append({
             "name": name, "grams": grams, "matched": True,
-            "kcal": round(kcal, 1), "protein_g": round(protein, 1),
-            "fat_g": round(fat, 1), "carb_g": round(carb, 1)
+            "kcal": round(kcal, 1),
+            "protein_g": round(protein, 1),
+            "fat_g": round(fat, 1),
+            "carb_g": round(carb, 1)
         })
     for k in totals:
         totals[k] = round(totals[k], 1)

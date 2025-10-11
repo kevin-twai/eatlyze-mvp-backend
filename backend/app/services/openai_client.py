@@ -1,4 +1,3 @@
-
 import os, base64, json
 from typing import Dict, Any
 from openai import OpenAI
@@ -13,7 +12,7 @@ def analyze_food_image(image_bytes: bytes) -> Dict[str, Any]:
     b64 = _b64(image_bytes)
     prompt = (
         "你是一位台灣在地的營養估算助手。請根據餐點圖片，列出每一項『食物名稱』與『估計重量(克)』，"
-        "並用台灣常見菜名表示，例如：白飯、雞胸肉、青花菜、滷肉飯、滷味拼盤、便當炸雞塊等。"
+        "使用台灣常見菜名，例如：白飯、雞胸肉、青花菜、滷肉飯、滷味拼盤、便當炸雞塊等。"
         "輸出 JSON 陣列，格式：[{\"name\":\"食物\",\"grams\":數字,\"confidence\":0-1}]. "
         "僅輸出 JSON，不要附加解說文字。"
     )

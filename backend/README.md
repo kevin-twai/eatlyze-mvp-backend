@@ -1,20 +1,17 @@
+# Eatlyze Taiwan — MVP Backend (FastAPI, No Pandas)
 
-# Eatlyze Taiwan — MVP Backend (FastAPI)
+純 Python 依賴，Render 免費方案可直接部署；附 `runtime.txt` (3.11.9)。
 
-Render 友善版本：**使用 uvicorn (無 [standard])**，建置時會先升級 pip 並用 --no-cache-dir 安裝。
-
-## 快速開始 (本機)
+## 本機啟動
 ```bash
 cd backend
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env  # 填入 API Key 與 Notion DB ID
+cp .env.example .env
 uvicorn main:app --reload
+# http://localhost:8000/docs
 ```
-Swagger: `http://localhost:8000/docs`
 
-## 主要端點
-- `POST /upload`
-- `POST /analyze/image`
-- `POST /nutrition/summary`
-- `POST /notion/log`
+## Render 部署（用 render.yaml）
+- Build Command: `pip install --upgrade pip && pip install --no-cache-dir -r backend/requirements.txt`
+- Start Command: `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`

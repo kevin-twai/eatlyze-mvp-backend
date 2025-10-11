@@ -1,4 +1,3 @@
-
 import os
 from typing import Dict, Any
 from notion_client import Client
