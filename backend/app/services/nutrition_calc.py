@@ -7,20 +7,14 @@ DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "data
 DF = pd.read_csv(DATA_PATH)
 
 def lookup_food(name: str):
-    # naive matching: exact or contains
     row = DF[DF["name"] == name]
     if row.empty:
         row = DF[DF["name"].str.contains(name, case=False, na=False)]
     if row.empty:
         return None
-    r = row.iloc[0].to_dict()
-    return r
+    return row.iloc[0].to_dict()
 
 def summarize_items(items: List[Dict]):
-    """
-    items: [{name, grams}]
-    returns totals and per-item breakdown
-    """
     summary = []
     totals = {"kcal": 0.0, "protein_g": 0.0, "fat_g": 0.0, "carb_g": 0.0}
     for it in items:
@@ -29,13 +23,10 @@ def summarize_items(items: List[Dict]):
         found = lookup_food(name)
         if not found:
             summary.append({
-                "name": name,
-                "grams": grams,
-                "matched": False,
+                "name": name, "grams": grams, "matched": False,
                 "kcal": None, "protein_g": None, "fat_g": None, "carb_g": None
             })
             continue
-        ratio = grams / float(found["unit_g"])
         kcal = found["kcal_per_100g"] * grams / 100.0
         protein = found["protein_g_per_100g"] * grams / 100.0
         fat = found["fat_g_per_100g"] * grams / 100.0

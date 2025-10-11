@@ -1,18 +1,16 @@
 
 import os
-from fastapi import FastAPI, UploadFile, File, Form
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 
 from app.routers import analyze, notion, nutrition, upload
 
 load_dotenv()
 
-app = FastAPI(title="Eatlyze Taiwan — MVP API", version="0.1.0")
+app = FastAPI(title="Eatlyze Taiwan — MVP API", version="0.1.1")
 
-# CORS (adjust in production)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -21,12 +19,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# static uploads
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
-# Routers
 app.include_router(upload.router, prefix="/upload", tags=["Upload"])
 app.include_router(analyze.router, prefix="/analyze", tags=["AI Analyze"])
 app.include_router(nutrition.router, prefix="/nutrition", tags=["Nutrition"])

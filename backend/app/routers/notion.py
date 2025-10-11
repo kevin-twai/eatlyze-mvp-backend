@@ -1,7 +1,8 @@
 
 from fastapi import APIRouter
 from pydantic import BaseModel
-from typing import List, Dict, Any
+from typing import Dict
+
 from app.services.notion_client import create_food_log
 
 router = APIRouter()
@@ -25,5 +26,4 @@ class NotionReq(BaseModel):
 @router.post("/log")
 async def notion_log(req: NotionReq):
     payload = req.model_dump()
-    res = create_food_log(payload)
-    return res
+    return create_food_log(payload)

@@ -1,5 +1,5 @@
 
-import os, io
+import os
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from app.services.openai_client import analyze_food_image
 from app.services.nutrition_calc import summarize_items

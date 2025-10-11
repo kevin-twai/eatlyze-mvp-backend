@@ -1,42 +1,20 @@
 
 # Eatlyze Taiwan — MVP Backend (FastAPI)
 
-一個可直接部署的後端：支援 **圖片上傳 → GPT Vision 分析 → 在地營養資料比對 → Notion 寫入**。
+Render 友善版本：**使用 uvicorn (無 [standard])**，建置時會先升級 pip 並用 --no-cache-dir 安裝。
 
-## 快速開始
-
+## 快速開始 (本機)
 ```bash
 cd backend
-python -m venv .venv && source .venv/bin/activate  # Windows 用 .venv\Scripts\activate
+python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env  # 填入你的 API key 與 Notion Database ID
+cp .env.example .env  # 填入 API Key 與 Notion DB ID
 uvicorn main:app --reload
 ```
-
-啟動後：`http://localhost:8000/docs` 進入 Swagger 測試。
+Swagger: `http://localhost:8000/docs`
 
 ## 主要端點
-
-- `POST /upload`：上傳圖片（jpg/png/webp）
-- `POST /analyze/image`：直接上傳圖片並得到「辨識 + 營養總結」
-- `POST /nutrition/summary`：傳入 `items: [{name, grams}]` 回傳營養加總
-- `POST /notion/log`：把當次結果寫入 Notion 資料庫
-
-## 設定環境變數
-
-請在 `.env` 中填入：
-
-- `OPENAI_API_KEY`：OpenAI API key
-- `OPENAI_MODEL`：預設 `gpt-4o-mini`（支援圖片理解）
-- `NOTION_API_KEY`、`NOTION_DATABASE_ID`：Notion 整合
-
-## 部署 Render
-
-新增 `Web Service` 指向此 backend 目錄：
-
-- Start Command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-- Python version: 3.11+
-
-## 資料庫
-
-`backend/data/foods_tw.csv` 為台灣常見食物基礎表，可自行擴充。
+- `POST /upload`
+- `POST /analyze/image`
+- `POST /nutrition/summary`
+- `POST /notion/log`
