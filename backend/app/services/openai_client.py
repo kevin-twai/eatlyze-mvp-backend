@@ -8,7 +8,10 @@ def _b64(data: bytes) -> str:
     return base64.b64encode(data).decode("utf-8")
 
 def analyze_food_image(image_bytes: bytes) -> Dict[str, Any]:
-    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        return {"items": [], "error": "Missing OPENAI_API_KEY"}
+    client = OpenAI(api_key=api_key)
     b64 = _b64(image_bytes)
     messages = [
         {"role": "system", "content": "你是專業的食物辨識與份量估算助手。"},
