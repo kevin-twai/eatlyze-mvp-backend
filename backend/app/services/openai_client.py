@@ -32,17 +32,31 @@ VISION_PROMPT = (
 )
 
 async def vision_analyze_base64(base64_str: str) -> str:
-    completion = await client.chat.completions.create(
-    model="gpt-4o-mini",
-    messages=[
-        {"role": "system", "content": "You are a nutrition analysis assistant."},
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": "Analyze this meal photo"},
-                {"type": "image_url", "image_url": {"url": image_b64}},  # ✅ 正確格式
+    \"\"\"呼叫 OpenAI Vision。任何錯都變成 RuntimeError 給路由轉 JSON。\"\"\"
+    from openai import OpenAIError
+    import httpx
+    try:
+        completion = await client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": VISION_PROMPT},
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": "請分析這張圖片的可食食材"},
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": "data:image/jpeg;base64," + base64_str,
+                                "detail": "high"
+                            }
+                        },
+                    ],
+                },
             ],
-        },
-    ],
-)
-    return completion.choices[0].message.content
+            max_tokens=800,
+            temperature=0.2,
+        )
+        return completion.choices[0].message.content or ""
+    except (OpenAIError, httpx.HTTPError) as e:
+        raise RuntimeError(f"openai_call_failed: {type(e).__name__}: {e}") from e

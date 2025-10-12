@@ -2,9 +2,15 @@ from fastapi import APIRouter
 from ..models import CalcRequest, CalcResponse, Macro
 import pandas as pd
 import os
+from pathlib import Path
 
 router = APIRouter()
-DATA_PATH = os.getenv("FOODS_CSV_PATH", "backend/app/data/foods_tw.csv")
+
+THIS_DIR = Path(__file__).resolve().parent
+APP_DIR = THIS_DIR.parent
+DEFAULT_CSV = APP_DIR / "data" / "foods_tw.csv"
+DATA_PATH = os.getenv("FOODS_CSV_PATH", str(DEFAULT_CSV))
+
 FOODS = pd.read_csv(DATA_PATH).set_index("name")
 
 def calc_item(canon: str, weight_g: float):
