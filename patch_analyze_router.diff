@@ -1,0 +1,23 @@
+*** Begin Patch
+*** Update File: backend/app/routers/analyze.py
+@@
+-@router.post("/analyze/image", response_model=AnalyzeResponse)
+-async def analyze_image(file: UploadFile = File(...)):
+-    image_bytes = await file.read()
+-    image_b64 = base64.b64encode(image_bytes).decode("utf-8")
+-    reply_text = await vision_analyze_base64(image_b64)
++@router.post("/analyze/image", response_model=AnalyzeResponse)
++async def analyze_image(file: UploadFile = File(...)):
++    image_bytes = await file.read()
++    if not image_bytes or len(image_bytes) < 128:
++        return AnalyzeResponse(status="fail", reason="empty_file")
++    if len(image_bytes) > 12 * 1024 * 1024:
++        return AnalyzeResponse(status="fail", reason="file_too_large")
++    image_b64 = base64.b64encode(image_bytes).decode("utf-8")
++    # 攔截 OpenAI 任何錯誤，避免 500
++    try:
++        reply_text = await vision_analyze_base64(image_b64)
++    except Exception as e:
++        logger.exception("vision_call_failed")
++        return AnalyzeResponse(status="fail", reason="openai_call_failed", debug={"error": str(e)[:800]})
+*** End Patch

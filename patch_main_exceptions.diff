@@ -1,0 +1,47 @@
+*** Begin Patch
+*** Update File: backend/main.py
+@@
+-from fastapi import FastAPI
++from fastapi import FastAPI, Request
+ from fastapi.middleware.cors import CORSMiddleware
+ import os, logging
+ from app.routers import analyze, nutrition, notion
++from fastapi.responses import JSONResponse
++from fastapi.exceptions import RequestValidationError
+@@
+ app = FastAPI(title="Eatlyze Backend", version="0.1.0")
+@@
+ @app.get("/")
+ def root():
+     return {"status": "ok"}
++
++# ---- Global exception handlers (避免回 500 text/plain) ----
++@app.exception_handler(RequestValidationError)
++async def validation_exception_handler(request: Request, exc: RequestValidationError):
++    logging.exception("validation_error")
++    return JSONResponse(
++        status_code=422,
++        content={"status": "fail", "reason": "validation_error", "debug": {"detail": exc.errors()}},
++    )
++
++@app.exception_handler(Exception)
++async def unhandled_exception_handler(request: Request, exc: Exception):
++    logging.exception("unhandled_exception")
++    return JSONResponse(
++        status_code=500,
++        content={"status": "fail", "reason": "unhandled_exception", "debug": {"error": str(exc)}},
++    )
++
++# ---- Catch-all HTTP middleware（最後一道保險絲）----
++@app.middleware("http")
++async def json_error_middleware(request: Request, call_next):
++    try:
++        resp = await call_next(request)
++        return resp
++    except Exception as e:
++        logging.exception("middleware_unhandled")
++        return JSONResponse(
++            status_code=500,
++            content={"status": "fail", "reason": "middleware_unhandled", "debug": {"error": str(e)}},
++        )
+*** End Patch
