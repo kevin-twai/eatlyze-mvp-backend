@@ -38,7 +38,7 @@ async def vision_analyze_base64(base64_str: str) -> str:
             {"role": "system", "content": VISION_PROMPT},
             {"role": "user", "content": [
                 {"type": "text", "text": "請分析這張圖片的可食食材"},
-                {"type": "image_url", "image_url": "data:image/jpeg;base64," + base64_str}
+                {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64," + base64_str}}
             ]}
         ],
         max_tokens=800,
