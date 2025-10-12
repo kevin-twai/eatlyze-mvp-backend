@@ -1,0 +1,115 @@
+*** Begin Patch
+*** Update File: backend/app/services/openai_client.py
+@@
+-async def vision_analyze_base64(base64_str: str) -> str:
+-    """呼叫 GPT-4o 系列模型分析圖片（輸入 base64 字串，不含 data: 前綴）"""
+-    completion = await client.chat.completions.create(
+-        model="gpt-4o-mini",
+-        messages=[
+-            {"role": "system", "content": VISION_PROMPT},
+-            {"role": "user", "content": [
+-                {"type": "text", "text": "請分析這張圖片的可食食材"},
+-                {"type": "image_url", "image_url": "data:image/jpeg;base64," + base64_str}
+-            ]}
+-        ],
+-        max_tokens=800,
+-        temperature=0.2,
+-    )
+-    return completion.choices[0].message.content
++async def vision_analyze_base64(base64_str: str) -> str:
++    """呼叫 GPT-4o 系列模型分析圖片（輸入 base64 字串，不含 data: 前綴）"""
++    from openai import OpenAIError
++    import httpx
++    try:
++        completion = await client.chat.completions.create(
++            model="gpt-4o-mini",
++            messages=[
++                {"role": "system", "content": VISION_PROMPT},
++                {"role": "user", "content": [
++                    {"type": "text", "text": "請分析這張圖片的可食食材"},
++                    {
++                        "type": "image_url",
++                        "image_url": {"url": "data:image/jpeg;base64," + base64_str, "detail": "high"}
++                    }
++                ]}
++            ],
++            max_tokens=800,
++            temperature=0.2,
++        )
++        return completion.choices[0].message.content
++    except (OpenAIError, httpx.HTTPError) as e:
++        # 直接把錯誤傳回呼叫端記錄
++        raise RuntimeError(f"openai_call_failed: {type(e).__name__}: {e}") from e
+*** End Patch
+*** Begin Patch
+*** Update File: backend/app/routers/analyze.py
+@@
+-from fastapi import APIRouter, UploadFile, File
++from fastapi import APIRouter, UploadFile, File, HTTPException
+ from ..models import AnalyzeResponse, VisionResult, VisionItem
+ from ..utils.normalizer import normalize_name
+ from ..services.openai_client import vision_analyze_base64
+ import json, base64, logging
++from typing import Optional
+ 
+ router = APIRouter()
+ logger = logging.getLogger(__name__)
+ 
+ @router.post("/analyze/image", response_model=AnalyzeResponse)
+ async def analyze_image(file: UploadFile = File(...)):
+-    # 將圖檔轉為 base64 字串（無 data: 前綴）
+-    image_bytes = await file.read()
++    # 基本檢查
++    if not file.content_type or not file.content_type.startswith("image/"):
++        return AnalyzeResponse(status="fail", reason="invalid_file_type")
++    image_bytes = await file.read()
++    if not image_bytes or len(image_bytes) < 128:
++        return AnalyzeResponse(status="fail", reason="empty_file")
++    if len(image_bytes) > 7 * 1024 * 1024:  # 7MB 保守限制（避免超過模型上限）
++        return AnalyzeResponse(status="fail", reason="file_too_large")
++
+     image_b64 = base64.b64encode(image_bytes).decode("utf-8")
+ 
+-    # 呼叫 Vision API
+-    reply_text = await vision_analyze_base64(image_b64)
++    # 呼叫 Vision API（加強錯誤處理）
++    try:
++        reply_text = await vision_analyze_base64(image_b64)
++    except Exception as e:
++        logger.exception("vision_call_failed")
++        return AnalyzeResponse(
++            status="fail",
++            reason="openai_call_failed",
++            debug={"error": str(e)[:800]}
++        )
+ 
+     # 嘗試解析 JSON
+     try:
+         raw = json.loads(reply_text)
+         items = raw.get("items", [])
+*** End Patch
+*** Begin Patch
+*** Update File: backend/main.py
+@@
+-from fastapi import FastAPI
++from fastapi import FastAPI
+ from fastapi.middleware.cors import CORSMiddleware
+ from app.routers import analyze, nutrition, notion
++import logging, os
+ 
+ app = FastAPI(title="Eatlyze Backend", version="0.1.0")
+ 
+ app.add_middleware(
+     CORSMiddleware,
+@@
+ )
+ 
++logging.basicConfig(
++    level=logging.INFO,
++    format="%(asctime)s %(levelname)s %(name)s :: %(message)s"
++)
++
+ @app.get("/")
+ def root():
+     return {"status": "ok"}
+*** End Patch
