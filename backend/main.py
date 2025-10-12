@@ -15,7 +15,6 @@ ALLOWED_ORIGINS = os.getenv(
     "http://localhost:5173,https://eatlyze-mvp-frontend.onrender.com"
 )
 origins = [o.strip() for o in ALLOWED_ORIGINS.split(",") if o.strip()]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
