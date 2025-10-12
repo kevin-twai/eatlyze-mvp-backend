@@ -32,16 +32,21 @@ VISION_PROMPT = (
 )
 
 async def vision_analyze_base64(base64_str: str) -> str:
-    completion = await client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": VISION_PROMPT},
-            {"role": "user", "content": [
-                {"type": "text", "text": "請分析這張圖片的可食食材"},
-                {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64," + base64_str}}
-            ]}
-        ],
-        max_tokens=800,
-        temperature=0.2,
-    )
+    completion = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "請分析這張食物照片"},
+        {"role": "user", "content": [
+            {"type": "text", "text": "請列出主要食材與推測重量(克)。"},
+            {
+                "type": "image_url",
+                "image_url": {
+                    "url": "data:image/jpeg;base64," + base64_str,
+                    "detail": "high"
+                }
+            }
+        ]}
+    ],
+    max_tokens=800,
+)
     return completion.choices[0].message.content
