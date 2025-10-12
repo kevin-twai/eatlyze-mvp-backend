@@ -32,7 +32,7 @@ VISION_PROMPT = (
 )
 
 async def vision_analyze_base64(base64_str: str) -> str:
-    \"\"\"呼叫 OpenAI Vision。任何錯都變成 RuntimeError 給路由轉 JSON。\"\"\"
+    """呼叫 OpenAI Vision。任何錯都變成 RuntimeError 給路由轉 JSON。"""
     from openai import OpenAIError
     import httpx
     try:
