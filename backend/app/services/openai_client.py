@@ -32,7 +32,7 @@ def analyze_food_image(image_bytes: bytes) -> Dict[str, Any]:
     user_text = (
         "根據這張餐點照片，列出所有主要食材與推測重量(克)。"
         "請用台灣常見菜名；若難以辨識請輸出最可能的名稱。"
-        "請嚴格輸出如下 JSON：{"items":[{"name":"食物","grams":數字,"confidence":0~1}]}"
+        "請嚴格輸出如下 JSON：{\"items\":[{\"name\":\"食物\",\"grams\":數字,\"confidence\":0~1}]}"
     )
 
     try:
