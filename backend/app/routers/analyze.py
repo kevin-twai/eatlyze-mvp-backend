@@ -40,7 +40,7 @@ async def analyze_image(file: UploadFile = File(...)):
         fixed.append({"name": name, "canonical": canonical, "weight_g": weight_g, "is_garnish": is_garnish})
 
     try:
-        enriched, totals = nutrition_service.calc(fixed)
+        enriched, totals = nutrition_service.calc(items, include_garnish=True)
     except Exception as e:
         logger.exception("nutrition calc failed")
         raise HTTPException(500, "Nutrition calculation failed") from e
