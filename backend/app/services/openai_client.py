@@ -1,97 +1,89 @@
 # backend/app/services/openai_client.py
 from __future__ import annotations
 
-import os
-import re
-import json
-import asyncio
-import httpx
-from typing import List, Dict, Any
+import os, json, httpx, logging
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-MODEL = os.getenv("OPENAI_VISION_MODEL", "gpt-4o-mini")
-OPENAI_URL = "https://api.openai.com/v1/chat/completions"
+logger = logging.getLogger(__name__)
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_BASE = "https://api.openai.com/v1"
+VISION_MODEL = os.getenv("OPENAI_VISION_MODEL", "gpt-4o-mini")  # 安全預設
 
 HEADERS = {
-    "Authorization": f"Bearer {OPENAI_API_KEY}",
+    "Authorization": f"Bearer {OPENAI_API_KEY}" if OPENAI_API_KEY else "",
     "Content-Type": "application/json",
 }
 
-SYSTEM_PROMPT = (
-    "你是營養辨識助手。請分析輸入的食物照片，"
-    "輸出**純 JSON 陣列**，每個元素包含："
-    "{\"name\": <原始名稱或辨識名>, "
-    "\"canonical\": <可用於查表的標準名(英文或中文皆可)>, "
-    "\"weight_g\": <重量(公克，數字)>, "
-    "\"is_garnish\": <是否僅裝飾用 布林> }。"
-    "不要輸出多餘文字。"
+PROMPT = (
+    "你是一個只能輸出 JSON 的助手。"
+    "輸入是一張餐點照片，請辨識主要食材，回傳陣列 items，每個元素："
+    "{ name: 食材原文或中文, canonical: 英文或統一名, weight_g: number, is_garnish: boolean }。"
+    "weight_g 為推估重量（整數或小數），沒有的也請估。is_garnish 為配菜/裝飾請標 true。"
+    "禁止回任何多餘文字，僅回：{ \"items\": [...] }。"
 )
 
-def _payload_for_b64(image_b64: str) -> Dict[str, Any]:
-    # 使用 data URL，避免外部連結失效
-    data_url = f"data:image/jpeg;base64,{image_b64}"
-    return {
-        "model": MODEL,
-        "temperature": 0.2,
-        "max_tokens": 700,
+def _data_url_from_b64(img_b64: str) -> str:
+    # 預設當成 jpeg；如果你想更準，可從檔頭 sniff mime
+    return f"data:image/jpeg;base64,{img_b64}"
+
+async def vision_analyze_base64(img_b64: str) -> dict:
+    """
+    呼叫 OpenAI Chat Completions（Vision）。回傳 dict，例如 { "items": [...] }。
+    在任何非 2xx 會將 response text 打 log，並拋 RuntimeError。
+    """
+    assert OPENAI_API_KEY, "OPENAI_API_KEY missing"
+
+    payload = {
+        "model": VISION_MODEL,
+        "temperature": 0,
         "messages": [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": [
-                {"type": "input_text", "text": "請辨識這張餐點照片，並估重（g）。只回 JSON 陣列。"},
-                {"type": "input_image", "image_url": {"url": data_url}},
-            ]},
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": PROMPT},
+                    {"type": "image_url", "image_url": {"url": _data_url_from_b64(img_b64)}},
+                ],
+            }
         ],
     }
 
-_JSON_BLOCK = re.compile(r"\[[\s\S]*\]")
+    timeout = httpx.Timeout(60.0)
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        try:
+            r = await client.post(
+                f"{OPENAI_API_BASE}/chat/completions",
+                headers=HEADERS,
+                json=payload,
+            )
+        except httpx.HTTPError as e:
+            logger.exception("HTTP error calling OpenAI")
+            raise RuntimeError("OpenAI HTTP error") from e
 
-def _extract_json_array(text: str) -> List[Dict[str, Any]]:
-    """
-    嘗試從模型回覆中抽出 JSON 陣列；若本身就是陣列字串亦可解析。
-    """
+    if r.status_code // 100 != 2:
+        # 400 這邊會把 body 打出來
+        logger.error("OpenAI bad response %s: %s", r.status_code, r.text)
+        raise RuntimeError(f"OpenAI returned {r.status_code}")
+
     try:
-        parsed = json.loads(text)
-        if isinstance(parsed, list):
-            return parsed
+        data = r.json()
+        content = (
+            data["choices"][0]["message"]["content"]
+            if data.get("choices")
+            else ""
+        )
     except Exception:
-        pass
+        logger.exception("Unexpected OpenAI schema: %s", r.text[:500])
+        raise RuntimeError("OpenAI response parse error")
 
-    m = _JSON_BLOCK.search(text or "")
-    if m:
-        return json.loads(m.group(0))
+    # OpenAI 會回「字串 JSON」，要再 parse 一次
+    try:
+        parsed = json.loads(content)
+    except Exception:
+        logger.error("OpenAI content is not valid JSON: %s", content[:500])
+        raise RuntimeError("OpenAI content not JSON")
 
-    raise ValueError("model_output_not_json_array")
+    if not isinstance(parsed, dict) or "items" not in parsed:
+        logger.error("OpenAI JSON missing items: %s", parsed)
+        raise RuntimeError("OpenAI JSON missing 'items'")
 
-async def vision_analyze_base64(image_b64: str, retries: int = 2) -> List[Dict[str, Any]]:
-    """
-    呼叫 OpenAI Chat Completions（Vision），將輸出解析為 list[dict]。
-    對 5xx/507 進行退避重試；仍失敗拋 RuntimeError("openai_http_<status>")。
-    """
-    payload = _payload_for_b64(image_b64)
-
-    async with httpx.AsyncClient(timeout=45) as client:
-        for attempt in range(retries + 1):
-            try:
-                r = await client.post(OPENAI_URL, headers=HEADERS, json=payload)
-                r.raise_for_status()
-                data = r.json()
-                # Chat Completions: 取 message.content（多段時串起來）
-                message = data["choices"][0]["message"]
-                content = message.get("content") or ""
-                if isinstance(content, list):
-                    # 少數驅動會把片段分段回來
-                    content = "".join([c.get("text", "") if isinstance(c, dict) else str(c) for c in content])
-                items = _extract_json_array(content)
-                return items
-            except httpx.HTTPStatusError as e:
-                code = e.response.status_code
-                if code >= 500 and attempt < retries:
-                    await asyncio.sleep(0.8 * (attempt + 1))
-                    continue
-                raise RuntimeError(f"openai_http_{code}") from e
-            except Exception as e:
-                # 其它錯誤（例如暫時性網路錯）也嘗試重試一次
-                if attempt < retries:
-                    await asyncio.sleep(0.8 * (attempt + 1))
-                    continue
-                raise RuntimeError(f"openai_unknown:{e}") from e
+    return parsed
