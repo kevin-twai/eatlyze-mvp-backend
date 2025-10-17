@@ -1,48 +1,55 @@
-
+# backend/app/routers/analyze.py
 from __future__ import annotations
-import base64, logging
+
+import base64
+import json
 from typing import Any, Dict, List
 from fastapi import APIRouter, UploadFile, File, HTTPException
+
 from ..services.openai_client import vision_analyze_base64
 from ..services import nutrition_service
 
-logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/analyze", tags=["analyze"])
 
-def _ok(data=None): return {"status":"ok","reason":None,"debug":None,"data":data}
+def _ok(data=None) -> Dict[str, Any]:
+    return {"status": "ok", "reason": None, "debug": None, "data": data}
 
 @router.post("/image")
 async def analyze_image(file: UploadFile = File(...)):
+    # 1) 讀入檔案、轉 base64
     raw = await file.read()
-    if not raw:
-        raise HTTPException(400, "empty file")
     img_b64 = base64.b64encode(raw).decode("utf-8")
 
+    # 2) 叫 OpenAI Vision
     try:
         items = await vision_analyze_base64(img_b64)  # list[dict]
-    except Exception as e:
-        logger.exception("vision_analyze_base64 failed")
-        raise HTTPException(502, "Vision analysis failed") from e
+    except RuntimeError as e:
+        msg = str(e)
+        # 將供應商/後端暫時性問題回 503，前端可友善提示
+        if msg.startswith("openai_http_"):
+            code = int(msg.split("_")[-1]) if msg.split("_")[-1].isdigit() else 500
+            if code >= 500:
+                raise HTTPException(status_code=503, detail="Vision service temporarily unavailable")
+        # 其它錯誤
+        raise HTTPException(status_code=502, detail="Vision analysis failed")
 
-    if not isinstance(items, list) or any(not isinstance(x, dict) for x in items):
-        logger.error("items_not_list_of_dicts_after_vision: %r", items)
-        return _ok({"items": [], "summary": {"totals": {"kcal": 0, "protein_g": 0, "fat_g": 0, "carb_g": 0}}})
-
-    fixed: List[Dict[str, Any]] = []
-    for it in items:
-        name = str(it.get("name") or "").strip()
-        canonical = str(it.get("canonical") or name).strip()
+    # 3) 容錯：有些模型回字串（已在 client 解析），但仍保險檢查
+    if isinstance(items, str):
         try:
-            weight_g = float(it.get("weight_g", 0) or 0)
+            items = json.loads(items)
         except Exception:
-            weight_g = 0.0
-        is_garnish = bool(it.get("is_garnish", False))
-        fixed.append({"name": name, "canonical": canonical, "weight_g": weight_g, "is_garnish": is_garnish})
+            items = []
 
+    if not isinstance(items, list):
+        items = []
+
+    # 4) 計算營養（即使空陣列也回合法格式）
     try:
-        enriched, totals = nutrition_service.calc(items, include_garnish=True)
-    except Exception as e:
-        logger.exception("nutrition calc failed")
-        raise HTTPException(500, "Nutrition calculation failed") from e
+        enriched, totals = nutrition_service.calc(items)
+    except Exception:
+        # 任何計算失敗，回空值避免 500
+        enriched = []
+        totals = {"kcal": 0, "protein_g": 0, "fat_g": 0, "carb_g": 0}
 
+    # 5) 回傳
     return _ok({"items": enriched, "summary": {"totals": totals}})
