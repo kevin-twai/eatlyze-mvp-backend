@@ -9,7 +9,7 @@ from fastapi.staticfiles import StaticFiles
 # ---- 基本設定 ----
 app = FastAPI(title="eatlyze-backend", version="1.0.0")
 
-# 允許的前端來源（可用環境變數 ALLOWED_ORIGINS 以逗點分隔覆蓋）
+# ---- CORS 設定 ----
 _allowed = os.getenv(
     "ALLOWED_ORIGINS",
     "http://localhost:5173,https://eatlyze-mvp-frontend.onrender.com",
@@ -27,11 +27,18 @@ app.add_middleware(
 )
 
 # ---- 靜態圖片服務 (/image/...) ----
-# 注意：這支檔案位於 backend/，而圖片實際在 backend/app/uploads/
-UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "app", "uploads")
+# 本機環境 → backend/app/uploads/
+# Render 雲端 → /opt/render/project/src/backend/app/uploads
+DEFAULT_LOCAL_UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "app", "uploads")
+DEFAULT_RENDER_UPLOAD_DIR = "/opt/render/project/src/backend/app/uploads"
+
+UPLOAD_DIR = os.getenv(
+    "UPLOAD_DIR",
+    DEFAULT_RENDER_UPLOAD_DIR if os.getenv("RENDER") else DEFAULT_LOCAL_UPLOAD_DIR,
+)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-# 例如：/image/xxxxx.jpg -> 讀取 backend/app/uploads/xxxxx.jpg
+# 例如 /image/xxxxx.jpg -> 讀取 UPLOAD_DIR/xxxxx.jpg
 app.mount("/image", StaticFiles(directory=UPLOAD_DIR), name="image")
 
 # ---- 路由註冊 ----
@@ -41,4 +48,4 @@ app.include_router(analyze_router.router)
 # ---- 健康檢查 ----
 @app.get("/")
 def root():
-    return {"status": "ok", "service": "eatlyze-backend"}
+    return {"status": "ok", "service": "eatlyze-backend", "upload_dir": UPLOAD_DIR}
