@@ -26,7 +26,7 @@ async def analyze_image(file: UploadFile = File(...)):
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
 
-    enriched, totals = nutrition.calc(parsed.get("items", []), include_garnish=False)
+    enriched, totals = nutrition.calc(parsed.get("items", []), include_garnish=True)
 
     return {
         "image_url": image_url,
