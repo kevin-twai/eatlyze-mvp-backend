@@ -34,7 +34,7 @@ async def analyze_image(file: UploadFile = File(...)):
     image_url = f"https://eatlyze-backend.onrender.com/image/{filename}"
 
     return {
-        "image_url": image_url,
-        "items": enriched,
-        "totals": totals,
-    }
+    "image_url": f"{BASE_URL}/image/{filename}",
+    "items": enriched,
+    "summary": totals,
+}
