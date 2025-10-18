@@ -7,7 +7,9 @@ from app.services.openai_client import vision_analyze_base64
 from app.services import nutrition_service as nutrition
 
 router = APIRouter(prefix="/analyze", tags=["Analyze"])
-
+# === 新增這段 ===
+BASE_URL = os.getenv("BASE_URL", "https://eatlyze-backend.onrender.com")
+# 這樣即使日後用 Render 環境變數覆蓋，也不會壞
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "..", "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
