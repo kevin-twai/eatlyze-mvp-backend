@@ -1,37 +1,40 @@
-# backend/app/routers/analyze.py
-from __future__ import annotations
-import base64, json, logging
-from fastapi import APIRouter, UploadFile, File, HTTPException
+import os
+import base64
+import uuid
+from fastapi import APIRouter, File, UploadFile
+from fastapi.responses import JSONResponse
+from app.services.openai_client import vision_analyze_base64
+from app.services import nutrition_service as nutrition
 
-from ..services.openai_client import vision_analyze_base64
-from ..services import nutrition_service
+router = APIRouter(prefix="/analyze", tags=["Analyze"])
 
-logger = logging.getLogger(__name__)
-router = APIRouter(prefix="/analyze", tags=["analyze"])
-
-def _ok(data=None):
-    return {"status": "ok", "reason": None, "debug": None, "data": data}
+UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "..", "uploads")
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.post("/image")
 async def analyze_image(file: UploadFile = File(...)):
+    # 將上傳的圖片讀取成 bytes
     raw = await file.read()
+
+    # 存檔
+    filename = f"{uuid.uuid4().hex}_{file.filename}"
+    filepath = os.path.join(UPLOAD_DIR, filename)
+    with open(filepath, "wb") as f:
+        f.write(raw)
+
+    # Base64 給 OpenAI Vision 分析
     img_b64 = base64.b64encode(raw).decode("utf-8")
 
     try:
-        parsed = await vision_analyze_base64(img_b64)  # {"items":[...]}
-        items = parsed.get("items", [])
+        parsed = await vision_analyze_base64(img_b64)
     except Exception as e:
-        logger.exception("vision_analyze_base64 failed")
-        raise HTTPException(status_code=502, detail="Vision analysis failed")
+        return JSONResponse({"error": str(e)}, status_code=500)
 
-    if not isinstance(items, list):
-        raise HTTPException(status_code=400, detail="Vision did not return an items list")
+    enriched, totals = nutrition.calc(parsed.get("items", []))
+    image_url = f"https://eatlyze-backend.onrender.com/image/{filename}"
 
-    # 計算營養
-    try:
-        enriched, totals = nutrition_service.calc(items)
-    except Exception:
-        logger.exception("nutrition calc failed")
-        raise HTTPException(status_code=500, detail="Nutrition calculation failed")
-
-    return _ok({"items": enriched, "summary": {"totals": totals}})
+    return {
+        "image_url": image_url,
+        "items": enriched,
+        "totals": totals,
+    }
