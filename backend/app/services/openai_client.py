@@ -1,105 +1,83 @@
 # backend/app/services/openai_client.py
 from __future__ import annotations
-import os, json, re, base64, logging, httpx
-import asyncio
+import os, json, asyncio, httpx, base64, logging
+
 logger = logging.getLogger(__name__)
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-OPENAI_MODEL   = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+# ---- 模型設定 ----
+PRIMARY_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")  # 預設用 mini
+FALLBACK_MODEL = "gpt-4o"  # 若 mini 失敗，再試一次 4o
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_URL = "https://api.openai.com/v1/chat/completions"
 
-_SYS = (
-    "你是餐點影像辨識與營養標記助手。"
-    "必須輸出 JSON 物件，格式："
-    '{"items":[{"name":"中文食材名","canonical":"英文或中文通用名","weight_g":數字,"is_garnish":布林}, ...]}。'
-    "請務必：1) 至少輸出一項主要食材（肉/飯/麵/主食/醬）; 2) 盡量推測克數(整數或小數); "
-    "3) 醬料與點綴(is_garnish=true); 4) 不可輸出多餘字段; 5) 絕對不要包覆程式碼圍欄。"
-)
-
-_USER_TEMPLATE = (
-    "這是一張餐點照片（base64）：data:image/jpeg;base64,{b64}\n"
-    "請只輸出 JSON 物件，鍵為 items。至少輸出 1 個主要食材（例：雞肉、白飯、麵、咖哩醬…）。"
-)
-
-# 簡單移除可能的圍欄
-def _strip_fences(s: str) -> str:
-    s = s.strip()
-    s = re.sub(r'^```(json)?', '', s, flags=re.I).strip()
-    s = re.sub(r'```$', '', s).strip()
-    return s
+HEADERS = {"Authorization": f"Bearer {OPENAI_API_KEY}"}
 
 
-
-async def _openai_chat_json(b64: str, temp: float = 0.2, max_tokens: int = 450) -> dict:
-    headers = {
-        "Authorization": f"Bearer {OPENAI_API_KEY}",
-        "Content-Type": "application/json",
-    }
+async def _openai_chat_json(image_b64: str, model: str, temp=0.3, max_tokens=600):
+    """送出 vision 請求並回傳 JSON 結果"""
     payload = {
-        "model": OPENAI_MODEL,
+        "model": model,
         "temperature": temp,
         "max_tokens": max_tokens,
         "response_format": {"type": "json_object"},
         "messages": [
-            {"role": "system", "content": _SYS},
-            {"role": "user", "content": _USER_TEMPLATE.format(b64=b64)},
+            {
+                "role": "system",
+                "content": (
+                    "You are a nutrition vision assistant. "
+                    "Analyze the food photo and return JSON with fields: "
+                    '{"items":[{"name":"","weight_g":"","is_garnish":false}]}. '
+                    "Do not include explanations or markdown."
+                ),
+            },
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": "Analyze this food image and list the dishes."},
+                    {"type": "image_url", "image_url": f"data:image/jpeg;base64,{image_b64}"},
+                ],
+            },
         ],
     }
 
-    retries = 3
-    backoff = 3  # 秒數
-    for attempt in range(1, retries + 1):
-        try:
-            async with httpx.AsyncClient(timeout=60) as client:
-                r = await client.post("https://api.openai.com/v1/chat/completions",
-                                      headers=headers, json=payload)
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        for attempt in range(3):
+            try:
+                r = await client.post(OPENAI_URL, headers=HEADERS, json=payload)
                 if r.status_code == 429:
-                    raise httpx.HTTPStatusError("Too Many Requests", request=r.request, response=r)
+                    delay = 3 * (attempt + 1)
+                    logger.warning(f"[openai] rate limited ({model}), retry {attempt+1}/3 in {delay}s…")
+                    await asyncio.sleep(delay)
+                    continue
                 r.raise_for_status()
-                data = r.json()
-                break
-        except httpx.HTTPStatusError as e:
-            if e.response is not None and e.response.status_code == 429:
-                logger.warning(f"[openai] rate limited, retry {attempt}/{retries} in {backoff}s…")
-                await asyncio.sleep(backoff)
-                backoff *= 2
-                continue
-            raise
-        except Exception as e:
-            logger.warning(f"[openai] general retry {attempt}/{retries}: {e}")
-            await asyncio.sleep(backoff)
-            backoff *= 2
-    else:
-        raise RuntimeError("OpenAI API failed after retries")
+                return r.json()
+            except httpx.HTTPStatusError as e:
+                logger.error(f"[openai] HTTP error ({model}): {e.response.status_code} {e.response.text[:120]}")
+                await asyncio.sleep(2)
+            except Exception as e:
+                logger.exception(f"[openai] request failed ({model}): {e}")
+                await asyncio.sleep(2)
 
-    content = data["choices"][0]["message"]["content"].strip()
-    content = _strip_fences(content)
-    parsed = json.loads(content)
-    return parsed
+    raise RuntimeError(f"OpenAI API failed after retries (model={model})")
 
-async def vision_analyze_base64(image_b64: str) -> dict:
-    """
-    回傳 dict，至少包含 {"items":[...]}。
-    策略：先保守（低溫、短 tokens），若 items 為空 → 進一步重試（高溫、長 tokens）。
-    """
-    # 第一次：保守
+
+async def vision_analyze_base64(image_b64: str):
+    """主要 Vision 分析邏輯 + 自動 fallback"""
     try:
-        parsed = await _openai_chat_json(image_b64, temp=0.2, max_tokens=450)
-        items = parsed.get("items") or []
-        logger.info("[vision] pass1 items=%d", len(items))
-        if isinstance(items, list) and items:
-            return {"items": items}
+        logger.info(f"[vision] Using primary model: {PRIMARY_MODEL}")
+        res = await _openai_chat_json(image_b64, PRIMARY_MODEL)
+    except Exception as e1:
+        logger.warning(f"[vision] {PRIMARY_MODEL} failed: {e1}, fallback to {FALLBACK_MODEL}")
+        try:
+            res = await _openai_chat_json(image_b64, FALLBACK_MODEL)
+        except Exception as e2:
+            logger.error(f"[vision] Both models failed: {e2}")
+            raise RuntimeError(f"Vision analysis failed for both models ({e1}, {e2})")
+
+    # ---- 解析 JSON ----
+    try:
+        content = res["choices"][0]["message"]["content"]
+        return json.loads(content)
     except Exception as e:
-        logger.exception("vision pass1 failed")
-
-    # 第二次：積極（稍高溫 + 更明確要求）
-    global _SYS
-    strong_sys = _SYS + " 若你不確定，也要用常見餐點類別合理猜測，務必至少輸出 1 項主要食材。"
-    old_sys = _SYS
-    _SYS = strong_sys
-    try:
-        parsed = await _openai_chat_json(image_b64, temp=0.4, max_tokens=600)
-        items = parsed.get("items") or []
-        logger.info("[vision] pass2 items=%d", len(items))
-        return {"items": items}
-    finally:
-        _SYS = old_sys
+        logger.exception("[vision] JSON parse failed")
+        raise RuntimeError(f"Invalid JSON response: {e}")
