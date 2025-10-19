@@ -76,7 +76,7 @@ def _norm(s: str) -> str:
         s = s[:-1]
     return s
 
-# --- 🔴 方案 B：宣告 _norm() 後建立「正規化別名表」，讓查表永遠用正規化鍵 ---
+# --- 方案 B：使用正規化的別名表 ---
 _NORM_ALIAS: Dict[str, str] = { _norm(k): v for k, v in ALIAS_MAP.items() }
 
 def _alias_to_zh(name: str) -> str:
@@ -173,12 +173,14 @@ def calc(items: List[Dict], include_garnish: bool = False):
     totals = dict(kcal=0.0, protein_g=0.0, fat_g=0.0, carb_g=0.0)
 
     for it in items or []:
+        # 若配菜不計入，仍顯示中文 label（用別名表轉換）
         if not include_garnish and bool(it.get("is_garnish")):
+            raw_name = (it.get("name") or it.get("canonical") or "")
             out = {
                 **it,
                 "kcal": 0.0, "protein_g": 0.0, "fat_g": 0.0, "carb_g": 0.0,
                 "matched": False,
-                "label": it.get("name") or it.get("canonical"),
+                "label": _alias_to_zh(raw_name),
             }
             enriched.append(out)
             continue
@@ -187,7 +189,11 @@ def calc(items: List[Dict], include_garnish: bool = False):
         nm_cano = str(it.get("canonical") or "").strip()
 
         # 先 name -> 再 canonical -> 再 canonical 的中文別名
-        row = _find_food(nm_name) or _find_food(nm_cano) or _find_food(_alias_to_zh(nm_cano))
+        row = (
+            _find_food(nm_name)
+            or _find_food(nm_cano)
+            or _find_food(_alias_to_zh(nm_cano))
+        )
 
         w = _as_float(it.get("weight_g", 0.0), 0.0)
         if w < 0:
