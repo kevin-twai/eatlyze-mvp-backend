@@ -49,7 +49,6 @@ ALIAS_MAP = {
 }
 
 def _col(row: dict, keys: Tuple[str, ...], default=None):
-    """按照多個可能欄位鍵取值"""
     for k in keys:
         if k in row and row[k] not in (None, ""):
             return row[k]
@@ -64,28 +63,39 @@ def _as_float(x, default=0.0):
 def _norm(s: str) -> str:
     """
     名稱正規化：小寫、去空白/連字號/底線、簡單單複數處理。
-    用於一致化比對與別名表快取鍵。
     """
     s = (s or "").strip().lower()
     for ch in [" ", "-", "_"]:
         s = s.replace(ch, "")
-    # 簡單英文字尾複數處理
     if s.endswith("es") and len(s) > 3:
         s = s[:-2]
     elif s.endswith("s") and len(s) > 3:
         s = s[:-1]
     return s
 
-# --- 方案 B：使用正規化的別名表 ---
-_NORM_ALIAS: Dict[str, str] = { _norm(k): v for k, v in ALIAS_MAP.items() }
+# --- 方案 B：正規化中文別名表（英->中） ---
+_NORM_ALIAS_ZH: Dict[str, str] = {_norm(k): v for k, v in ALIAS_MAP.items()}
 
 def _alias_to_zh(name: str) -> str:
-    """
-    將任何輸入名稱正規化後，到正規化別名表查中文。
-    查不到就回傳原字串（不強轉）。
-    """
+    """英文或中文別名 → 中文顯示名（查不到就回傳原字串）"""
     key = _norm(name)
-    return _NORM_ALIAS.get(key, name)
+    return _NORM_ALIAS_ZH.get(key, name)
+
+# --- 新增：正規化 canonical 別名表（英->標準英），用來對齊 CSV 的 canonical ---
+_CANON_ALIAS_RAW = {
+    # 蛋類的常見寫法，全部映射到 CSV 內存在的「egg」或「egg white」
+    "boiled egg": "egg",
+    "soft-boiled egg": "egg",
+    "hard-boiled egg": "egg",
+    "egg whites": "egg white",
+    "egg white": "egg white",
+}
+_NORM_ALIAS_CANON: Dict[str, str] = {_norm(k): v for k, v in _CANON_ALIAS_RAW.items()}
+
+def _alias_to_canon(name: str) -> str:
+    """英文別名 → 標準英文 canonical（查不到就回原字串）"""
+    key = _norm(name)
+    return _NORM_ALIAS_CANON.get(key, name)
 
 def _load_food_table(csv_path: str) -> List[dict]:
     with open(csv_path, "r", encoding="utf-8") as f:
@@ -121,36 +131,49 @@ def _all_names_for_row(r: dict) -> List[str]:
     names = [zh, en]
     # 若英文在別名表中有指定的中文，也加入比對名單（提升命中率）
     if en:
-        zh_from_alias = _NORM_ALIAS.get(_norm(en))
+        zh_from_alias = _NORM_ALIAS_ZH.get(_norm(en))
         if zh_from_alias:
             names.append(zh_from_alias)
     return [n for n in names if n]
 
 def _find_food(name: str) -> dict | None:
-    """先 exact，後 fuzzy"""
+    """先 exact，後 fuzzy；同時嘗試別名 → canonical 的映射。"""
     _ensure_loaded()
-    key = _norm(name)
-    if not key:
-        return None
+    # 依序嘗試：原名、canonical 別名、中文別名
+    tries = []
+    if name:
+        tries.append(name)
+        c = _alias_to_canon(name)
+        if c != name:
+            tries.append(c)
+        z = _alias_to_zh(name)
+        if z != name:
+            tries.append(z)
 
     # 1) exact match（中/英/別名）
-    for r in _FOODS:
-        for n in _all_names_for_row(r):
-            if _norm(n) == key:
-                return r
+    for probe in tries:
+        key = _norm(probe)
+        if not key:
+            continue
+        for r in _FOODS:
+            for n in _all_names_for_row(r):
+                if _norm(n) == key:
+                    return r
 
-    # 2) fuzzy match（避免過度誤判，cutoff 可酌量調整）
-    candidates = []
-    for r in _FOODS:
-        for n in _all_names_for_row(r):
-            candidates.append((_norm(n), r))
-    corpus = [c[0] for c in candidates]
-    hits = get_close_matches(key, corpus, n=1, cutoff=0.86)
-    if hits:
-        hit = hits[0]
-        for norm_name, r in candidates:
-            if norm_name == hit:
-                return r
+    # 2) fuzzy match（以最後一次 probe 為基準；如需更嚴謹可改為對每個 probe 做 fuzzy）
+    if tries:
+        key = _norm(tries[0])
+        candidates = []
+        for r in _FOODS:
+            for n in _all_names_for_row(r):
+                candidates.append((_norm(n), r))
+        corpus = [c[0] for c in candidates]
+        hits = get_close_matches(key, corpus, n=1, cutoff=0.86)
+        if hits:
+            hit = hits[0]
+            for norm_name, r in candidates:
+                if norm_name == hit:
+                    return r
     return None
 
 def _coerce_items(items):
@@ -173,14 +196,12 @@ def calc(items: List[Dict], include_garnish: bool = False):
     totals = dict(kcal=0.0, protein_g=0.0, fat_g=0.0, carb_g=0.0)
 
     for it in items or []:
-        # 若配菜不計入，仍顯示中文 label（用別名表轉換）
         if not include_garnish and bool(it.get("is_garnish")):
-            raw_name = (it.get("name") or it.get("canonical") or "")
             out = {
                 **it,
                 "kcal": 0.0, "protein_g": 0.0, "fat_g": 0.0, "carb_g": 0.0,
                 "matched": False,
-                "label": _alias_to_zh(raw_name),
+                "label": it.get("name") or it.get("canonical"),
             }
             enriched.append(out)
             continue
@@ -188,12 +209,13 @@ def calc(items: List[Dict], include_garnish: bool = False):
         nm_name = str(it.get("name") or "").strip()
         nm_cano = str(it.get("canonical") or "").strip()
 
-        # 先 name -> 再 canonical -> 再 canonical 的中文別名
-        row = (
-            _find_food(nm_name)
-            or _find_food(nm_cano)
-            or _find_food(_alias_to_zh(nm_cano))
-        )
+        # 依序試：name → canonical 映射 → name 的中文別名
+        row = (_find_food(nm_name)
+               or _find_food(_alias_to_canon(nm_name))
+               or _find_food(_alias_to_zh(nm_name))
+               or _find_food(nm_cano)
+               or _find_food(_alias_to_canon(nm_cano))
+               or _find_food(_alias_to_zh(nm_cano)))
 
         w = _as_float(it.get("weight_g", 0.0), 0.0)
         if w < 0:
@@ -211,15 +233,17 @@ def calc(items: List[Dict], include_garnish: bool = False):
             c    = round(per100_c    * ratio, 1)
             matched = True
 
-            # 顯示中文：CSV 中文；若無則用別名表把英文映成中文
-            label = _col(row, NAME_KEYS) or _alias_to_zh(_col(row, CANON_KEYS, "") or nm_name or nm_cano)
-            canonical = _col(row, CANON_KEYS, nm_cano or nm_name)
+            # 顯示名：優先用「上傳名稱的中文別名」，否則用 CSV 中文
+            label = (_alias_to_zh(nm_name)
+                     or _col(row, NAME_KEYS)
+                     or _alias_to_zh(_col(row, CANON_KEYS, "") or nm_name or nm_cano))
+            canonical = _alias_to_canon(_col(row, CANON_KEYS, nm_cano or nm_name))
         else:
             kcal = p = f = c = 0.0
             matched = False
             # 顯示名盡量中文（用正規化別名表轉換）
             label = _alias_to_zh(nm_name or nm_cano) or (nm_name or nm_cano)
-            canonical = nm_cano or nm_name
+            canonical = _alias_to_canon(nm_cano or nm_name)
 
         out = {
             **it,
