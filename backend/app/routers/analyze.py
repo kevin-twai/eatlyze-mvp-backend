@@ -63,7 +63,7 @@ async def analyze_image(file: UploadFile = File(...)):
         logger.info("[analyze] vision parsed items (len=%s): %s", len(items) if items else 0, items)
 
         try:
-            enriched, totals = nutrition.calc(items or [], include_garnish=False)
+            enriched, totals = nutrition.calc(items or [], include_garnish=True)
         except Exception as e:
             logger.exception("nutrition calc failed")
             return JSONResponse({"error": "Nutrition calculation failed", "detail": str(e)}, status_code=500)
