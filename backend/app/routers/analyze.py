@@ -1,46 +1,48 @@
 # backend/app/routers/analyze.py
 from __future__ import annotations
-import base64
-from fastapi import APIRouter, File, UploadFile, Query
+import base64, uuid, os, logging
+from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
-
 from app.services.openai_client import vision_analyze_base64
 from app.services import nutrition_service as nutrition
-from app.services.storage import store_image_and_get_url
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/analyze", tags=["Analyze"])
 
+UPLOAD_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "uploads"))
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+BASE_URL = os.getenv("BASE_URL", "https://eatlyze-backend.onrender.com")
+
 @router.post("/image")
-async def analyze_image(
-    file: UploadFile = File(...),
-    debug: int = Query(0, description="1=附加除錯資訊")
-):
+async def analyze_image(file: UploadFile = File(...)):
     raw = await file.read()
-    image_url = store_image_and_get_url(raw, file.filename)
 
+    # 儲存圖片（供前端顯示）
+    fname = f"{uuid.uuid4().hex}.jpg"
+    fpath = os.path.join(UPLOAD_DIR, fname)
+    with open(fpath, "wb") as f:
+        f.write(raw)
+    image_url = f"{BASE_URL}/image/{fname}"
+
+    # 丟給 Vision
     img_b64 = base64.b64encode(raw).decode("utf-8")
-
+    logger.info(">>> POST /analyze/image")
     try:
         parsed = await vision_analyze_base64(img_b64)  # {"items":[...]}
     except Exception as e:
-        print("[analyze] OpenAI error:", e)
-        return JSONResponse({"error": str(e)}, status_code=500)
+        logger.exception("vision_analyze_base64 failed")
+        return JSONResponse({"error": "vision failed", "detail": str(e)}, status_code=502)
 
-    # 後端直接記錄 AI 解析的 items
-    print(f"[analyze] vision parsed items (len={len(parsed.get('items', []))}): {parsed.get('items')}")
+    items = parsed.get("items") or []
+    logger.info("[analyze] vision parsed items (len=%d): %s", len(items), items[:3])
 
-    enriched, totals = nutrition.calc(parsed.get("items", []), include_garnish=False)
+    # 計算營養（先排除 garnish，想含入可設 include_garnish=True）
+    enriched, totals = nutrition.calc(items, include_garnish=False)
+    logger.info("[analyze] nutrition totals: %s", totals)
 
-    # 後端也記錄計算後總和，確認是不是 0
-    print(f"[analyze] nutrition totals: {totals}")
-
-    payload = {
+    # 前端好讀：統一回傳一個物件（你前端已支援這種結構）
+    return {
         "image_url": image_url,
         "items": enriched,
         "summary": totals,
     }
-
-    if debug == 1:
-        payload["_debug_raw_items"] = parsed.get("items", [])
-
-    return payload
