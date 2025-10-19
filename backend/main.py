@@ -1,6 +1,5 @@
 # backend/main.py
 from __future__ import annotations
-
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,6 +7,14 @@ from fastapi.staticfiles import StaticFiles
 
 # ---- 基本設定 ----
 app = FastAPI(title="eatlyze-backend", version="1.0.0")
+
+# ---- 請求紀錄中介層（Request Log Middleware）----
+@app.middleware("http")
+async def log_requests(request, call_next):
+    print(f">>> {request.method} {request.url.path}")
+    response = await call_next(request)
+    print(f"<<< {response.status_code} {request.url.path}")
+    return response
 
 # ---- CORS 設定 ----
 _allowed = os.getenv(
@@ -27,18 +34,10 @@ app.add_middleware(
 )
 
 # ---- 靜態圖片服務 (/image/...) ----
-# 本機環境 → backend/app/uploads/
-# Render 雲端 → /opt/render/project/src/backend/app/uploads
-DEFAULT_LOCAL_UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "app", "uploads")
-DEFAULT_RENDER_UPLOAD_DIR = "/opt/render/project/src/backend/app/uploads"
-
-UPLOAD_DIR = os.getenv(
-    "UPLOAD_DIR",
-    DEFAULT_RENDER_UPLOAD_DIR if os.getenv("RENDER") else DEFAULT_LOCAL_UPLOAD_DIR,
-)
+UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "app", "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-# 例如 /image/xxxxx.jpg -> 讀取 UPLOAD_DIR/xxxxx.jpg
+# 例如：/image/xxxxx.jpg -> 讀取 backend/app/uploads/xxxxx.jpg
 app.mount("/image", StaticFiles(directory=UPLOAD_DIR), name="image")
 
 # ---- 路由註冊 ----
@@ -48,4 +47,4 @@ app.include_router(analyze_router.router)
 # ---- 健康檢查 ----
 @app.get("/")
 def root():
-    return {"status": "ok", "service": "eatlyze-backend", "upload_dir": UPLOAD_DIR}
+    return {"status": "ok", "service": "eatlyze-backend"}
