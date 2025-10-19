@@ -4,7 +4,15 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+# ---- CSV 公開存取 ----
+from fastapi.responses import FileResponse
 
+@app.get("/data/foods_tw.csv")
+def get_foods_csv():
+    csv_path = os.path.join(os.path.dirname(__file__), "app", "data", "foods_tw.csv")
+    if not os.path.exists(csv_path):
+        return {"error": "foods_tw.csv not found"}
+    return FileResponse(csv_path, media_type="text/csv")
 # ---- 基本設定 ----
 app = FastAPI(title="eatlyze-backend", version="1.0.0")
 
