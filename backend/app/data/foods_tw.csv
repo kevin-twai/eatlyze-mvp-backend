@@ -1,61 +1,153 @@
 name,canonical,kcal,protein_g,fat_g,carb_g
+蘋果,apple,52,0.3,0.2,14.0
+蘆筍,asparagus,20,2.2,0.1,3.9
+玉米筍,baby corn,26,1.9,0.2,5.4
+培根,bacon,541,37.0,42.0,1.4
+烤豆（美式）,baked beans,94,5.0,0.5,21.0
+香蕉,banana,89,1.1,0.3,22.8
+牛肉,beef,250,26.1,15.0,0.0
+牛腩,beef brisket,309,20.0,25.0,0.0
+拌飯醬,bibimbap sauce,180,2.0,7.0,28.0
+黑橄欖,black olives,115,0.8,10.0,6.0
+藍莓,blueberry,57,0.7,0.3,14.5
+水煮蛋,boiled egg,155,13.0,11.0,1.1
+義式肉醬,bolognese sauce,120,8.0,7.0,6.0
+花椰菜,broccoli,34,2.8,0.4,6.6
+韓式烤牛肉,bulgogi beef,210,20.0,12.0,5.0
+鴻喜菇,bunashimeji,22,2.7,0.3,3.0
+漢堡麵包,burger bun,270,9.0,5.0,49.0
+奶油,butter,717,0.9,81.0,0.1
+高麗菜,cabbage,25,1.3,0.1,6.0
+紅蘿蔔,carrot,41,0.9,0.2,10.0
+切達起司,cheddar cheese,403,25.0,33.0,1.3
+雞肉,chicken,165,31.0,3.6,0.0
 雞胸肉,chicken breast,165,31.0,3.6,0.0
 雞腿肉,chicken thigh,215,26.0,13.5,0.0
-雞肉,chicken,165,31.0,3.6,0.0
-牛肉,beef,250,26.1,15.0,0.0
-牛絞肉(瘦),lean ground beef,217,26.0,12.0,0.0
-牛腩,beef brisket,309,20.0,25.0,0.0
-豬肉,pork,242,27.0,14.0,0.0
-豬里肌,pork loin,201,29.0,8.0,0.0
-五花肉,pork belly,518,9.3,53.0,0.0
-羊肉,lamb,294,25.0,21.0,0.0
+椰奶,coconut milk,230,2.3,24.0,6.0
+玉米片（玉米脆片）,corn flakes,357,8.0,2.0,84.0
+小黃瓜,cucumber,15,0.7,0.1,3.6
+咖哩醬,curry sauce,110,2.0,7.0,9.0
+韓式大醬,doenjang,200,13.0,8.0,15.0
 鴨肉,duck,337,19.0,28.0,0.0
-雞蛋,egg,155,13.0,11.0,1.1
-蛋白,egg white,52,11.0,0.2,0.7
-水煮蛋,boiled egg,155,13.0,11.0,1.1
-軟嫩豆腐,silken tofu,55,5.0,3.0,2.0
-豆干,firm tofu,120,13.0,7.0,3.0
 毛豆,edamame,121,11.9,5.2,8.9
-納豆,natto,212,18.0,11.0,14.0
+雞蛋,egg,155,13.0,11.0,1.1
+茄子,eggplant,25,1.0,0.2,6.0
+蛋白,egg white,52,11.0,0.2,0.7
+豆干,firm tofu,120,13.0,7.0,3.0
+魚露,fish sauce,35,6.0,0.0,2.0
+南薑,galangal,80,1.0,0.3,17.0
+大蒜,garlic,149,6.4,0.5,33.1
+紫菜,gim (seaweed),35,5.8,0.3,5.1
+韓式辣醬,gochujang,290,4.8,4.0,60.0
+青蔥,green onions,32,1.8,0.2,7.3
+青木瓜,green papaya,43,0.5,0.3,10.0
+青椒,green pepper,20,0.9,0.2,4.6
+羅勒（打拋葉/聖羅勒）,holy basil,22,3.2,0.6,2.7
+美式熱狗腸,hot dog sausage,290,12.0,26.0,3.0
+義式香腸,italian sausage,301,16.0,26.0,2.0
+雜菜冬粉,japchae (sweet potato noodles),150,2.0,3.0,30.0
+檸檬葉,kaffir lime leaf,30,3.0,1.0,5.0
+番茄醬（美式）,ketchup,112,1.3,0.2,25.0
+泡菜,kimchi,16,1.1,0.5,2.4
+杏鮑菇,king oyster mushroom,35,3.0,0.2,6.8
+蘿蔔塊（醃）,kkakdugi radish,20,0.8,0.2,3.5
+韓式炸雞,korean fried chicken,290,18.0,17.0,14.0
+羊肉,lamb,294,25.0,21.0,0.0
+牛絞肉(瘦),lean ground beef,217,26.0,12.0,0.0
+香茅,lemongrass,99,1.8,0.5,25.0
+萵苣,lettuce,15,1.4,0.2,2.9
+楓糖漿,maple syrup,260,0.0,0.0,67.0
+番茄醬（義式）,marinara sauce,80,1.8,3.0,12.0
+美乃滋,mayonnaise,680,1.0,75.0,0.6
+莫札瑞拉,mozzarella,300,22.0,22.0,2.2
+蘑菇,mushroom,22,3.1,0.3,3.3
+海苔,nori seaweed,35,5.4,0.3,5.1
+橄欖油,olive oil,884,0.0,100.0,0.0
+洋蔥,onion,40,1.1,0.1,9.3
+柳橙,orange,47,0.9,0.1,11.8
+棕櫚糖,palm sugar,387,0.0,0.0,100.0
+帕瑪森起司,parmesan cheese,431,38.0,29.0,4.1
+巴西里,parsley,36,3.0,0.8,6.3
+義大利麵(熟),pasta (cooked),131,5.2,1.1,25.0
+花生醬,peanut butter,588,25.0,50.0,20.0
+義式青醬,pesto,460,12.0,47.0,6.0
+豬肉,pork,242,27.0,14.0,0.0
+五花肉,pork belly,518,9.3,53.0,0.0
+豬里肌,pork loin,201,29.0,8.0,0.0
+馬鈴薯,potato,77,2.0,0.1,17.0
+南瓜,pumpkin,26,1.0,0.1,6.5
+紅甜椒,red bell pepper,31,1.0,0.3,6.0
+牛排（肋眼）,ribeye steak,291,24.0,21.0,0.0
+白飯,rice,130,2.4,0.3,28.7
+泰式米粉,rice vermicelli,364,7.0,1.0,80.0
+燕麥片(乾),rolled oats,379,13.2,6.5,67.7
 鮭魚,salmon,208,20.4,13.0,0.0
 鯛魚,sea bream,96,20.5,1.5,0.0
-蝦仁,shrimp,99,24.0,0.3,0.2
-南瓜,pumpkin,26,1.0,0.1,6.5
-紅蘿蔔,carrot,41,0.9,0.2,10.0
-茄子,eggplant,25,1.0,0.2,6.0
-青椒,green pepper,20,0.9,0.2,4.6
-紅甜椒,red bell pepper,31,1.0,0.3,6.0
-玉米筍,baby corn,26,1.9,0.2,5.4
-蓮藕,lotus root,74,2.6,0.1,17.2
-馬鈴薯,potato,77,2.0,0.1,17.0
-地瓜,sweet potato,86,1.6,0.1,20.1
-番茄,tomato,18,0.9,0.2,3.9
-小黃瓜,cucumber,15,0.7,0.1,3.6
-洋蔥,onion,40,1.1,0.1,9.3
-大蒜,garlic,149,6.4,0.5,33.1
-花椰菜,broccoli,34,2.8,0.4,6.6
-高麗菜,cabbage,25,1.3,0.1,6.0
-萵苣,lettuce,15,1.4,0.2,2.9
-菠菜,spinach,23,2.9,0.4,3.6
-蘆筍,asparagus,20,2.2,0.1,3.9
+芝麻油,sesame oil,884,0.0,100.0,0.0
 香菇,shiitake,34,2.2,0.5,6.8
-鴻喜菇,bunashimeji,22,2.7,0.3,3.0
-杏鮑菇,king oyster mushroom,35,3.0,0.2,6.8
-蘑菇,mushroom,22,3.1,0.3,3.3
 獅子椒,shishito pepper,27,1.5,0.2,6.0
-巴西里,parsley,36,3.0,0.8,6.3
-白飯,rice,130,2.4,0.3,28.7
-義大利麵(熟),pasta (cooked),131,5.2,1.1,25.0
-吐司麵包,white bread,265,9.0,3.2,49.0
-燕麥片(乾),rolled oats,379,13.2,6.5,67.7
-咖哩醬,curry sauce,110,2.0,7.0,9.0
-番茄醬,ketchup,112,1.3,0.2,26.0
-美乃滋,mayonnaise,680,1.0,75.0,0.6
-橄欖油,olive oil,884,0.0,100.0,0.0
-奶油,butter,717,0.9,81.0,0.1
+蝦仁,shrimp,99,24.0,0.3,0.2
+軟嫩豆腐,silken tofu,55,5.0,3.0,2.0
+蕎麥麵,soba noodles,99,4.9,0.1,21.0
 醬油,soy sauce,53,8.0,0.0,4.9
-香蕉,banana,89,1.1,0.3,22.8
-蘋果,apple,52,0.3,0.2,14.0
-柳橙,orange,47,0.9,0.1,11.8
+義大利麵（乾）,spaghetti (dry),371,13.0,1.5,75.0
+菠菜,spinach,23,2.9,0.4,3.6
 草莓,strawberry,32,0.7,0.3,7.7
-藍莓,blueberry,57,0.7,0.3,14.5
+地瓜,sweet potato,86,1.6,0.1,20.1
+打拋豬,thai basil pork,240,18.0,16.0,6.0
+泰式綠咖哩醬,thai green curry paste,150,3.0,7.0,18.0
+紅咖哩醬,thai red curry paste,140,3.0,6.0,19.0
+豆腐（硬）,tofu (firm),76,8.0,4.8,1.9
+番茄,tomato,18,0.9,0.2,3.9
+番茄糊,tomato paste,82,4.3,0.5,19.0
+韓式年糕,tteok (rice cake),220,3.7,0.4,49.0
+山葵,wasabi,109,4.8,0.6,23.0
+吐司麵包,white bread,265,9.0,3.2,49.0
+白酒,white wine (cooking),82,0.1,0.0,2.6
+味噌湯,miso soup,40,3.0,1.2,4.0
+柴魚片,bonito flakes,350,76.0,2.0,0.0
+鰹魚高湯,dashi broth,10,1.0,0.1,1.0
+納豆,natto,200,17.7,10.0,12.0
+牛蒡,burdock root,72,1.5,0.1,17.0
+蓮藕,lotus root,74,2.6,0.1,17.0
+竹筍,bamboo shoot,27,2.6,0.3,5.2
+牛丼肉,gyudon beef,210,18.0,12.0,6.0
+天婦羅,tempura,295,10.0,22.0,15.0
+章魚燒,takoyaki,175,6.0,9.0,17.0
+關東煮,oden,90,7.0,3.0,7.0
+茶碗蒸,chawanmushi,70,7.0,4.0,2.0
+青江菜,bok choy,13,1.5,0.2,2.2
+空心菜,water spinach,19,2.6,0.4,2.1
+芥藍菜,chinese kale,21,2.5,0.3,3.0
+大陸妹,baby bok choy,15,1.7,0.2,2.4
+油菜花,choy sum,19,1.8,0.3,2.5
+花枝丸,cuttlefish ball,155,10.0,8.0,10.0
+魚丸,fish ball,110,8.5,5.0,7.5
+蝦丸,shrimp ball,120,9.0,5.0,8.0
+魷魚,squid (asian style),92,16.0,1.5,2.0
+海參,sea cucumber,44,10.0,0.0,1.0
+干貝,scallop,111,22.0,1.0,3.0
+白蝦,white shrimp,99,24.0,0.3,0.2
+豆干,tofu (dry),120,12.0,6.0,6.0
+滷蛋,braised egg,130,11.0,9.0,1.0
+滷豆腐,braised tofu,110,10.0,7.0,4.0
+炒青菜,stir-fried greens,80,2.0,6.0,4.0
+酸菜,pickled mustard greens,23,1.0,0.3,4.0
+滷肉,braised pork,280,14.0,22.0,5.0
+麻婆豆腐,mapo tofu,180,9.0,12.0,8.0
+蛋炒飯,fried rice with egg,250,7.0,12.0,28.0
+雲吞,wonton,155,9.0,7.0,13.0
+餃子,dumpling,200,8.0,10.0,18.0
+湯圓,glutinous rice ball,320,5.0,5.0,65.0
+越南河粉,pho noodles,110,2.6,0.5,22.0
+生春捲,fresh spring roll,150,8.0,5.0,18.0
+越南魚露,nuoc mam,35,6.0,0.0,2.0
+香茅雞,lemongrass chicken,220,20.0,12.0,5.0
+牛肉粉湯,pho bo soup,70,6.5,3.0,3.0
+越式法國麵包,banh mi bread,260,9.0,4.0,48.0
+越式烤豬肉,grilled pork (Vietnamese),250,22.0,14.0,6.0
+越式炸春捲,fried spring roll,240,8.0,14.0,20.0
+越式酸辣湯,canh chua soup,40,2.0,1.0,6.0
+越式米紙,rice paper,350,6.0,0.3,82.0
+越式甜辣醬,sweet chili sauce,200,0.5,0.1,49.0
+越式沙嗲醬,satay sauce,220,5.0,12.0,20.0
