@@ -1,0 +1,114 @@
+*** Begin Patch
+*** Update File: backend/app/services/openai_client.py
+@@
+-from __future__ import annotations
+-import os
+-import json
+-from typing import Any, Dict
+-from openai import OpenAI
+-
+-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+-client = OpenAI(api_key=OPENAI_API_KEY)
+-
+-SYSTEM = (
+-    "You are a nutrition assistant. Given a food photo, return a concise JSON "
+-    "listing each detected ingredient with {name, canonical, weight_g, is_garnish}. "
+-    "Prefer common canonical names in English (e.g., chicken, beef, carrot, eggplant). "
+-    "Estimate weights (grams). Mark small toppings as garnish."
+-)
+-
+-# 強制輸出 JSON（避免回傳 code fence）
+-def _force_json_text(s: str) -> str:
+-    s = s.strip()
+-    if s.startswith("```"):
+-        s = s.strip("`")
+-        # 可能像 ```json ... ```
+-        s = s.replace("json", "", 1).strip()
+-    return s.strip()
+-
+-async def vision_analyze_base64(image_b64: str) -> Dict[str, Any]:
+-    prompt = (
+-        "Analyze this dish photo and output JSON with an 'items' array.\n"
+-        "Each item: { name, canonical, weight_g, is_garnish }.\n"
+-        "Only JSON. No extra text."
+-    )
+-    r = client.chat.completions.create(
+-        model="gpt-4o-mini",
+-        temperature=0.2,
+-        max_tokens=700,
+-        messages=[
+-            {"role": "system", "content": SYSTEM},
+-            {
+-                "role": "user",
+-                "content": [
+-                    {"type": "text", "text": prompt},
+-                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_b64}"}}],
+-            },
+-        ],
+-        response_format={"type": "json_object"},
+-    )
+-    content = r.choices[0].message.content or "{}"
+-    content = _force_json_text(content)
+-    try:
+-        parsed = json.loads(content)
+-    except Exception:
+-        # 最後再嘗試一次保險切割大括號
+-        start = content.find("{")
+-        end = content.rfind("}")
+-        parsed = json.loads(content[start : end + 1]) if start >= 0 and end > start else {}
+-    return parsed if isinstance(parsed, dict) else {}
++from __future__ import annotations
++import os
++import json
++from typing import Any, Dict
++from openai import OpenAI
++
++OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
++client = OpenAI(api_key=OPENAI_API_KEY)
++
++# System guidance: keep it short and structured
++SYSTEM = (
++    "You are a nutrition assistant. Given a food photo, return a concise JSON with an 'items' array. "
++    "Each item must include: name (user language if possible), canonical (english), weight_g, is_garnish. "
++    "Prefer common canonical names like chicken, beef, carrot, eggplant, green pepper, baby corn, lotus root, curry sauce, rice, onion, broccoli. "
++    "Estimate weights in grams for normal portions. Mark small toppings/herbs as garnish."
++)
++
++def _force_json_text(s: str) -> str:
++    s = s.strip()
++    if s.startswith("```"):
++        # Remove code fences like ```json ... ```
++        s = s.strip("`")
++        s = s.replace("json", "", 1).strip()
++    return s.strip()
++
++async def vision_analyze_base64(image_b64: str) -> Dict[str, Any]:
++    prompt = (
++        "Analyze this dish photo and output JSON with an 'items' array only.\n"
++        "item: { name, canonical, weight_g, is_garnish }"
++    )
++    r = client.chat.completions.create(
++        model="gpt-4o-mini",
++        temperature=0.2,
++        max_tokens=600,
++        messages=[
++            {"role": "system", "content": SYSTEM},
++            {
++                "role": "user",
++                "content": [
++                    {"type": "text", "text": prompt},
++                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_b64}"}}],
++            },
++        ],
++        response_format={"type": "json_object"},
++    )
++    content = r.choices[0].message.content or "{}"
++    content = _force_json_text(content)
++    try:
++        parsed = json.loads(content)
++    except Exception:
++        start = content.find("{")
++        end = content.rfind("}")
++        parsed = json.loads(content[start : end + 1]) if start >= 0 and end > start else {}
++    return parsed if isinstance(parsed, dict) else {}
+*** End Patch
