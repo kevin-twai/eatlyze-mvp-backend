@@ -7,74 +7,55 @@ name,canonical,kcal,protein_g,fat_g,carb_g
 牛腩,beef brisket,309,20.0,25.0,0.0
 豬肉,pork,242,27.0,14.0,0.0
 豬里肌,pork loin,201,29.0,8.0,0.0
-豬五花,pork belly,518,9.3,53.0,0.0
+五花肉,pork belly,518,9.3,53.0,0.0
 羊肉,lamb,294,25.0,21.0,0.0
 鴨肉,duck,337,19.0,28.0,0.0
 雞蛋,egg,155,13.0,11.0,1.1
 蛋白,egg white,52,11.0,0.2,0.7
-豆腐(板豆腐),tofu,76,8.0,4.8,1.9
-嫩豆腐,silken tofu,55,5.0,3.0,2.0
+水煮蛋,boiled egg,155,13.0,11.0,1.1
+軟嫩豆腐,silken tofu,55,5.0,3.0,2.0
 豆干,firm tofu,120,13.0,7.0,3.0
 毛豆,edamame,121,11.9,5.2,8.9
 納豆,natto,212,18.0,11.0,14.0
+鮭魚,salmon,208,20.4,13.0,0.0
+鯛魚,sea bream,96,20.5,1.5,0.0
+蝦仁,shrimp,99,24.0,0.3,0.2
 南瓜,pumpkin,26,1.0,0.1,6.5
-胡蘿蔔,carrot,41,0.9,0.2,10.0
+紅蘿蔔,carrot,41,0.9,0.2,10.0
 茄子,eggplant,25,1.0,0.2,6.0
 青椒,green pepper,20,0.9,0.2,4.6
 紅甜椒,red bell pepper,31,1.0,0.3,6.0
 玉米筍,baby corn,26,1.9,0.2,5.4
 蓮藕,lotus root,74,2.6,0.1,17.2
 馬鈴薯,potato,77,2.0,0.1,17.0
-洋蔥,onion,40,1.1,0.1,9.3
-大蒜,garlic,149,6.4,0.5,33.0
-高麗菜,cabbage,25,1.3,0.1,6.0
-青江菜,bok choy,13,1.5,0.2,2.2
-花椰菜,broccoli,34,2.8,0.4,6.6
-白花椰菜,cauliflower,25,1.9,0.3,5.0
-菠菜,spinach,23,2.9,0.4,3.6
-萵苣,lettuce,15,1.4,0.2,2.9
+地瓜,sweet potato,86,1.6,0.1,20.1
 番茄,tomato,18,0.9,0.2,3.9
 小黃瓜,cucumber,15,0.7,0.1,3.6
-香菇,shiitake mushroom,34,2.2,0.5,7.0
-杏鮑菇,king oyster mushroom,35,2.2,0.4,7.0
-金針菇,enoki mushroom,37,2.7,0.3,7.8
-鴻禧菇,shimeji mushroom,22,2.7,0.4,3.5
-玉米粒,corn (sweet kernels),86,3.4,1.2,19.0
-秋葵,okra,33,1.9,0.2,7.5
-四季豆,green beans,31,1.8,0.1,7.0
-櫛瓜,zucchini,17,1.2,0.3,3.1
-白蘿蔔,daikon radish,18,0.6,0.1,4.1
-蔥,scallion,32,1.8,0.2,7.3
-大白菜,napa cabbage,12,1.2,0.2,2.2
-豆芽菜,bean sprouts,30,3.0,0.2,6.0
-筍,bamboo shoots,27,2.6,0.3,5.2
-海帶芽,wakame,45,3.0,0.6,9.1
-白飯(熟),"white rice, cooked",130,2.4,0.3,28.7
-糙米飯(熟),"brown rice, cooked",123,2.6,1.0,25.6
-白米(生),"white rice, dry",360,7.0,0.6,80.0
-烏龍麵(熟),"udon, cooked",105,3.0,0.2,21.0
-拉麵(熟),"ramen noodles, cooked",140,5.0,1.8,25.0
-蕎麥麵(熟),"soba, cooked",99,5.0,0.1,21.0
-義大利麵(熟),"pasta, cooked",131,5.0,1.1,25.0
-白吐司,white bread,265,9.0,3.2,49.0
-小麥薄餅,wheat tortilla,300,8.0,7.0,49.0
-米粉(熟),"rice vermicelli, cooked",109,0.2,0.1,25.0
+洋蔥,onion,40,1.1,0.1,9.3
+大蒜,garlic,149,6.4,0.5,33.1
+花椰菜,broccoli,34,2.8,0.4,6.6
+高麗菜,cabbage,25,1.3,0.1,6.0
+萵苣,lettuce,15,1.4,0.2,2.9
+菠菜,spinach,23,2.9,0.4,3.6
+蘆筍,asparagus,20,2.2,0.1,3.9
+香菇,shiitake,34,2.2,0.5,6.8
+鴻喜菇,bunashimeji,22,2.7,0.3,3.0
+杏鮑菇,king oyster mushroom,35,3.0,0.2,6.8
+蘑菇,mushroom,22,3.1,0.3,3.3
+獅子椒,shishito pepper,27,1.5,0.2,6.0
+巴西里,parsley,36,3.0,0.8,6.3
+白飯,rice,130,2.4,0.3,28.7
+義大利麵(熟),pasta (cooked),131,5.2,1.1,25.0
+吐司麵包,white bread,265,9.0,3.2,49.0
+燕麥片(乾),rolled oats,379,13.2,6.5,67.7
 咖哩醬,curry sauce,110,2.0,7.0,9.0
-味噌湯底,miso soup base,35,2.0,1.2,4.0
-味噌(醬),miso paste,198,12.8,6.0,25.4
-醬油,soy sauce,53,8.0,0.0,5.0
 番茄醬,ketchup,112,1.3,0.2,26.0
-美乃滋,mayonnaise,680,1.0,75.0,1.0
-奶油,butter,717,0.9,81.0,0.1
+美乃滋,mayonnaise,680,1.0,75.0,0.6
 橄欖油,olive oil,884,0.0,100.0,0.0
-芝麻油,sesame oil,884,0.0,100.0,0.0
-砂糖,sugar,387,0.0,0.0,100.0
-食鹽,salt,0,0.0,0.0,0.0
-牛奶,milk,61,3.2,3.3,5.0
-優格(希臘),greek yogurt,97,9.0,5.0,4.0
-切達起司,cheddar cheese,403,25.0,33.0,1.3
-帕馬森起司,parmesan cheese,431,38.0,29.0,4.1
-鮭魚,salmon,208,20.0,13.0,0.0
-鮪魚,tuna,144,23.0,4.9,0.0
-蝦仁,shrimp,99,24.0,0.3,0.2
-干貝,scallop,88,16.0,0.8,3.2
+奶油,butter,717,0.9,81.0,0.1
+醬油,soy sauce,53,8.0,0.0,4.9
+香蕉,banana,89,1.1,0.3,22.8
+蘋果,apple,52,0.3,0.2,14.0
+柳橙,orange,47,0.9,0.1,11.8
+草莓,strawberry,32,0.7,0.3,7.7
+藍莓,blueberry,57,0.7,0.3,14.5
