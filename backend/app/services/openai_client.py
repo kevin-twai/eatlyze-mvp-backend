@@ -8,7 +8,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise RuntimeError("OPENAI_API_KEY is not set")
 
-# ── 模型：先用 mini，失敗再 fallback 到 4o ───────────────────────────────
+# 先 mini、失敗 fallback 4o
 PRIMARY_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 FALLBACK_MODEL = "gpt-4o"
 
@@ -21,8 +21,10 @@ HEADERS = {
 
 def _vision_messages_from_b64(image_b64: str):
     """
-    建立帶圖片的 messages（符合 Chat Completions 規範）
-    注意：image 要用 type: input_image，且 image_url 需為物件：{"url": "..."}
+    Chat Completions Vision 正確格式：
+    - content 為陣列
+    - 圖片 part 使用 type: "image_url"
+    - image_url 需是物件：{ "url": "...", "detail": "auto" }
     """
     data_url = f"data:image/jpeg;base64,{image_b64}"
 
@@ -31,8 +33,8 @@ def _vision_messages_from_b64(image_b64: str):
             "role": "system",
             "content": (
                 "You are a nutrition vision assistant. Analyze the food photo and return pure JSON. "
-                "JSON schema: {\"items\":[{\"name\":\"string\",\"canonical\":\"string(optional)\","
-                "\"weight_g\":number,\"is_garnish\":boolean}]}. "
+                'JSON schema: {"items":[{"name":"string","canonical":"string(optional)",'
+                '"weight_g":number,"is_garnish":boolean}]}. '
                 "No extra text, no markdown, just a JSON object."
             ),
         },
@@ -48,8 +50,11 @@ def _vision_messages_from_b64(image_b64: str):
                     ),
                 },
                 {
-                    "type": "input_image",
-                    "image_url": { "url": data_url },
+                    "type": "image_url",
+                    "image_url": {
+                        "url": data_url,
+                        "detail": "auto",  # auto/default/simple 皆可，auto 較保險
+                    },
                 },
             ],
         },
@@ -58,14 +63,13 @@ def _vision_messages_from_b64(image_b64: str):
 
 async def _openai_chat_json(image_b64: str, *, model: str, temp: float, max_tokens: int):
     """
-    呼叫 Chat Completions 取得 JSON（帶重試與 429 退避）
+    呼叫 Chat Completions 取得 JSON（帶 429 退避重試）
     """
     payload = {
         "model": model,
         "temperature": temp,
         "max_tokens": max_tokens,
-        # 讓模型輸出真正的 JSON（無 markdown）
-        "response_format": { "type": "json_object" },
+        "response_format": {"type": "json_object"},
         "messages": _vision_messages_from_b64(image_b64),
     }
 
@@ -81,8 +85,7 @@ async def _openai_chat_json(image_b64: str, *, model: str, temp: float, max_toke
                 r.raise_for_status()
                 return r.json()
             except httpx.HTTPStatusError as e:
-                body = e.response.text
-                logger.error(f"[openai] HTTP error ({model}): {e.response.status_code} {body[:200]}")
+                logger.error(f"[openai] HTTP error ({model}): {e.response.status_code} {e.response.text[:200]}")
                 await asyncio.sleep(2)
             except Exception as e:
                 logger.exception(f"[openai] request failed ({model}): {e}")
@@ -93,8 +96,7 @@ async def _openai_chat_json(image_b64: str, *, model: str, temp: float, max_toke
 
 async def vision_analyze_base64(image_b64: str) -> dict:
     """
-    主要入口：先用 PRIMARY_MODEL，失敗再 fallback 到 FALLBACK_MODEL
-    回傳 dict（已解析的 JSON）
+    入口：PRIMARY → FALLBACK，回傳解析後 dict
     """
     try:
         logger.info(f"[vision] Using primary model: {PRIMARY_MODEL}")
