@@ -1,7 +1,7 @@
 # backend/app/services/openai_client.py
 from __future__ import annotations
 import os, json, re, base64, logging, httpx
-
+import asyncio
 logger = logging.getLogger(__name__)
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
@@ -27,6 +27,8 @@ def _strip_fences(s: str) -> str:
     s = re.sub(r'```$', '', s).strip()
     return s
 
+
+
 async def _openai_chat_json(b64: str, temp: float = 0.2, max_tokens: int = 450) -> dict:
     headers = {
         "Authorization": f"Bearer {OPENAI_API_KEY}",
@@ -42,20 +44,37 @@ async def _openai_chat_json(b64: str, temp: float = 0.2, max_tokens: int = 450) 
             {"role": "user", "content": _USER_TEMPLATE.format(b64=b64)},
         ],
     }
-    async with httpx.AsyncClient(timeout=60) as client:
-        r = await client.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-        r.raise_for_status()
-        data = r.json()
-    content = data["choices"][0]["message"]["content"]
+
+    retries = 3
+    backoff = 3  # 秒數
+    for attempt in range(1, retries + 1):
+        try:
+            async with httpx.AsyncClient(timeout=60) as client:
+                r = await client.post("https://api.openai.com/v1/chat/completions",
+                                      headers=headers, json=payload)
+                if r.status_code == 429:
+                    raise httpx.HTTPStatusError("Too Many Requests", request=r.request, response=r)
+                r.raise_for_status()
+                data = r.json()
+                break
+        except httpx.HTTPStatusError as e:
+            if e.response is not None and e.response.status_code == 429:
+                logger.warning(f"[openai] rate limited, retry {attempt}/{retries} in {backoff}s…")
+                await asyncio.sleep(backoff)
+                backoff *= 2
+                continue
+            raise
+        except Exception as e:
+            logger.warning(f"[openai] general retry {attempt}/{retries}: {e}")
+            await asyncio.sleep(backoff)
+            backoff *= 2
+    else:
+        raise RuntimeError("OpenAI API failed after retries")
+
+    content = data["choices"][0]["message"]["content"].strip()
     content = _strip_fences(content)
-    try:
-        parsed = json.loads(content)
-        if not isinstance(parsed, dict):
-            raise ValueError("not a dict")
-        return parsed
-    except Exception as e:
-        logger.error("OpenAI content not JSON: %r", content[:400])
-        raise RuntimeError("OpenAI content not JSON") from e
+    parsed = json.loads(content)
+    return parsed
 
 async def vision_analyze_base64(image_b64: str) -> dict:
     """
