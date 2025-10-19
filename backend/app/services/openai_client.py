@@ -1,124 +1,107 @@
 # backend/app/services/openai_client.py
 from __future__ import annotations
-
 import os
 import json
-import logging
+import re
 import httpx
 
-logger = logging.getLogger(__name__)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
+OPENAI_MODEL = os.getenv("OPENAI_VISION_MODEL", "gpt-4o-mini")
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
-OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1").rstrip("/")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini").strip()  # 小、快、夠用
-
-# 超時與重試設定
-_DEFAULT_TIMEOUT = httpx.Timeout(20.0, connect=10.0, read=20.0, write=20.0)
-_HEADERS = {
+HEADERS = {
     "Authorization": f"Bearer {OPENAI_API_KEY}",
     "Content-Type": "application/json",
 }
 
-if not OPENAI_API_KEY:
-    logger.warning("OPENAI_API_KEY is empty – vision will fail without it.")
+PROMPT = """
+你是一位食物辨識專家。請從圖片中辨識所有「可食用的食材與配料」，
+忽略盤子、餐具、標籤文字、背景物件（例如木桌、菜單、LOGO、日文紙條）。
 
+只回傳 JSON（不要任何說明），格式如下：
+{
+  "items": [
+    { "name": "食材名（可中文）" }
+  ]
+}
+
+規則：
+- 盡量用常見中文名稱（例如：牛肉、雞肉、南瓜、胡蘿蔔、茄子、青椒、玉米筍、蓮藕、馬鈴薯、咖哩醬、雞蛋...）
+- 如果不確定，仍可輸出你最有把握的名稱；若真的沒有，items 回傳 []。
+"""
 
 def _strip_code_fences(s: str) -> str:
-    """移除```…```或```json…```包裹，避免 JSONDecodeError"""
-    if not isinstance(s, str):
-        return s
-    s = s.strip()
-    if s.startswith("```"):
-        # 去掉開頭 ``` 或 ```json
-        first_nl = s.find("\n")
-        if first_nl != -1:
-            s = s[first_nl + 1 :]
-        # 去掉結尾 ```
-        if s.endswith("```"):
-            s = s[:-3]
+    """移除```json ... ``` 或 ``` ... ``` 包裹"""
+    s = re.sub(r"^```(?:json)?\s*", "", s.strip(), flags=re.IGNORECASE)
+    s = re.sub(r"\s*```$", "", s.strip())
     return s.strip()
 
-
-def _build_messages(img_b64: str):
-    prompt = (
-        "你是營養辨識助手。請只輸出 JSON 物件（不要多餘文字）。"
-        "從餐點照片中列出主要食材與推測重量(克)。"
-        "欄位：name(中文)、canonical(英文或中文常見寫法)、weight_g(數字)、is_garnish(是否配菜/裝飾，布林)。"
-        "僅列出你有把握的項目，重量為整數或一位小數。"
-    )
-    return [
-        {
-            "role": "system",
-            "content": "You are a precise vision analyst that returns ONLY valid JSON objects.",
-        },
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": prompt},
-                {
-                    "type": "image_url",
-                    "image_url": {
-                        "url": f"data:image/jpeg;base64,{img_b64}",
-                        "detail": "low",  # 更快
-                    },
-                },
-            ],
-        },
-    ]
-
+def _extract_json(s: str) -> str:
+    """從回覆文字中擷取第一個看似 JSON 的 {...} 片段"""
+    s = _strip_code_fences(s)
+    # 先嘗試整段
+    try:
+        json.loads(s)
+        return s
+    except Exception:
+        pass
+    # 再用最外層大括號抓第一段 JSON
+    m = re.search(r"\{.*\}", s, flags=re.DOTALL)
+    if m:
+        return m.group(0)
+    return s  # 最後一搏，回原字串交給 json.loads 試試
 
 async def vision_analyze_base64(img_b64: str) -> dict:
     """
-    呼叫 OpenAI Vision 並回傳 Python 物件：
-    {"items": [{"name": "...", "canonical": "...", "weight_g": 123, "is_garnish": false}, ...]}
-    任何錯誤都 raise RuntimeError，讓路由轉成 JSON 錯誤。
+    呼叫 OpenAI Vision，回傳 dict：
+      {"items": [{"name": "雞肉"}, ...]}
     """
     if not OPENAI_API_KEY:
-        raise RuntimeError("OPENAI_API_KEY not set")
+        raise RuntimeError("OPENAI_API_KEY is not set")
 
-    url = f"{OPENAI_BASE_URL}/chat/completions"
     payload = {
         "model": OPENAI_MODEL,
-        "messages": _build_messages(img_b64),
+        "messages": [
+            {
+                "role": "system",
+                "content": "You are a meticulous food recognition expert. Reply in JSON only."
+            },
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": PROMPT},
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"data:image/jpeg;base64,{img_b64}",
+                        },
+                    },
+                ],
+            },
+        ],
+        # 控制成本/延遲
         "temperature": 0.2,
-        "max_tokens": 400,  # 控制成本 & 速度
-        "response_format": {"type": "json_object"},
+        "max_tokens": 400,
+        "response_format": {"type": "text"},  # 我們會自己 parse 成 JSON
     }
 
-    try:
-        async with httpx.AsyncClient(timeout=_DEFAULT_TIMEOUT) as client:
-            r = await client.post(url, headers=_HEADERS, json=payload)
-            r.raise_for_status()
-    except httpx.HTTPStatusError as e:
-        # 伺服器/用戶錯誤（含 400/401/429/5xx）
-        logger.error("OpenAI HTTP %s: %s", e.response.status_code, e.response.text)
-        raise RuntimeError(f"OpenAI HTTP {e.response.status_code}") from e
-    except Exception as e:
-        logger.exception("OpenAI request failed")
-        raise RuntimeError("OpenAI request failed") from e
+    url = f"{OPENAI_BASE_URL}/chat/completions"
+    async with httpx.AsyncClient(timeout=60) as client:
+        r = await client.post(url, headers=HEADERS, json=payload)
+        r.raise_for_status()
+        data = r.json()
 
-    data = r.json()
+    content = data["choices"][0]["message"]["content"]
+    text = _extract_json(content)
     try:
-        content = data["choices"][0]["message"]["content"]
-    except Exception as e:
-        logger.error("Unexpected OpenAI response: %s", json.dumps(data)[:500])
-        raise RuntimeError("OpenAI response shape unexpected") from e
-
-    # 移除可能的 code fences
-    content = _strip_code_fences(content)
-
-    # 解析 JSON
-    try:
-        parsed = json.loads(content)
+        obj = json.loads(text)
+        # 正常化
+        items = obj.get("items", [])
+        if not isinstance(items, list):
+            items = []
+        # 只保留 name 欄位
+        slim = [{"name": str(x.get("name", "")).strip()} for x in items if x and x.get("name")]
+        return {"items": slim}
     except Exception:
-        logger.error("OpenAI content is not valid JSON: %r", content[:500])
-        raise RuntimeError("OpenAI content not JSON")
-
-    # 正規化輸出：確保有 items 並為 list
-    items = parsed.get("items", parsed if isinstance(parsed, list) else None)
-    if not isinstance(items, list):
-        # 統一回傳結構
-        parsed = {"items": []}
-    else:
-        parsed = {"items": items}
-    return parsed
+        # 回傳空集合，讓後續邏輯執行
+        return {"items": []}
