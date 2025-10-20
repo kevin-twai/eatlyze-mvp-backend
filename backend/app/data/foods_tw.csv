@@ -1,153 +1,2181 @@
-name,canonical,kcal,protein_g,fat_g,carb_g
-蘋果,apple,52,0.3,0.2,14.0
-蘆筍,asparagus,20,2.2,0.1,3.9
-玉米筍,baby corn,26,1.9,0.2,5.4
-培根,bacon,541,37.0,42.0,1.4
-烤豆（美式）,baked beans,94,5.0,0.5,21.0
-香蕉,banana,89,1.1,0.3,22.8
-牛肉,beef,250,26.1,15.0,0.0
-牛腩,beef brisket,309,20.0,25.0,0.0
-拌飯醬,bibimbap sauce,180,2.0,7.0,28.0
-黑橄欖,black olives,115,0.8,10.0,6.0
-藍莓,blueberry,57,0.7,0.3,14.5
-水煮蛋,boiled egg,155,13.0,11.0,1.1
-義式肉醬,bolognese sauce,120,8.0,7.0,6.0
-花椰菜,broccoli,34,2.8,0.4,6.6
-韓式烤牛肉,bulgogi beef,210,20.0,12.0,5.0
-鴻喜菇,bunashimeji,22,2.7,0.3,3.0
-漢堡麵包,burger bun,270,9.0,5.0,49.0
-奶油,butter,717,0.9,81.0,0.1
-高麗菜,cabbage,25,1.3,0.1,6.0
-紅蘿蔔,carrot,41,0.9,0.2,10.0
-切達起司,cheddar cheese,403,25.0,33.0,1.3
-雞肉,chicken,165,31.0,3.6,0.0
-雞胸肉,chicken breast,165,31.0,3.6,0.0
-雞腿肉,chicken thigh,215,26.0,13.5,0.0
-椰奶,coconut milk,230,2.3,24.0,6.0
-玉米片（玉米脆片）,corn flakes,357,8.0,2.0,84.0
-小黃瓜,cucumber,15,0.7,0.1,3.6
-咖哩醬,curry sauce,110,2.0,7.0,9.0
-韓式大醬,doenjang,200,13.0,8.0,15.0
-鴨肉,duck,337,19.0,28.0,0.0
-毛豆,edamame,121,11.9,5.2,8.9
-雞蛋,egg,155,13.0,11.0,1.1
-茄子,eggplant,25,1.0,0.2,6.0
-蛋白,egg white,52,11.0,0.2,0.7
-豆干,firm tofu,120,13.0,7.0,3.0
-魚露,fish sauce,35,6.0,0.0,2.0
-南薑,galangal,80,1.0,0.3,17.0
-大蒜,garlic,149,6.4,0.5,33.1
-紫菜,gim (seaweed),35,5.8,0.3,5.1
-韓式辣醬,gochujang,290,4.8,4.0,60.0
-青蔥,green onions,32,1.8,0.2,7.3
-青木瓜,green papaya,43,0.5,0.3,10.0
-青椒,green pepper,20,0.9,0.2,4.6
-羅勒（打拋葉/聖羅勒）,holy basil,22,3.2,0.6,2.7
-美式熱狗腸,hot dog sausage,290,12.0,26.0,3.0
-義式香腸,italian sausage,301,16.0,26.0,2.0
-雜菜冬粉,japchae (sweet potato noodles),150,2.0,3.0,30.0
-檸檬葉,kaffir lime leaf,30,3.0,1.0,5.0
-番茄醬（美式）,ketchup,112,1.3,0.2,25.0
-泡菜,kimchi,16,1.1,0.5,2.4
-杏鮑菇,king oyster mushroom,35,3.0,0.2,6.8
-蘿蔔塊（醃）,kkakdugi radish,20,0.8,0.2,3.5
-韓式炸雞,korean fried chicken,290,18.0,17.0,14.0
-羊肉,lamb,294,25.0,21.0,0.0
-牛絞肉(瘦),lean ground beef,217,26.0,12.0,0.0
-香茅,lemongrass,99,1.8,0.5,25.0
-萵苣,lettuce,15,1.4,0.2,2.9
-楓糖漿,maple syrup,260,0.0,0.0,67.0
-番茄醬（義式）,marinara sauce,80,1.8,3.0,12.0
-美乃滋,mayonnaise,680,1.0,75.0,0.6
-莫札瑞拉,mozzarella,300,22.0,22.0,2.2
-蘑菇,mushroom,22,3.1,0.3,3.3
-海苔,nori seaweed,35,5.4,0.3,5.1
-橄欖油,olive oil,884,0.0,100.0,0.0
-洋蔥,onion,40,1.1,0.1,9.3
-柳橙,orange,47,0.9,0.1,11.8
-棕櫚糖,palm sugar,387,0.0,0.0,100.0
-帕瑪森起司,parmesan cheese,431,38.0,29.0,4.1
-巴西里,parsley,36,3.0,0.8,6.3
-義大利麵(熟),pasta (cooked),131,5.2,1.1,25.0
-花生醬,peanut butter,588,25.0,50.0,20.0
-義式青醬,pesto,460,12.0,47.0,6.0
-豬肉,pork,242,27.0,14.0,0.0
-五花肉,pork belly,518,9.3,53.0,0.0
-豬里肌,pork loin,201,29.0,8.0,0.0
-馬鈴薯,potato,77,2.0,0.1,17.0
-南瓜,pumpkin,26,1.0,0.1,6.5
-紅甜椒,red bell pepper,31,1.0,0.3,6.0
-牛排（肋眼）,ribeye steak,291,24.0,21.0,0.0
-白飯,rice,130,2.4,0.3,28.7
-泰式米粉,rice vermicelli,364,7.0,1.0,80.0
-燕麥片(乾),rolled oats,379,13.2,6.5,67.7
-鮭魚,salmon,208,20.4,13.0,0.0
-鯛魚,sea bream,96,20.5,1.5,0.0
-芝麻油,sesame oil,884,0.0,100.0,0.0
-香菇,shiitake,34,2.2,0.5,6.8
-獅子椒,shishito pepper,27,1.5,0.2,6.0
-蝦仁,shrimp,99,24.0,0.3,0.2
-軟嫩豆腐,silken tofu,55,5.0,3.0,2.0
-蕎麥麵,soba noodles,99,4.9,0.1,21.0
-醬油,soy sauce,53,8.0,0.0,4.9
-義大利麵（乾）,spaghetti (dry),371,13.0,1.5,75.0
-菠菜,spinach,23,2.9,0.4,3.6
-草莓,strawberry,32,0.7,0.3,7.7
-地瓜,sweet potato,86,1.6,0.1,20.1
-打拋豬,thai basil pork,240,18.0,16.0,6.0
-泰式綠咖哩醬,thai green curry paste,150,3.0,7.0,18.0
-紅咖哩醬,thai red curry paste,140,3.0,6.0,19.0
-豆腐（硬）,tofu (firm),76,8.0,4.8,1.9
-番茄,tomato,18,0.9,0.2,3.9
-番茄糊,tomato paste,82,4.3,0.5,19.0
-韓式年糕,tteok (rice cake),220,3.7,0.4,49.0
-山葵,wasabi,109,4.8,0.6,23.0
-吐司麵包,white bread,265,9.0,3.2,49.0
-白酒,white wine (cooking),82,0.1,0.0,2.6
-味噌湯,miso soup,40,3.0,1.2,4.0
-柴魚片,bonito flakes,350,76.0,2.0,0.0
-鰹魚高湯,dashi broth,10,1.0,0.1,1.0
-納豆,natto,200,17.7,10.0,12.0
-牛蒡,burdock root,72,1.5,0.1,17.0
-蓮藕,lotus root,74,2.6,0.1,17.0
-竹筍,bamboo shoot,27,2.6,0.3,5.2
-牛丼肉,gyudon beef,210,18.0,12.0,6.0
-天婦羅,tempura,295,10.0,22.0,15.0
-章魚燒,takoyaki,175,6.0,9.0,17.0
-關東煮,oden,90,7.0,3.0,7.0
-茶碗蒸,chawanmushi,70,7.0,4.0,2.0
-青江菜,bok choy,13,1.5,0.2,2.2
-空心菜,water spinach,19,2.6,0.4,2.1
-芥藍菜,chinese kale,21,2.5,0.3,3.0
-大陸妹,baby bok choy,15,1.7,0.2,2.4
-油菜花,choy sum,19,1.8,0.3,2.5
-花枝丸,cuttlefish ball,155,10.0,8.0,10.0
-魚丸,fish ball,110,8.5,5.0,7.5
-蝦丸,shrimp ball,120,9.0,5.0,8.0
-魷魚,squid (asian style),92,16.0,1.5,2.0
-海參,sea cucumber,44,10.0,0.0,1.0
-干貝,scallop,111,22.0,1.0,3.0
-白蝦,white shrimp,99,24.0,0.3,0.2
-豆干,tofu (dry),120,12.0,6.0,6.0
-滷蛋,braised egg,130,11.0,9.0,1.0
-滷豆腐,braised tofu,110,10.0,7.0,4.0
-炒青菜,stir-fried greens,80,2.0,6.0,4.0
-酸菜,pickled mustard greens,23,1.0,0.3,4.0
-滷肉,braised pork,280,14.0,22.0,5.0
-麻婆豆腐,mapo tofu,180,9.0,12.0,8.0
-蛋炒飯,fried rice with egg,250,7.0,12.0,28.0
-雲吞,wonton,155,9.0,7.0,13.0
-餃子,dumpling,200,8.0,10.0,18.0
-湯圓,glutinous rice ball,320,5.0,5.0,65.0
-越南河粉,pho noodles,110,2.6,0.5,22.0
-生春捲,fresh spring roll,150,8.0,5.0,18.0
-越南魚露,nuoc mam,35,6.0,0.0,2.0
-香茅雞,lemongrass chicken,220,20.0,12.0,5.0
-牛肉粉湯,pho bo soup,70,6.5,3.0,3.0
-越式法國麵包,banh mi bread,260,9.0,4.0,48.0
-越式烤豬肉,grilled pork (Vietnamese),250,22.0,14.0,6.0
-越式炸春捲,fried spring roll,240,8.0,14.0,20.0
-越式酸辣湯,canh chua soup,40,2.0,1.0,6.0
-越式米紙,rice paper,350,6.0,0.3,82.0
-越式甜辣醬,sweet chili sauce,200,0.5,0.1,49.0
-越式沙嗲醬,satay sauce,220,5.0,12.0,20.0
+﻿name,canonical,kcal,protein_g,fat_g,carb_g
+大麥仁,Barley,364.6,8.6,1.6,77.1
+大麥片,Barley Flakes,364.6,8.6,1.8,76.7
+大麥仁粉,Barley Flour,388.8,7.1,1.3,85.0
+小米,Millet,370.2,11.3,3.7,71.7
+糯小米,Glutinous Millet,360.2,12.5,1.5,72.5
+小麥,Wheat,361.6,14.1,2.6,69.2
+小麥胚芽,Wheat Germ,417.0,31.4,11.6,47.9
+去筋麵粉,Gluten-Free Flour,354.9,0.2,0.1,85.7
+低筋麵粉,Low-Gluten Flour,363.6,8.1,1.2,78.2
+中筋麵粉,All-Purpose Flour,361.0,11.5,1.3,74.1
+高筋麵粉,Bread Flour,361.6,12.9,1.2,73.1
+高筋麵粉(2021年取樣),Bread Flour,362.2,13.8,1.3,72.2
+全麥麵粉,Whole Wheat Flour,359.3,13.0,1.7,71.4
+雜糧中筋麵粉,Mixed Grain All-Purpose Flour,360.9,13.1,2.3,72.0
+雜糧高筋麵粉,Mixed Grain Bread Flour,360.3,14.3,2.8,69.6
+白玉米,White Corn,65.8,3.4,0.6,11.4
+紫玉米,Purple Corn,167.9,4.5,1.0,34.4
+甜玉米,Sweet Corn,106.9,3.2,2.5,17.8
+雙色水果玉米,Bicolor Sweet Corn,105.4,3.1,2.6,17.5
+糯玉米,Glutinous Corn,172.2,4.7,1.9,33.4
+冷凍玉米粒,Frozen Corn Kernels,173.6,3.1,8.2,22.5
+乾玉米粒,Dried Corn Kernels,373.0,10.9,3.9,72.2
+玉米胚芽,Corn Germ,365.9,7.0,0.9,80.3
+玉米粉,Corn Flour,368.6,0.3,0.4,88.3
+秈米平均值,Indica Rice Average,356.6,7.8,0.9,77.4
+秈米(台中在來2號),Indica Rice,354.8,8.2,1.0,76.3
+秈米(台中秈10號),Indica Rice,358.3,7.4,0.7,78.5
+秈米(台中秈10號)(2024年取樣),Indica Rice,357.4,6.1,0.6,79.8
+稉米平均值,Japonica Rice Average,354.0,7.0,0.7,77.8
+稉米(台中189號),Japonica Rice,355.6,7.5,0.6,78.1
+稉米(台南11號),Japonica Rice,348.3,6.7,0.5,77.2
+稉米(台稉2號),Japonica Rice,356.7,7.2,0.5,78.7
+稉米(台稉8號),Japonica Rice,355.2,6.9,0.4,78.8
+稉米(台稉9號),Japonica Rice,353.2,6.6,0.6,78.2
+稉米(台農71號),Japonica Rice,356.6,7.9,0.6,77.8
+稉米(高雄139號),Japonica Rice,357.2,6.1,1.2,78.5
+稉米(高雄142號),Japonica Rice,352.5,7.0,0.6,77.7
+稉米(高雄145號),Japonica Rice,364.4,6.8,1.0,80.0
+稉米(高雄139號)(2021年取樣),Japonica Rice,352.3,5.7,0.5,79.2
+越光米,Koshihikari Rice,339.5,7.6,1.0,73.2
+越光米(台南16號)(2024年取樣),Koshihikari Rice,355.9,6.9,0.3,79.1
+秈型糯米(台中糯70號),Indica Glutinous Rice,361.4,7.9,0.9,78.4
+稉型糯米平均值,Japonica Glutinous Rice Average,358.2,8.3,0.8,77.4
+稉型糯米,Japonica Glutinous Rice,358.6,8.4,0.5,78.0
+稉型糯米(台稉糯1號),Japonica Glutinous Rice,357.7,8.2,1.1,76.8
+野生紅米,Wild Red Rice,359.7,7.7,2.6,74.7
+紅糯糙米,Red Glutinous Brown Rice,361.7,9.9,2.8,72.6
+黑秈糯糙米,Black Indica Glutinous Brown Rice,357.4,10.1,3.5,70.1
+胚芽秈米(台中秈10號),Germ Indica Rice,363.0,8.3,2.1,76.1
+胚芽稉米平均值,Germ Japonica Rice Average,361.7,8.2,1.6,76.8
+胚芽稉米(台稉10號）,Germ Japonica Rice,360.4,7.3,1.7,77.2
+胚芽稉米(台稉9號),Germ Japonica Rice,363.1,9.1,1.5,76.5
+發芽稉米平均值,Germinated Japonica Rice Average,354.9,7.8,2.3,74.0
+發芽稉米(台稉71號),Germinated Japonica Rice,356.7,7.4,2.8,73.9
+發芽稉米(台稉9號）,Germinated Japonica Rice,353.1,8.2,1.9,74.1
+糙秈米,Brown Indica Rice,358.7,7.3,3.2,73.6
+糙稉米平均值,Brown Japonica Rice Average,364.3,7.4,2.3,76.6
+糙稉米(台稉71號),Brown Japonica Rice,360.4,9.0,2.6,73.6
+糙稉米(台稉9號),Brown Japonica Rice,364.3,7.4,2.3,76.6
+黑秈糙米,Black Indica Brown Rice,363.1,7.5,3.5,74.0
+加鈣米,加鈣米,355.1,7.4,0.7,77.7
+高纖米,高纖米,362.7,8.3,2.5,75.2
+五穀米,五穀米,358.3,8.7,2.9,72.9
+米胚芽,米胚芽,390.9,17.0,12.7,52.9
+秈米粉,秈米粉,363.2,4.2,0.4,83.4
+糙米粉,糙米粉,392.7,11.3,3.2,78.1
+白糯米粉,白糯米粉,359.9,4.5,0.4,82.3
+白飯,白飯,183.1,3.1,0.2,41.0
+高梁,高梁,371.8,11.0,3.0,73.6
+糯高梁,糯高梁,362.3,10.7,1.0,75.7
+黑麥片,黑麥片,359.2,7.8,1.2,77.3
+燕麥,燕麥,406.0,10.9,10.2,67.4
+燕麥片,燕麥片,393.4,12.3,9.7,64.1
+即食燕麥片,即食燕麥片,406.3,11.9,9.6,67.9
+蕎麥(甜蕎),蕎麥,360.8,11.0,2.9,71.3
+薏仁,薏仁,378.5,14.1,6.0,66.2
+糙薏仁,糙薏仁,386.9,13.7,7.4,65.9
+薏仁粉,薏仁粉,394.8,10.9,3.5,80.0
+紅藜麥,紅藜麥,378.9,12.1,6.7,66.8
+台灣藜(紅)(帶殼),台灣藜,385.6,14.9,8.4,62.3
+淮山,淮山,362.8,5.3,0.3,82.4
+山藥平均值,山藥平均值,85.4,2.8,0.1,17.8
+山藥(二刺),山藥,89.2,2.7,0.1,18.9
+山藥(大汕1號),山藥,80.0,2.4,0.1,17.0
+山藥(大汕3號),山藥,72.7,2.6,0.1,15.0
+山藥(大刺),山藥,84.6,3.5,0.1,17.1
+山藥(中國長品),山藥,74.1,2.5,0.1,15.5
+山藥(台農1號),山藥,93.4,2.6,0.1,19.9
+山藥(台農2號),山藥,94.9,3.2,0.1,19.9
+山藥(白皮削),山藥,75.0,2.5,0.1,15.7
+山藥(尖石原生種),Yam,64.7,3.1,0.1,12.4
+山藥(宜蘭原生種),Yam,140.2,4.8,0.2,29.1
+山藥(花蓮3號),Yam,93.3,1.7,0.1,20.9
+山藥(青森),Yam,93.6,2.6,0.2,19.9
+山藥(高田),Yam,71.0,3.1,0.1,14.0
+山藥(白肉),Yam,68.6,2.1,0.1,14.4
+紫山藥,Purple Yam,92.3,2.8,0.1,19.6
+木薯粉,Tapioca Flour,361.7,0.1,0.2,87.3
+白皮甘藷,White Sweet Potato,119.2,1.3,0.1,27.5
+菱角牛奶甘藷,Water Chestnut Milk Sweet Potato,133.2,1.9,0.3,29.9
+芋心甘藷,Taro Heart Sweet Potato,122.3,1.1,0.1,28.5
+紅肉甘藷,Red Sweet Potato,113.7,1.8,0.2,25.4
+金時甘藷,Golden Sweet Potato,138.3,1.6,0.4,31.3
+黃肉甘藷,Yellow Sweet Potato,120.7,1.3,0.2,27.8
+甘藷粉,Sweet Potato Flour,357.6,1.0,0.2,85.5
+油炸脫水甘藷,Fried Dehydrated Sweet Potato,524.9,2.3,30.1,61.2
+芋頭,Taro,127.8,2.5,1.1,26.4
+小芋頭(山芋),Small Taro,112.9,2.3,1.2,22.8
+檳榔心芋,Betel Nut Heart Taro,121.0,1.3,0.0,28.1
+檳榔心芋(2021年取樣),Betel Nut Heart Taro,106.6,1.1,0.0,24.8
+冷凍芋頭塊,Frozen Taro Chunks,147.2,2.2,4.3,24.9
+芋頭粉,Taro Flour,333.2,0.1,0.0,83.1
+豆薯,Jicama,31.4,0.7,0.1,6.8
+紅馬鈴薯(粉紅珍珠馬鈴薯),Red Potato,65.8,1.6,0.0,14.4
+馬鈴薯,Potato,76.9,2.6,0.2,15.8
+馬鈴薯(2022年取樣),Potato,70.4,2.3,0.0,14.9
+小馬鈴薯(珍珠馬鈴薯),Small Potato,59.5,1.7,0.0,12.8
+馬鈴薯粉,Potato Flour,346.2,0.1,0.1,83.8
+荸薺,Water Chestnut,67.2,1.7,0.1,14.5
+荸薺粉,Water Chestnut Flour,364.9,0.4,0.2,87.8
+蓮藕,Lotus Root,65.2,2.0,0.2,13.5
+熟蓮藕,Cooked Lotus Root,50.2,1.1,0.1,11.0
+熟蓮藕切片(水煮),Cooked Lotus Root Slices,73.2,0.8,0.0,16.9
+蓮藕粉,Lotus Root Powder,364.8,0.1,0.0,88.3
+菱角(生),Water Caltrop,76.4,1.9,0.3,16.1
+菱角仁(生),Water Caltrop Kernels,118.0,4.1,0.3,24.1
+菱角(熟),Water Caltrop,146.2,4.2,0.2,31.0
+蒟蒻粉,Konjac Powder,351.4,0.2,0.2,87.2
+甘扁桃仁片(生),Sweet Almond Slices,563.9,27.3,47.8,17.0
+甘扁桃仁片(熟),Sweet Almond Slices,617.9,23.4,56.9,14.8
+甘扁桃仁(熟),Sweet Almonds,587.9,21.9,49.8,23.2
+松子仁(生),Pine Nuts,677.8,16.6,69.5,9.4
+原味松子仁,Plain Pine Nuts,680.4,14.5,69.0,13.0
+原味夏威夷豆,Plain Macadamia Nuts,699.8,7.5,71.6,18.2
+生核桃,Raw Walnuts,667.4,15.4,67.9,11.2
+栗子(生),Chestnuts,186.0,3.5,0.6,41.5
+栗子仁(生),Chestnut Kernels,176.5,3.7,0.7,38.7
+開心果,Pistachios,600.8,22.4,52.7,20.1
+腰果(生),Cashews,568.1,18.3,45.5,30.3
+原味腰果,Plain Cashews,566.0,16.4,43.7,35.2
+原味榛果,Plain Hazelnuts,671.6,13.0,66.5,17.2
+山粉圓,Basil Seeds,399.6,16.3,12.8,58.0
+亞麻仁籽,Flaxseeds,524.2,20.8,40.3,28.1
+亞麻仁籽粉,Flaxseed Powder,557.1,21.7,43.6,28.6
+咖啡豆(曼特寧),Coffee Beans,437.4,13.9,14.9,65.1
+奇亞子,Chia Seeds,483.3,21.7,31.8,34.8
+白芝麻(生),White Sesame Seeds,598.0,22.3,54.9,15.0
+黑芝麻(生),Black Sesame Seeds,550.9,22.2,48.1,17.6
+白芝麻(熟),White Sesame Seeds,625.6,20.3,58.7,15.7
+白芝麻(熟)2022年取樣),White Sesame Seeds,600.7,21.7,52.4,21.2
+黑芝麻(熟),Black Sesame,599.5,17.3,54.4,20.6
+黑芝麻(熟)(2022年取樣),Black Sesame,591.1,20.7,51.8,21.1
+黑芝麻粉,Black Sesame Powder,601.3,15.7,55.2,20.8
+帶殼花生(生),Peanuts in Shell,330.8,15.3,27.2,12.2
+冷凍帶殼花生(熟),Frozen Peanuts in Shell,343.5,17.2,27.4,13.3
+黑金剛花生(生),Black King Kong Peanuts,553.1,27.6,46.6,16.6
+帶膜花生仁(生)(1995年之前取樣),Peanuts with Skin,505.9,28.8,38.5,20.6
+去膜花生仁(生),Skinless Peanuts,557.6,28.8,45.4,19.1
+帶膜花生仁(生)(2004年取樣),Peanuts with Skin,516.5,23.6,38.1,28.4
+紅土帶殼花生(熟),Red Soil Peanuts in Shell,555.0,31.2,43.9,19.5
+花生粉,Peanut Powder,515.8,28.5,33.8,33.0
+芡實,Fox Nuts,342.6,9.9,0.1,75.4
+愛玉子,Aiyu Jelly Seeds,406.7,12.2,12.5,63.7
+原味葵瓜子(去殼),Original Flavor Sunflower Seeds,586.4,22.0,51.9,18.7
+銀杏果,Ginkgo Nuts,142.1,4.1,1.2,28.9
+蓮子,Lotus Seeds,140.9,9.3,0.5,25.6
+蓮子(乾),Lotus Seeds,333.9,21.8,1.2,60.9
+山竹,Mangosteen,69.4,0.6,0.3,18.1
+木瓜平均值,Papaya,38.2,0.6,0.1,9.9
+木瓜(2月取樣),Papaya,31.2,0.7,0.1,7.7
+木瓜(5月取樣),Papaya,43.8,0.7,0.1,11.3
+木瓜(8月取樣),Papaya,33.4,0.5,0.0,8.8
+木瓜(11月取樣),Papaya,44.2,0.4,0.1,11.8
+青木瓜,Green Papaya,28.6,0.6,0.1,7.2
+安石榴,Pomegranate,67.2,1.7,0.1,16.8
+百香果(台農一號),Passion Fruit,102.2,2.0,2.2,21.3
+百香果汁,Passion Fruit Juice,72.9,0.9,0.4,18.6
+金黃奇異果,Golden Kiwi,58.9,0.8,0.3,15.0
+奇異果,Kiwi,56.3,1.1,0.3,14.0
+紅毛丹,Rambutan,73.3,1.0,0.7,17.9
+紅龍果(白肉),Dragon Fruit,51.5,0.9,0.4,12.4
+紅龍果(紅肉),Dragon Fruit,50.0,1.1,0.2,12.3
+北蕉平均值,Banana,85.0,1.5,0.1,22.1
+北蕉(2月取樣),Banana,93.2,1.3,0.0,24.6
+北蕉(5月取樣),Banana,91.8,1.6,0.2,23.7
+北蕉(9月取樣),Banana,64.7,1.3,0.0,16.6
+北蕉(11月取樣),Banana,90.2,1.6,0.1,23.4
+"北蕉(0天,綠皮)",Banana,90.5,1.3,0.3,23.3
+北蕉(1天),Banana,87.2,1.4,0.3,22.2
+北蕉(3天),Banana,83.7,1.4,0.3,21.3
+北蕉(7天),Banana,67.9,1.3,0.2,17.1
+李林蕉(2007年取樣),Lilin Banana,102.2,1.4,0.3,26.3
+李林蕉(2012年取樣),Lilin Banana,110.6,1.5,0.1,29.2
+南華蕉,Nanhua Banana,124.1,1.1,0.1,33.2
+紅皮蕉(2004年取樣),Red Banana,93.0,1.3,0.3,24.0
+紅皮蕉(2012年取樣),Red Banana,97.8,1.3,0.2,25.5
+蛋蕉(2023年取樣),Egg Banana,87.4,1.1,0.0,23.3
+酪梨(綠皮),Avocado,65.0,1.6,3.7,7.9
+酪梨(室溫存放0天),Avocado,80.0,1.5,5.9,7.1
+酪梨(室溫存放3天),Avocado,84.5,1.4,6.8,6.3
+酪梨(室溫存放6天),Avocado,92.2,1.5,7.6,6.6
+榴槤,Durian,131.7,2.7,1.9,29.7
+開英種1號鳳梨,Kaiying Pineapple,56.2,0.6,0.2,14.5
+鳳梨平均值(雜交種),Pineapple,52.7,0.7,0.1,13.6
+甘蔗鳳梨,Sugarcane Pineapple,57.4,0.7,0.1,15.1
+甜蜜蜜鳳梨,Sweet Pineapple,42.3,1.0,0.1,10.6
+金鑽鳳梨,Golden Diamond Pineapple,50.4,0.5,0.1,13.2
+牛奶鳳梨,Milk Pineapple,60.5,0.8,0.3,15.4
+釋迦,Custard Apple,104.2,2.2,0.1,26.6
+鳳梨釋迦,Pineapple Custard Apple,102.2,1.5,0.4,26.0
+桑葚,Mulberry,32.0,1.1,0.4,7.0
+桑葚汁,Mulberry Juice,25.2,0.8,0.2,5.9
+草莓,Strawberry,38.7,1.0,0.2,9.3
+土芭樂,Native Guava,39.2,0.7,0.1,10.0
+芭樂平均值(白肉),Guava,40.0,0.7,0.1,10.2
+番石榴(珍珠拔)(有機),Guava,39.8,0.6,0.1,10.4
+世紀芭樂,Century Guava,39.7,0.7,0.1,10.3
+珍珠芭樂,Pearl Guava,42.0,0.7,0.2,10.6
+泰國芭樂,Thai Guava,38.4,0.8,0.1,9.7
+無子芭樂,Seedless Guava,33.4,0.7,0.0,8.6
+紅心芭樂,Red Guava,42.0,0.8,0.1,10.7
+楊桃平均值,Starfruit,32.0,0.5,0.1,8.2
+楊桃(2月取樣),Starfruit,29.4,0.4,0.1,7.6
+楊桃(4月取樣),Starfruit,32.1,0.7,0.1,8.1
+楊桃(5月取樣),Starfruit,34.4,0.6,0.1,8.7
+楊桃(9月取樣),Starfruit,33.4,0.5,0.0,8.8
+楊桃(11月取樣),Starfruit,30.8,0.4,0.0,8.0
+美國紅葡萄,Red Grapes,68.6,0.4,0.4,17.7
+巨峰葡萄,Kyoho Grapes,63.5,0.5,0.3,16.6
+綠葡萄平均值,Green Grapes,57.9,0.5,0.2,15.3
+美國綠葡萄,Green Grapes,64.0,0.5,0.2,16.8
+意大利葡萄,Italian Grapes,51.9,0.5,0.1,13.7
+美國紅葡萄(含皮),Red Grapes,61.3,0.4,0.1,16.3
+美國紫葡萄(含皮),Purple Grapes,80.4,0.4,0.0,21.9
+美國黑葡萄(含皮),Black Grapes,62.7,0.6,0.2,16.4
+美國綠葡萄(含皮),Green Grapes,86.9,0.6,0.4,22.7
+無子紅葡萄(含皮),Seedless Red Grapes,71.7,0.5,0.1,19.2
+黑美人葡萄(含皮),Black Beauty Grapes,65.5,0.5,0.1,17.4
+金香葡萄(含皮),Golden Fragrance Grapes,60.2,0.6,0.1,16.0
+葡萄乾,Raisins,306.1,3.2,1.5,78.7
+蓮霧平均值(粉紅色種),Wax Apple,39.4,0.4,0.3,10.0
+蓮霧(紅寶石),Wax Apple,32.9,0.3,0.3,8.1
+蓮霧(黑金剛),Wax Apple,33.8,0.5,0.1,8.8
+蓮霧(黑珍珠),Wax Apple,51.5,0.3,0.4,13.0
+華寶大西瓜(花蓮),Hua Bao Watermelon,33.1,0.7,0.1,8.4
+西瓜平均值(紅肉小瓜),Watermelon,32.6,0.8,0.1,8.0
+皇宮西瓜,Imperial Watermelon,32.4,0.7,0.1,8.1
+紅鈴西瓜,Red Bell Watermelon,34.0,0.8,0.1,8.5
+黑美人西瓜,Black Beauty Watermelon,36.5,0.9,0.1,9.1
+鳳光西瓜,Feng Guang Watermelon,27.5,0.7,0.2,6.5
+無籽西瓜,Seedless Watermelon,32.8,0.9,0.0,8.2
+西瓜平均值(黃肉小瓜),Watermelon,29.0,0.7,0.0,7.3
+小玉西瓜,Little Jade Watermelon,34.4,0.8,0.1,8.7
+金蘭西瓜,Golden Orchid Watermelon,23.6,0.6,0.0,6.0
+嘉寶瓜,Jia Bao Melon,40.2,0.8,0.2,10.0
+甜瓜平均值(光皮洋香瓜),Melon,29.6,0.9,0.1,7.2
+太陽洋香瓜,Sun Melon,32.4,1.2,0.0,7.8
+狀元瓜,Champion Melon,27.4,0.7,0.1,6.6
+蜜世界洋香瓜,Honey World Melon,29.0,0.7,0.1,7.1
+甜瓜平均值(東洋系脆瓜),Melon,36.7,1.0,0.2,8.9
+美濃瓜,Meinong Melon,36.8,1.1,0.2,8.8
+黃香瓜,Yellow Melon,30.5,0.6,0.2,7.5
+嘉玉甜瓜,Jia Yu Melon,42.8,1.3,0.1,10.4
+洋香瓜(新世紀),Cantaloupe,38.9,0.7,0.0,10.1
+新疆哈密瓜,Xinjiang Hami Melon,27.8,0.7,0.1,6.9
+洋香瓜(卡蜜拉),Cantaloupe,37.6,0.6,0.2,9.5
+甜瓜平均值(網紋洋香瓜),Melon,36.9,0.9,0.0,9.3
+七股香洋香瓜,Qigu Fragrant Melon,40.3,0.6,0.1,10.5
+天香洋香瓜,Tian Xiang Melon,44.5,0.8,0.0,11.6
+秋香洋香瓜,Autumn Fragrance Melon,34.1,1.0,0.0,8.4
+紅寶石洋香瓜,Ruby Melon,38.8,1.2,0.0,9.6
+香華洋香瓜,Fragrant Melon,30.5,0.7,0.0,7.7
+藍寶石洋香瓜,Sapphire Melon,33.6,1.1,0.0,8.2
+土芒果,Native Mango,54.3,0.6,0.3,13.8
+芒果平均值(西洋種),Average Mango,50.3,0.6,0.2,13.0
+肯特芒果,Kent Mango,49.4,0.5,0.2,12.7
+海頓芒果,Haden Mango,59.9,0.4,0.2,15.7
+凱特芒果,Keitt Mango,50.1,1.1,0.2,12.5
+愛文芒果,Irwin Mango,42.4,0.4,0.2,11.0
+聖心芒果,Heart Mango,50.0,0.5,0.2,12.9
+黑香芒果,Black Fragrant Mango,66.0,0.8,0.3,16.9
+芒果平均值(新興種),Average Mango,55.8,0.6,0.2,14.4
+四季芒果,Four Seasons Mango,60.1,0.6,0.2,15.6
+玉文芒果,Yu Wen Mango,61.9,0.5,0.3,16.1
+金煌芒果,Jin Huang Mango,51.6,0.8,0.2,13.0
+金蜜芒果,Golden Honey Mango,63.8,0.6,0.4,16.3
+金興芒果,Golden Star Mango,41.0,0.6,0.1,10.6
+香水芒果,Perfume Mango,65.2,0.6,0.2,17.1
+蓮花芒果,Lotus Mango,47.3,0.4,0.2,12.2
+芒果乾,Dried Mango,333.9,0.6,1.0,90.0
+荔枝平均值,Average Lychee,65.0,1.0,0.2,16.5
+玉荷苞荔枝,Yu He Bao Lychee,68.3,1.2,0.2,17.3
+黑葉仔荔枝,Black Leaf Lychee,61.7,0.9,0.2,15.8
+冷凍荔枝,Frozen Lychee,28.1,0.4,0.1,7.2
+龍眼,Longan,71.9,1.1,0.4,18.0
+龍眼乾,Dried Longan,276.1,5.1,0.5,70.9
+帶殼龍眼乾,Dried Longan with Shell,278.5,4.6,0.1,72.9
+李子平均值(青皮黃肉),Average Plum,47.5,0.7,0.4,11.7
+加州青李,California Green Plum,47.2,0.6,0.2,12.0
+翡翠李,Jade Plum,47.9,0.7,0.5,11.4
+李子平均值(紅皮紅肉),Plum Average,39.5,0.6,0.3,9.6
+紅肉李(大),Red Flesh Plum,40.6,0.5,0.3,10.0
+紅肉李(小),Red Flesh Plum,38.3,0.7,0.3,9.2
+李子平均值(紅皮黃肉),Plum Average,47.6,0.7,0.3,11.9
+加州紅李(台灣),California Red Plum,44.6,0.3,0.6,10.6
+加州紅李(進口),California Red Plum,60.1,0.8,0.3,15.3
+加州蜜李(進口),California Honey Plum,66.2,1.3,0.1,17.1
+香水李,Perfume Plum,36.2,0.7,0.3,8.8
+桃接李(大),Peach Plum,37.6,0.6,0.3,9.2
+桃接李(小),Peach Plum,35.8,0.7,0.3,8.6
+蜜棗李(進口),Honey Date Plum,52.9,0.6,0.2,13.6
+黃肉李,Yellow Flesh Plum,35.4,0.4,0.2,8.9
+黑李,Black Plum,56.9,0.7,0.2,14.7
+枇杷,Loquat,38.0,0.3,0.2,9.8
+筆柿,Persimmon,69.2,0.6,0.1,18.3
+甜柿平均值,Sweet Persimmon Average,57.1,0.5,0.1,15.2
+富有甜柿(大雪山),Fuyu Sweet Persimmon,56.8,0.4,0.1,15.1
+甜柿(進口),Sweet Persimmon,57.5,0.6,0.1,15.3
+國產甜柿,Domestic Sweet Persimmon,47.4,0.4,0.1,12.7
+牛心柿,Bull Heart Persimmon,62.3,0.5,0.2,16.5
+四周柿,Four Week Persimmon,65.6,0.5,0.1,17.6
+柿餅,Dried Persimmon,195.6,1.7,0.2,52.2
+水蜜桃平均值,Peach Average,39.4,0.9,0.2,9.7
+水蜜桃,Peach,39.7,0.9,0.1,9.9
+甜蜜桃,Sweet Peach,39.1,0.9,0.2,9.6
+脆桃平均值,Crisp Peach Average,44.3,0.9,0.1,11.1
+白油桃,White Nectarine,36.8,0.6,0.1,9.3
+玫瑰桃,Rose Peach,50.9,1.2,0.1,12.8
+福壽桃,Longevity Peach,47.2,0.9,0.2,11.9
+鶯哥桃,Yingge Peach,42.3,1.0,0.2,10.5
+蟠桃,Peach,45.3,0.9,0.2,11.3
+青梅(胭脂梅),Green Plum,34.6,0.5,0.1,8.8
+西洋梨平均值,Western Pear Average,52.8,0.3,0.2,14.1
+西洋梨(青皮),Western Pear,61.9,0.3,0.2,16.5
+西洋梨(紅皮),Western Pear,52.8,0.3,0.2,13.9
+西洋梨(黃皮),Western Pear,43.7,0.2,0.1,11.8
+幸水梨,Kousui Pear,34.1,0.4,0.0,9.0
+大雪梨,Daxue Pear,42.0,0.3,0.1,11.1
+新世紀梨,New Century Pear,41.6,0.4,0.2,10.7
+新興梨,Shinko Pear,44.1,0.2,0.1,11.9
+橫山梨,Hengshan Pear,46.6,0.4,0.1,12.4
+豐水梨,Hosui Pear,36.1,0.5,0.1,9.4
+將軍蜜梨,Shogun Honey Pear,49.8,0.4,0.1,13.3
+梨山蜜梨,Lishan Honey Pear,47.0,0.3,0.0,12.7
+蜜棗平均值(大),Honey Date Average,43.3,1.1,0.1,10.7
+蜜棗(長形),Honey Date,42.8,1.2,0.2,10.4
+蜜棗(圓形),Honey Date,43.7,0.9,0.1,11.0
+珍珠蜜棗,Pearl Honey Date,45.9,1.1,0.0,11.7
+國產紅棗,Domestic Red Date,87.3,0.9,0.1,23.1
+紅棗(乾),Red Date,227.4,3.2,0.3,59.5
+黑棗(乾),Black Date,230.1,2.7,0.2,60.9
+蘋果平均值(青皮),Apple Average,50.0,0.3,0.2,13.1
+青龍蘋果,Qinglong Apple,53.8,0.3,0.3,14.0
+翠玉青蘋果,Emerald Green Apple,46.1,0.3,0.1,12.2
+翠玉青蘋果(帶皮),Emerald Green Apple,53.7,0.4,0.2,14.1
+美國五爪蘋果,American Five Claw Apple,50.7,0.2,0.1,13.8
+蘋果平均值(混色),Apple Average,51.4,0.2,0.1,13.9
+加拉蘋果,Gala Apple,55.0,0.2,0.1,15.0
+津輕蜜蘋果,Tsugaru Honey Apple,56.3,0.2,0.2,15.1
+秋香蘋果,Qiuxiang Apple,45.3,0.3,0.0,12.3
+富士蘋果,Fuji Apple,48.9,0.2,0.1,13.1
+富士蘋果(帶皮),Fuji Apple,44.9,0.2,0.1,11.9
+金冠蘋果,Golden Crown Apple,48.8,0.4,0.1,13.0
+櫻桃,Cherry,74.9,1.2,0.3,19.1
+白櫻桃,White Cherry,69.4,0.7,0.1,18.4
+椪柑,Ponkan,40.2,0.8,0.2,10.0
+紅柑,Red Mandarin,41.8,0.8,0.1,10.6
+茂谷柑,Murcott,44.4,0.6,0.1,11.5
+海梨桶柑,Pear Orange,43.8,0.9,0.2,11.0
+高牆桶柑,Tall Wall Orange,45.1,0.8,0.0,11.8
+檸檬柑,Lemon Orange,48.3,1.1,0.1,12.2
+砂糖橘,Sugar Tangerine,49.9,0.7,0.3,12.6
+長果金柑,Long Kumquat,55.5,1.0,0.2,14.1
+圓果金柑,Round Kumquat,31.6,0.7,0.2,7.6
+圓果金柑汁(綠皮),Round Kumquat Juice,32.3,0.9,0.1,8.0
+文旦,Pomelo,34.4,0.7,0.1,8.8
+文旦(2023年取樣),Pomelo,47.8,0.6,0.0,12.7
+白柚,White Pomelo,37.4,0.6,0.1,9.6
+西施蜜柚,Xi Shi Honey Pomelo,40.3,0.8,0.2,10.1
+甜橙平均值(普遍系),Sweet Orange,45.6,0.8,0.2,11.3
+柳橙,Orange,43.5,0.8,0.1,11.0
+香吉士(進口),Satsuma,47.2,0.7,0.5,11.4
+澳洲甜橙(進口),Australian Sweet Orange,46.0,0.9,0.1,11.6
+青皮葡萄柚,Green Grapefruit,33.1,0.8,0.1,8.3
+紅寶石葡萄柚(古坑),Ruby Grapefruit,36.9,0.7,0.3,8.9
+黃皮葡萄柚(進口),Yellow Grapefruit,37.8,0.7,0.1,9.7
+黃皮葡萄柚,Yellow Grapefruit,37.2,0.7,0.2,9.2
+檸檬,Lemon,33.3,0.7,0.5,7.4
+萊姆,Lime,37.7,0.5,1.0,7.7
+檸檬汁平均值,Lemon Juice,30.6,0.4,0.4,7.0
+檸檬汁(黃皮),Lemon Juice,29.9,0.5,0.3,7.2
+檸檬汁(綠皮),Lemon Juice,31.4,0.4,0.6,6.9
+萊姆汁,Lime Juice,34.2,0.3,0.5,8.1
+紅甘蔗汁,Red Sugarcane Juice,76.2,0.5,0.2,20.2
+"紅甘蔗汁(有機,2023年取樣)",Red Sugarcane Juice,72.0,0.2,0.4,18.8
+人心果,Sapodilla,82.5,0.6,0.8,20.5
+可可椰子汁平均值,Coconut Water Average,17.4,0.1,0.1,4.4
+可可椰子汁(屏東),Coconut Water,16.0,0.1,0.2,3.8
+可可椰子汁(進口),Coconut Water,18.9,0.2,0.0,5.0
+蛋黃果,Eggfruit,105.6,1.4,0.3,27.3
+無花果,Fig,67.0,1.2,0.4,16.5
+無花果乾,Dried Fig,328.0,3.6,4.3,77.8
+黃金果,Golden Berry,44.5,0.9,0.2,11.0
+菠蘿蜜,Jackfruit,107.8,1.0,0.2,28.4
+榴槤蜜,Durian,123.8,1.6,0.1,32.6
+牛奶果,Milk Fruit,62.2,0.8,0.3,15.8
+餘甘子,Indian Gooseberry,42.6,0.3,0.3,10.8
+嘉寶果,Jabuticaba,58.6,0.3,0.3,15.3
+藍莓(台灣),Blueberry,53.5,0.5,0.3,13.6
+牛蒡,Burdock,84.5,2.5,0.4,19.1
+胡蘿蔔平均值,Carrot Average,38.5,1.1,0.1,8.9
+胡蘿蔔,Carrot,37.2,1.0,0.2,8.5
+向陽二號胡蘿蔔,Sunshine No. 2 Carrot,44.3,0.6,0.1,10.6
+澳洲胡蘿蔔(細長型),Australian Carrot,34.1,1.7,0.1,7.5
+黃胡蘿蔔,Yellow Carrot,41.8,1.1,0.3,9.4
+冷凍胡蘿蔔,Frozen Carrot,13.4,0.5,0.1,3.0
+根菾菜根,Beetroot,27.0,1.2,0.1,6.0
+根菾菜根(2023年取樣),Beetroot,36.6,1.2,0.0,8.6
+白蘿蔔平均值,White Radish Average,17.6,0.5,0.1,3.9
+白蘿蔔,White Radish,16.0,0.7,0.1,3.3
+白蘿蔔(長形),White Radish,19.2,0.4,0.1,4.4
+櫻桃蘿蔔,Cherry Radish,10.7,0.6,0.0,2.3
+青蘿蔔,Green Radish,32.7,1.8,0.1,7.0
+蘿蔔乾,Dried Radish,57.9,2.2,1.2,10.8
+百合鱗片,Lily Bulb,136.6,3.8,0.1,32.3
+乾百合鱗片,Dried Lily Bulb,303.9,11.8,0.7,68.4
+芋莖,Taro Stem,19.8,1.1,0.5,3.4
+金針菜嫩莖,Daylily Stem,24.0,0.7,0.2,5.3
+草石蠶,Chinese Artichoke,74.9,1.7,0.0,18.0
+球莖甘藍,Kohlrabi,19.9,1.6,0.2,3.6
+孟宗竹筍,Moso Bamboo Shoot,40.1,4.0,0.2,7.3
+熟桂竹筍,Cooked Makino Bamboo Shoot,20.8,2.1,0.2,3.5
+烏殼綠竹筍,Black Bamboo Shoot,21.4,1.8,0.2,3.8
+茭白筍,Water Bamboo Shoot,20.5,1.3,0.2,4.0
+玉米筍,Baby Corn,33.4,1.8,0.2,7.0
+麻竹筍,Ma Bamboo Shoot,22.0,1.4,0.1,4.4
+冷凍麻竹筍,Frozen Ma Bamboo Shoot,17.3,0.8,0.0,3.8
+綠竹筍,Green Bamboo Shoot,25.0,1.7,0.2,4.7
+帶殼熟綠竹筍,Cooked Green Bamboo Shoot with Shell,25.3,2.0,0.1,4.9
+沙拉筍塊,Salad Bamboo Shoot,23.8,1.6,0.1,4.8
+熟箭竹筍,Cooked Arrow Bamboo Shoot,19.7,2.1,0.3,2.9
+白蘆筍,White Asparagus,25.3,1.8,0.2,4.9
+綠蘆筍平均值,Green Asparagus,21.9,2.7,0.2,3.5
+綠蘆筍,Green Asparagus,22.3,1.3,0.2,4.5
+澳洲綠蘆筍(粗短型),Australian Green Asparagus,20.5,2.5,0.2,3.1
+綠蘆筍(細短型),Green Asparagus,23.0,3.3,0.2,3.2
+綠蘆筍(短型),Green Asparagus,21.8,3.5,0.1,3.0
+蘆筍花,Asparagus Flower,20.6,2.9,0.3,2.7
+嫩莖萵苣,Stem Lettuce,16.3,1.0,0.2,3.1
+嫩薑,Young Ginger,21.2,0.0,0.3,4.8
+粉薑,Powdered Ginger,28.4,1.0,0.3,6.1
+老薑,Old Ginger,52.6,1.1,0.5,11.7
+檳榔嫩莖,Betel Nut Stalk,31.3,2.2,0.4,5.6
+大蒜,Garlic,122.5,6.7,0.2,26.4
+青蒜,Green Garlic,32.8,2.1,0.3,6.4
+蒜苗,Garlic Sprout,53.5,2.2,0.1,12.0
+青蔥平均值,Green Onion Average,30.6,1.3,0.2,6.6
+青蔥(有機),Green Onion,31.3,1.1,0.2,6.8
+山東大蔥,Shandong Green Onion,30.6,1.3,0.1,6.7
+日本甜蔥,Japanese Sweet Onion,33.3,1.0,0.1,7.6
+宜蘭粉蔥,Yilan Green Onion,27.2,1.6,0.2,5.4
+白洋蔥,White Onion,41.9,1.0,0.1,10.0
+紫洋蔥,Purple Onion,31.6,0.9,0.1,7.3
+黃洋蔥,Yellow Onion,41.6,1.0,0.2,9.5
+紅蔥頭,Shallot,75.0,3.4,0.3,16.4
+韮菜花,Chive Flower,28.2,1.8,0.2,5.6
+韮菜,Chives,23.0,1.9,0.4,3.9
+韮黃,Yellow Chives,16.2,1.5,0.1,2.9
+九層塔,Basil,27.4,2.9,0.3,4.4
+小麥苗,Wheatgrass,34.0,3.3,0.5,5.5
+水菜(日本種),Mizuna,10.9,1.2,0.2,1.6
+甘藍平均值,Cabbage Average,23.2,1.3,0.1,4.8
+梨山甘藍(尖球形),Lishan Cabbage,24.1,1.4,0.1,5.1
+甘藍(扁圓形),Cabbage,21.0,1.1,0.2,4.3
+甘藍(圓球形),Cabbage,24.4,1.4,0.2,4.9
+甘藍(圓球形)(2021年取樣),Cabbage,20.2,0.8,0.0,4.6
+紫色甘藍,Red Cabbage,28.5,1.5,0.2,5.9
+甘藍芽,Cabbage Sprout,33.0,2.7,0.6,5.4
+冷凍甘藍,Frozen Cabbage,20.5,1.3,0.1,4.2
+羽衣甘藍(有機),Kale,35.2,3.0,0.9,5.1
+脫水甘藍,Dehydrated Kale,340.7,6.9,0.1,82.6
+甘藷葉,Sweet Potato Leaves,27.8,3.2,0.3,4.4
+蚵仔白菜(2022年取樣),Oyster Cabbage,13.1,1.4,0.3,1.8
+荷葉白菜,Lotus Leaf Cabbage,14.4,1.4,0.1,2.5
+葵扇白菜,Fan Cabbage,13.9,1.6,0.1,2.4
+黑葉白菜(短梗),Black Leaf Cabbage,15.1,1.3,0.0,2.9
+千寶菜,Thousand Treasure Cabbage,20.2,1.7,0.2,3.6
+小白菜(土植)(1月取樣),Baby Bok Choy,10.4,1.2,0.2,1.5
+小白菜(土植)(3月取樣),Baby Bok Choy,13.9,1.2,0.1,2.4
+小白菜(土植)(4月取樣),Baby Bok Choy,13.1,1.0,0.2,2.2
+小白菜(土植)(7月取樣),Baby Bok Choy,10.5,1.0,0.1,1.8
+小白菜(土植)(10月取樣),Baby Bok Choy,11.4,1.1,0.2,1.7
+小白菜(水耕)(1月取樣),Baby Bok Choy,12.8,1.5,0.1,2.1
+小白菜(水耕)(4月取樣),Baby Bok Choy,13.4,1.0,0.2,2.4
+小白菜(水耕)(7月取樣),Baby Bok Choy,12.2,0.9,0.1,2.4
+小白菜(水耕)(10月取樣),Baby Bok Choy,12.0,1.1,0.3,1.8
+小白菜(有機)(1月取樣),Baby Bok Choy,9.2,1.8,0.2,0.8
+小白菜(有機)(4月取樣),Baby Bok Choy,14.4,1.3,0.2,2.4
+小白菜(有機)(7月取樣),Baby Bok Choy,10.9,1.3,0.1,1.7
+小白菜(有機)(10月取樣),Baby Bok Choy,13.0,1.3,0.2,1.9
+珍珠小白菜,Pearl Baby Bok Choy,11.1,1.5,0.1,1.7
+油菜心,Choy Sum,30.9,3.2,0.8,4.0
+油菜(有機),Rapeseed Greens,13.0,1.3,0.1,2.2
+青江菜(土植)(1月取樣),Bok Choy,10.2,1.3,0.0,1.6
+青江菜(土植)(3月取樣),Bok Choy,12.9,1.2,0.1,2.2
+青江菜(土植)(4月取樣),Bok Choy,10.7,1.0,0.1,1.8
+青江菜(土植)(7月取樣),Bok Choy,14.8,1.5,0.1,2.5
+青江菜(土植)(10月取樣),Bok Choy,18.1,1.7,0.1,3.4
+青江菜(水耕)(1月取樣),Bok Choy,12.5,1.2,0.0,2.4
+青江菜(水耕)(4月取樣),Bok Choy,14.3,1.4,0.2,2.4
+青江菜(水耕)(7月取樣),Bok Choy,13.9,1.7,0.1,2.2
+青江菜(水耕)(10月取樣),Bok Choy,10.9,1.4,0.2,1.4
+青江菜(有機)(1月取樣),Bok Choy,9.9,1.5,0.0,1.5
+青江菜(有機)(4月取樣),Bok Choy,14.9,1.4,0.2,2.5
+青江菜(有機)(7月取樣),Bok Choy,20.7,1.9,0.2,3.5
+青江菜(有機)(10月取樣),Bok Choy,15.4,1.6,0.0,2.7
+塔菇菜(有機),Tower Mushroom Greens,14.0,1.9,0.0,2.3
+廣島野菜,Hiroshima Vegetables,15.8,1.7,0.0,2.9
+日本油菜(有機),Japanese Rapeseed,20.4,1.5,0.4,3.3
+結球白菜平均值,Cabbage,16.8,1.2,0.3,2.9
+煙台白菜,Yantai Cabbage,14.3,1.3,0.3,2.2
+迷你竹筍白菜,Mini Bamboo Shoot Cabbage,18.9,1.3,0.1,3.8
+翠玉白菜,Emerald Cabbage,19.4,1.0,0.7,2.8
+包心白菜,Heart Cabbage,14.4,1.2,0.1,2.6
+白菜芽,Cabbage Sprouts,21.2,3.1,0.1,3.2
+白鳳菜,White Phoenix Greens,27.3,2.0,0.4,4.8
+紅鳳菜,Red Phoenix Greens,22.5,2.1,0.4,3.5
+豆瓣菜,Watercress,20.5,2.2,0.3,3.2
+明日葉,Ashitaba,56.8,1.4,0.8,11.9
+山芹菜,Mountain Celery,27.9,2.1,0.2,5.2
+芹菜平均值,Celery,15.4,0.8,0.1,3.1
+芹菜(青梗),Celery,12.3,0.8,0.1,2.4
+芹菜,Celery,18.4,0.8,0.2,3.8
+西洋芹菜,Western Celery,11.2,0.4,0.2,2.2
+大心芥菜,Large Mustard Greens,12.5,1.0,0.0,2.5
+大芥菜,Large Mustard,19.1,0.8,0.5,3.4
+包心芥菜,Heart Mustard,17.1,1.0,0.5,2.7
+芥菜平均值,Mustard Greens,19.1,1.5,0.2,3.5
+芥菜,Mustard Greens,17.7,1.6,0.1,3.2
+雪裡蕻,Snow Mustard,20.4,1.5,0.2,3.8
+抱子芥菜,Brussels Sprouts,20.9,2.1,0.1,3.8
+芥藍菜,Chinese Broccoli,19.9,1.7,0.3,3.2
+芥藍芽,Broccoli Sprouts,26.2,2.2,0.3,4.5
+芫荽,Coriander,26.0,2.3,0.3,4.5
+紅梗珍珠菜,Red Stem Pearl Vegetable,37.2,2.6,1.0,5.6
+食茱萸,Sichuan Pepper,126.5,11.9,0.3,23.8
+香樁,Lemongrass,99.3,4.3,1.5,19.4
+茴香,Fennel,23.9,2.2,0.2,4.1
+馬齒莧,Purslane,13.8,1.2,0.4,1.9
+茼蒿,Garland Chrysanthemum,15.7,1.7,0.3,2.2
+日本茼蒿(有機),Japanese Garland Chrysanthemum,25.9,1.9,0.2,4.8
+昭和草,Showa Grass,26.4,2.2,0.7,3.8
+隼人瓜苗,Chayote Shoots,23.7,3.3,0.2,3.5
+白莧菜,White Amaranth,17.5,1.9,0.3,2.6
+紅莧菜,Red Amaranth,21.9,2.6,0.3,3.3
+野莧菜,Wild Amaranth,40.6,6.3,0.6,4.9
+紫蘇,Perilla,70.5,5.5,1.2,11.9
+菠菜,Spinach,17.9,2.2,0.3,2.4
+菠菜(葉)(有機),Spinach,25.6,3.3,0.4,3.6
+冷凍菠菜,Frozen Spinach,17.2,2.1,0.0,2.9
+菾菜,Beet Greens,20.7,2.0,0.1,3.7
+黃金菾菜,Golden Beet Greens,18.4,2.4,0.2,2.6
+落葵,Malabar Spinach,33.2,2.7,0.3,6.0
+藤三七,Gynura,21.3,1.6,0.5,3.2
+不結球萵苣平均值,Loose Leaf Lettuce,16.2,1.1,0.3,2.8
+奶油萵苣(日本種),Butterhead Lettuce,15.7,1.1,0.3,2.6
+紅葉萵苣(荷蘭種）,Red Leaf Lettuce,15.7,1.4,0.3,2.5
+廣東萵苣,Celtuce,19.8,1.0,0.2,4.0
+蘿美萵苣,Romaine Lettuce,13.5,1.0,0.2,2.3
+本島萵苣(土植)(1月取樣),Island Lettuce,16.7,1.6,0.4,2.5
+本島萵苣(土植)(3月取樣),Island Lettuce,17.8,0.3,0.3,3.8
+本島萵苣(土植)(4月取樣),Island Lettuce,16.8,0.9,0.2,3.3
+本島萵苣(土植)(7月取樣),Island Lettuce,23.5,1.4,0.3,4.4
+本島萵苣(土植)(10月取樣),Island Lettuce,13.9,1.1,0.3,2.2
+本島萵苣(水耕)(1月取樣),Island Lettuce,13.8,1.6,0.2,2.1
+本島萵苣(水耕)(4月取樣),Island Lettuce,14.8,1.0,0.2,2.7
+本島萵苣(水耕)(7月取樣),Island Lettuce,12.6,1.4,0.2,1.9
+本島萵苣(水耕)(10月取樣),Island Lettuce,11.6,1.1,0.3,1.6
+本島萵苣(有機)(1月取樣),Island Lettuce,14.9,1.8,0.0,2.6
+本島萵苣(有機)(4月取樣),Island Lettuce,18.7,1.1,0.3,3.5
+本島萵苣(有機)(7月取樣),Island Lettuce,17.2,1.5,0.3,2.7
+本島萵苣(有機)(10月取樣),Island Lettuce,14.7,1.3,0.3,2.3
+水耕波士頓萵苣,Hydroponic Boston Lettuce,14.3,1.3,0.7,1.2
+結球萵苣,Iceberg Lettuce,13.5,0.7,0.1,2.8
+豌豆苗,Pea Shoots,31.3,3.7,0.5,4.4
+龍葵,Black Nightshade,25.8,3.8,0.3,3.4
+蕹菜(土植)(1月取樣),Water Spinach,21.6,2.0,0.3,3.5
+蕹菜(土植)(4月取樣),Water Spinach,20.0,1.7,0.2,3.5
+蕹菜(土植)(7月取樣),Water Spinach,17.0,1.9,0.1,2.8
+蕹菜(土植)(10月取樣),Water Spinach,17.5,1.8,0.3,2.6
+蕹菜(水耕)(1月取樣),Water Spinach,27.3,2.7,0.3,4.5
+蕹菜(水耕)(4月取樣),Water Spinach,23.6,2.2,0.1,4.3
+蕹菜(水耕)(7月取樣),Water Spinach,17.2,1.9,0.2,2.7
+蕹菜(水耕)(10月取樣),Water Spinach,22.7,2.2,0.3,3.8
+蕹菜(有機)(4月取樣),Water Spinach,25.8,1.9,0.3,4.7
+蕹菜(有機)(10月取樣),Water Spinach,19.4,1.7,0.4,3.0
+水蕹菜,Water Spinach,23.6,2.6,0.5,3.3
+蘿蔔葉,Radish Leaves,13.7,1.7,0.2,2.0
+花椰菜,Cauliflower,23.2,1.8,0.1,4.5
+冷凍花椰菜,Frozen Cauliflower,21.3,1.3,0.0,4.5
+紫色花椰菜,Purple Cauliflower,40.1,3.1,0.3,7.6
+青花菜(1999年取樣),Broccoli,28.4,3.7,0.2,4.4
+青花菜(2021年取樣),Broccoli,37.9,3.4,0.4,6.5
+冷凍青花菜,Frozen Broccoli,25.3,2.5,0.2,4.4
+青花菜筍,Broccoli Stalks,32.3,3.0,0.5,5.1
+花椰菜乾,Dried Cauliflower,290.8,16.0,0.6,62.5
+金針菜,Daylily,39.6,2.4,0.5,7.4
+金針菜乾,Dried Daylily,307.1,14.3,1.8,65.4
+洛神花乾,Dried Roselle,306.0,9.0,0.6,71.2
+絲瓜花,Loofah Flower,31.3,3.9,0.3,4.8
+冬瓜平均值,Winter Melon,10.8,0.4,0.1,2.4
+冬瓜,Winter Melon,12.8,0.4,0.1,2.7
+香芋冬瓜,Taro Winter Melon,8.8,0.4,0.0,2.0
+冬瓜(2022年取樣),Winter Melon,20.8,0.4,0.0,5.1
+南瓜平均值,Pumpkin,74.1,1.9,0.2,17.3
+日本南瓜,Kabocha,85.8,0.6,0.4,20.8
+台灣南瓜,Taiwan Pumpkin,49.0,1.7,0.2,11.1
+栗子南瓜,Chestnut Pumpkin,85.6,1.4,0.2,20.7
+菊花南瓜,Chrysanthemum Pumpkin,76.0,3.8,0.1,16.8
+胡瓜,Cucumber,13.8,0.7,0.1,2.9
+花胡瓜(有機),Flowering Cucumber,14.9,0.8,0.1,3.1
+苦瓜(白皮),Bitter Melon,19.4,0.9,0.1,4.1
+苦瓜(青皮),Bitter Melon,19.8,0.9,0.1,4.2
+珍珠苦瓜,Pearl Bitter Melon,18.6,0.7,0.1,4.2
+野苦瓜,Wild Bitter Melon,30.0,1.7,0.6,5.3
+隼人瓜,Chayote,23.2,0.7,0.1,5.2
+隼人瓜(2023年取樣),Chayote,21.5,0.7,0.2,4.5
+白皮蛇瓜,White Snake Gourd,18.7,1.4,0.3,3.2
+綠皮蛇瓜,Green Snake Gourd,31.9,1.9,0.6,5.6
+絲瓜,Loofah,18.7,1.1,0.1,3.9
+稜角絲瓜,Ridge Gourd,20.3,0.9,0.2,4.1
+越瓜,Wax Gourd,18.1,0.6,0.1,4.1
+蒲瓜平均值,Bottle Gourd,17.8,0.5,0.1,4.0
+蒲瓜(長形),Bottle Gourd,18.6,0.5,0.1,4.2
+蒲瓜(圓形),Bottle Gourd,17.9,0.6,0.1,4.0
+花蒲瓜(圓形),Flower Bottle Gourd,14.9,0.3,0.0,3.5
+葫蘆瓜,Calabash,19.7,0.5,0.3,4.1
+黃櫛瓜,Yellow Zucchini,15.1,1.4,0.1,2.7
+綠櫛瓜,Green Zucchini,13.1,2.2,0.0,1.8
+枸杞乾,Dried Goji Berries,346.7,12.3,1.3,77.8
+長茄子,Long Eggplant,25.3,1.2,0.2,5.3
+圓茄子,Round Eggplant,20.7,1.0,0.0,4.5
+大番茄平均值(紅色系),Large Tomato,18.6,0.8,0.1,4.1
+牛番茄,Beefsteak Tomato,18.6,0.7,0.1,4.0
+紅番茄,Red Tomato,19.7,0.9,0.0,4.4
+桃太郎番茄,Momotaro Tomato,17.4,0.7,0.0,4.0
+黃番茄,Yellow Tomato,23.3,0.9,0.0,5.3
+大番茄平均值(綠色系),Large Tomato,22.0,0.7,0.1,5.0
+粉柿番茄,Pink Persimmon Tomato,18.0,0.8,0.0,4.0
+黑柿番茄,Black Persimmon Tomato,23.3,0.4,0.1,5.6
+綠番茄,Green Tomato,24.6,0.9,0.1,5.4
+小番茄平均值(紅色系),Cherry Tomato,32.7,0.9,0.2,7.4
+聖女小番茄,Cherry Tomato,33.8,1.1,0.5,6.9
+試交二號小番茄,Test Cross No. 2 Cherry Tomato,29.9,0.7,0.0,7.2
+櫻桃小番茄,Cherry Tomato,34.3,0.9,0.1,8.1
+黃金小蕃茄,Golden Cherry Tomato,30.6,0.8,0.2,6.8
+小番茄平均值(橙色系),Cherry Tomato,31.1,1.1,0.2,6.9
+金女小番茄,Golden Cherry Tomato,29.9,1.1,0.1,6.6
+黃金聖女小番茄,Golden Cherry Tomato,30.9,1.0,0.1,7.0
+橙蕃茄,Orange Tomato,32.4,1.2,0.2,7.0
+香瓜茄,Melon Eggplant,26.0,0.4,0.1,6.2
+甜椒平均值(青皮),Sweet Pepper,29.4,1.0,0.4,5.9
+甜椒(青皮),Sweet Pepper,23.3,0.8,0.3,4.9
+小甜椒(青皮),Mini Sweet Pepper,34.5,1.4,0.5,6.8
+高山甜椒(青皮),Mountain Sweet Pepper,30.4,0.9,0.6,6.0
+甜椒(紅皮),Sweet Pepper,33.5,0.8,0.4,7.1
+甜椒(黃皮),Sweet Pepper,28.1,0.8,0.3,6.0
+甜椒(橙皮),Sweet Pepper,34.6,0.9,0.3,7.7
+青辣椒平均值,Green Chili,32.9,1.3,0.3,6.9
+角椒,Bell Pepper,22.2,0.9,0.2,4.7
+長辣椒(青皮),Long Chili,49.0,1.9,0.4,10.3
+糯米椒,Glutinous Rice Pepper,27.6,1.2,0.3,5.6
+紅辣椒平均值,Red Chili,80.4,3.6,0.9,16.4
+長辣椒(紅皮),Long Chili,48.4,2.4,0.7,9.3
+朝天椒(長果),Facing Heaven Chili,90.1,3.4,1.3,17.9
+朝天椒(圓果),Facing Heaven Chili,102.8,4.9,0.5,21.9
+乾長辣椒(紅皮),Dried Long Chili,382.1,19.9,17.2,47.6
+黃秋葵,Okra,35.6,2.1,0.1,7.5
+青花菜芽,Broccoli Sprout,34.7,2.8,1.0,4.9
+苜蓿芽,Alfalfa Sprout,20.1,3.2,0.2,2.5
+紫甘藍芽,Purple Cabbage Sprout,32.1,0.2,0.7,6.6
+黃豆芽,Soybean Sprout,47.0,5.3,1.6,5.0
+"黃豆芽(有機,2023年取樣)",Soybean Sprout,40.9,5.1,1.0,5.0
+黑豆芽,Black Bean Sprout,51.6,6.6,1.1,6.4
+葵花芽,Sunflower Sprout,26.4,2.5,0.4,4.3
+綠豆芽,Mung Bean Sprout,23.8,2.3,0.2,4.1
+豌豆芽,Pea Sprout,25.4,4.0,0.4,2.9
+蕎麥芽,Buckwheat Sprout,20.0,1.9,0.2,3.4
+蘿蔔芽,Radish Sprout,23.6,2.1,0.4,3.9
+山蘇菜,Bird's Nest Fern,26.3,3.0,0.2,4.4
+火炭母草,Fireweed,12.0,1.6,0.4,1.2
+石蓮花,Stone Lotus,10.6,0.4,0.1,2.2
+青葙,Feather Cockscomb,50.1,2.5,1.6,7.7
+假人蔘,False Ginseng,31.5,1.6,2.2,2.2
+野苦瓜嫩梢,Wild Bitter Melon Shoots,76.5,5.7,1.7,12.2
+過溝菜蕨,Water Fern,27.4,3.1,0.8,3.2
+蔘鬚,Ginseng Beard,330.2,7.0,1.8,76.2
+龍骨瓣莕菜,Water Lily,17.4,1.1,0.3,3.1
+薄荷,Mint,55.4,3.0,0.6,10.9
+蕺菜,Houttuynia,45.5,3.2,0.9,7.7
+蘆薈,Aloe Vera,4.4,0.0,0.4,0.2
+皇宮菜,Malabar Spinach,21.7,2.2,0.3,3.5
+香芫荽,Cilantro,23.0,2.4,0.2,3.9
+荷蘭豆菜心,Snow Pea Shoots,29.8,3.9,0.6,3.8
+厥子,Fern,22.7,2.3,0.2,3.9
+義大利茼蒿,Italian Chrysanthemum,14.8,1.6,0.4,1.9
+龍延草,Dragon Herb,78.8,3.9,2.3,12.7
+麵包果,Breadfruit,61.3,1.0,1.8,11.2
+冰花,Ice Plant,6.9,0.8,0.1,1.0
+紅毛苔,Red Algae,264.7,39.9,1.9,36.9
+紫菜,Nori,267.5,28.0,0.9,47.9
+熟紫菜,Cooked Nori,294.2,18.1,0.4,62.4
+髮菜,Black Moss,302.2,10.3,0.5,69.5
+麒麟菜,Agar Weed,41.2,1.0,0.0,9.9
+乾麒麟菜,Dried Agar Weed,189.2,1.2,0.5,46.7
+礁膜,Sea Lettuce,16.0,0.3,0.1,3.7
+乾海茸芯,Dried Seaweed Core,254.3,8.4,0.2,59.1
+海帶平均值,Kelp,19.0,0.7,0.1,4.2
+海帶卷,Kelp Roll,14.0,0.7,0.2,2.8
+海帶茸,Kelp Buds,28.7,1.1,0.0,6.5
+海帶梗,Kelp Stems,13.7,0.4,0.0,3.2
+海帶結,Kelp Knots,16.7,0.8,0.1,3.6
+海帶絲,Kelp Strips,22.1,0.7,0.1,5.0
+乾海帶,Dried Kelp,220.0,10.0,1.1,47.3
+裙帶菜,Wakame,58.3,5.0,0.0,11.6
+乾裙帶菜,Dried Wakame,224.9,22.9,0.7,40.8
+乾裙帶菜根,Dried Wakame Roots,201.4,6.2,0.6,46.1
+鳳尾藻,Seaweed,212.7,11.7,1.3,43.9
+葛仙米藻,Nostoc Algae,24.1,1.3,0.0,5.2
+壽司海苔片,Sushi Nori Sheets,277.9,46.5,3.7,32.1
+木耳,Wood Ear Mushrooms,38.0,0.9,0.1,8.8
+冷凍木耳,Frozen Wood Ear Mushrooms,50.9,0.9,0.0,12.4
+乾木耳平均值,Average Dried Wood Ear Mushrooms,333.2,13.8,0.7,74.7
+乾木耳(紅耳仔),Dried Wood Ear Mushrooms,328.8,6.1,0.2,79.8
+乾木耳(黑耳仔),Dried Wood Ear Mushrooms,337.7,21.4,1.2,69.6
+乾川耳,Dried Cloud Ear Mushrooms,336.0,9.0,0.3,79.4
+銀耳,Tremella,30.7,1.1,0.0,7.2
+白毛木耳,White Wood Ear Mushrooms,44.9,1.2,0.1,10.6
+乾銀耳,Dried Tremella,310.1,9.3,1.2,70.8
+草菇,Straw Mushrooms,35.7,3.8,0.3,5.9
+雞腿菇,King Oyster Mushrooms,35.8,2.1,0.1,7.5
+雞腿菇(乾),King Oyster Mushrooms,297.6,20.1,1.4,59.8
+松茸,Matsutake Mushrooms,35.7,3.1,0.5,5.9
+雪白菇(長),White Beech Mushrooms,35.6,2.1,0.4,6.9
+柳松菇,Shimeji Mushrooms,35.8,3.7,0.3,6.0
+乾柳松菇,Dried Shimeji Mushrooms,285.8,23.5,1.9,53.5
+香菇平均值,Average Shiitake Mushrooms,38.5,3.0,0.1,7.6
+香菇(大),Shiitake Mushrooms,37.2,3.0,0.2,7.1
+香菇(小),Shiitake Mushrooms,25.9,2.4,0.1,4.9
+花菇,Flower Shiitake Mushrooms,52.5,3.6,0.1,10.7
+乾香菇平均值,Dried Shiitake Mushroom Average,320.9,20.9,1.6,64.9
+乾香菇,Dried Shiitake Mushroom,332.6,23.3,1.4,66.6
+乾花菇,Dried Flower Shiitake Mushroom,316.7,17.0,1.1,67.4
+乾白花菇,Dried White Flower Shiitake Mushroom,309.9,18.7,1.1,64.5
+乾鈕釦菇,Dried Button Mushroom,324.6,24.6,2.7,60.9
+姬松茸,Agaricus Blazei,40.4,4.0,0.4,6.9
+乾姬松茸,Dried Agaricus Blazei,293.6,34.0,2.7,46.7
+酒杯菇,Wine Cap Mushroom,49.9,4.6,0.3,9.0
+秀珍菇,Oyster Mushroom,27.5,3.3,0.1,4.6
+天喜菇,Tianxi Mushroom,25.9,4.5,0.5,2.5
+白蠔菇,White Oyster Mushroom,32.7,2.2,0.3,6.4
+玫瑰菇,Rose Mushroom,34.9,4.5,0.1,5.6
+杏香菇,King Oyster Mushroom,26.2,2.7,0.1,4.6
+杏鮑菇平均值,King Oyster Mushroom Average,41.3,2.7,0.2,8.3
+杏鮑菇(大),King Oyster Mushroom,36.9,2.4,0.1,7.5
+杏鮑菇(中),King Oyster Mushroom,40.3,2.5,0.2,8.2
+杏鮑菇(小),King Oyster Mushroom,46.7,3.2,0.3,9.2
+珊瑚菇,Coral Mushroom,32.7,4.0,0.2,5.2
+蠔菇,Oyster Mushroom,26.2,2.1,0.3,4.8
+鮑魚菇,Abalone Mushroom,21.9,1.7,0.2,4.0
+金針菇,Enoki Mushroom,37.3,2.6,0.3,7.2
+華翠菇,Hua Cui Mushroom,28.7,2.5,0.2,5.1
+滑菇,Nameko Mushroom,26.7,2.6,0.2,4.7
+舞菇,Maitake Mushroom,27.6,1.4,0.1,5.8
+鴻喜菇,Hon Shimeji Mushroom,29.6,2.9,0.1,5.3
+雪白菇,White Mushroom,30.9,2.2,0.0,6.4
+洋菇,Button Mushroom,25.0,3.0,0.2,3.8
+冷凍洋菇,Frozen Button Mushroom,38.8,3.8,1.4,4.3
+白茯苓,White Poria,315.8,1.0,0.2,79.9
+猴頭菇,Lion's Mane Mushroom,30.4,2.1,0.2,5.9
+乾猴頭菇,Dried Monkey Head Mushroom,311.2,12.3,3.4,64.3
+乾竹笙,Dried Bamboo Fungus,312.1,17.5,2.0,64.1
+松茸白菇,Matsutake Mushroom,37.9,5.1,0.5,5.3
+金喜菇,Golden Mushroom,39.2,2.7,0.2,7.7
+喜來菇,Shiitake Mushroom,37.0,3.5,0.4,6.3
+富珍茸,Rich Mushroom,37.4,3.0,0.4,6.8
+白鳳豆平均值,White Phoenix Bean Average,336.6,23.8,2.1,58.2
+白鳳豆(台灣),White Phoenix Bean,348.0,27.4,2.8,56.4
+白鳳豆(進口),White Phoenix Bean,325.2,20.1,1.3,60.0
+米豆,Rice Bean,349.1,21.7,2.4,62.2
+花豆,Flower Bean,328.4,21.2,1.7,59.0
+紅豆,Red Bean,328.0,20.9,0.6,61.5
+紅雲豆(大紅豆),Red Cloud Bean,327.6,20.2,1.4,60.4
+青仁黑豆,Green Kernel Black Bean,384.8,37.0,14.2,33.7
+黃仁黑豆,Yellow Kernel Black Bean,253.2,20.6,2.1,40.3
+黑豆胚芽,Black Bean Germ,185.0,16.1,7.7,15.9
+烘烤黑豆,Roasted Black Bean,435.3,39.0,20.1,32.4
+黑豆粉,Black Bean Powder,431.0,36.0,17.6,39.0
+毛綠豆,Hairy Mung Bean,345.7,22.1,1.2,63.6
+綠豆,Mung Bean,344.5,22.8,1.1,63.0
+綠豆仁,Mung Bean Kernel,338.6,24.6,1.3,59.6
+綠豆粉,Mung Bean Powder,344.3,21.7,1.5,62.9
+豇豆(莢),Cowpea,34.5,2.4,0.1,6.2
+萊豆仁(帶膜),Lima Bean Kernel,112.4,7.8,0.4,20.1
+萊豆仁(去膜),Lima Bean Kernel,137.4,7.4,1.4,24.7
+粉豆莢,Powder Bean Pod,27.0,1.7,0.1,5.0
+敏豆莢,Sensitive Bean Pod,29.7,1.7,0.2,5.3
+冷凍菜豆(莢),Frozen Green Bean,56.8,3.4,0.1,10.8
+毛豆仁,Edamame,129.3,14.6,3.3,12.5
+毛豆莢(高雄13號),Edamame Pod,136.8,11.6,5.1,13.2
+冷凍毛豆仁,Frozen Edamame,134.7,12.5,6.1,9.8
+黃豆,Soybeans,388.9,35.6,15.7,33.0
+黃豆胚芽,Soybean Sprouts,169.2,16.6,5.4,16.4
+黃豆粉,Soybean Flour,400.9,37.4,16.7,32.2
+黃豆粉(有機),Soybean Flour,434.4,42.0,21.9,25.9
+豆漿(無糖),Soy Milk,35.0,3.6,1.9,0.7
+豌豆仁,Peas,123.4,9.2,0.4,21.7
+豌豆莢,Pea Pods,40.6,2.9,0.2,7.1
+高山大豌豆莢,Mountain Snow Pea Pods,48.5,2.4,0.0,9.9
+甜豌豆莢,Sweet Pea Pods,42.3,3.0,0.2,7.4
+冷凍豌豆仁,Frozen Peas,96.0,6.1,0.6,17.1
+鵲豆莢,Fava Bean Pods,31.3,2.4,0.3,5.1
+紅扁豆仁,Red Lentils,342.8,25.3,2.1,58.3
+鷹嘴豆,Chickpeas,364.0,19.4,5.8,61.0
+樹豆(白),Tree Beans,325.4,22.1,0.8,59.4
+翼豆,Winged Beans,30.7,2.5,0.4,4.7
+天貝(黃豆),Tempeh,187.2,23.6,9.0,7.4
+牛小排平均值,Average Short Ribs,325.0,15.1,28.9,0.0
+去骨牛小排,Boneless Short Ribs,289.8,17.1,24.0,0.0
+帶骨牛小排,Bone-In Short Ribs,360.2,13.1,33.7,0.4
+無骨牛小排(美牛),Boneless Short Ribs,335.1,15.6,29.8,0.2
+牛肋條,Beef Rib Strips,225.3,18.6,16.2,1.1
+牛肋條(2021年取樣),Beef Rib Strips,358.1,15.7,32.3,0.3
+沙朗牛排,Sirloin Steak,162.0,20.4,8.3,1.5
+板腱 ,Chuck Steak,166.3,19.8,9.0,0.2
+牛去骨肩胛小排,Boneless Chuck Short Ribs,233.5,16.9,17.9,1.2
+牛前胸肉,Brisket,330.6,14.8,29.6,0.0
+牛修清前胸肉,Trimmed Brisket,120.5,22.3,2.8,0.9
+去骨紐約克牛排,Boneless New York Strip Steak,199.6,21.3,12.0,0.0
+腓力牛排,Filet Mignon,184.2,20.6,10.7,0.1
+牛後腿肉,Beef Hind Leg Meat,121.9,19.4,4.3,3.7
+牛後腿股肉,Beef Hind Leg Thigh Meat,152.7,20.6,7.2,0.8
+牛後腿腱子心,Beef Hind Leg Tendon Core,139.2,19.8,6.0,0.0
+牛後腿腱子心(2022年取樣),Beef Hind Leg Tendon Core,151.1,23.7,5.5,4.0
+牛肉火鍋片平均值,Beef Hot Pot Slices,250.3,19.1,18.7,0.0
+牛五花肉火鍋片,Beef Belly Hot Pot Slices,430.3,15.7,40.3,0.0
+牛紐約客火鍋片,Beef New York Strip Hot Pot Slices,262.7,20.1,19.6,0.0
+牛梅花肉火鍋片,Beef Chuck Hot Pot Slices,120.0,20.3,3.7,0.9
+牛嫩肩里肌火鍋片,Beef Tender Shoulder Loin Hot Pot Slices,188.4,20.0,11.4,1.8
+牛肚平均值,Beef Tripe,55.8,11.4,0.8,0.1
+牛肚(瘤胃),Beef Tripe,44.3,7.5,1.4,0.0
+牛肚切片(瘤胃),Beef Tripe Slices,67.2,15.3,0.2,0.3
+牛肚(蜂巢胃),Beef Tripe,106.7,19.0,2.8,0.0
+牛筋,Beef Tendon,157.3,21.7,7.2,3.3
+山羊帶皮羊肉塊,Goat Meat with Skin Chunks,164.4,20.3,8.6,3.4
+山羊前腿肉片,Goat Front Leg Slices,122.5,21.3,3.5,0.0
+山羊後腿肉火鍋片,Goat Hind Leg Hot Pot Slices,170.4,18.9,9.9,0.1
+綿羊肉切片,Lamb Slices,197.5,18.8,13.0,0.0
+法式羊排,French Lamb Chops,260.2,18.8,20.0,0.0
+去骨肩頸眼羊肉,Boneless Lamb Neck Eye,198.1,17.8,13.5,0.0
+小羊腰脊肉,Lamb Loin,143.0,26.5,3.3,0.0
+綿羊腹脅肉火鍋片,Lamb Belly Hot Pot Slices,252.4,16.9,20.0,2.5
+豬下肩肉,Pork Lower Shoulder Meat,200.0,18.1,13.6,0.0
+豬下肩瘦肉,Pork Lower Shoulder Lean Meat,131.2,20.1,5.0,0.0
+豬上肩肉,Pork Upper Shoulder Meat,207.0,18.9,14.0,0.0
+豬肩胛肉,Pork Shoulder Meat,294.7,16.5,24.8,0.0
+豬肩胛排,Pork Shoulder Chop,191.4,17.9,12.7,0.0
+豬肩胛排(2021年取樣),Pork Shoulder Chop,244.4,17.8,18.7,0.0
+豬前腿外腱肉,Pork Front Leg Outer Tendon Meat,146.5,20.7,6.5,0.0
+豬後腿外腱肉,Pork Hind Leg Outer Tendon Meat,184.0,19.0,11.4,0.8
+豬後腿肉,Pork Hind Leg,122.8,20.4,4.0,0.4
+豬後腿瘦肉,Pork Hind Leg Lean,120.4,21.1,3.4,0.3
+豬大里肌,Pork Loin,211.7,19.2,14.4,0.0
+豬大排,Pork Chop,214.2,19.1,14.7,0.0
+豬小排,Pork Spare Ribs,287.4,18.0,23.3,0.0
+僧帽肌,Pork Shoulder,208.6,20.4,13.5,0.0
+豬小里肌,Pork Tenderloin,139.3,21.1,5.4,0.0
+豬去皮腹脇肉,Pork Belly (Skinless),360.0,14.9,32.9,0.5
+豬帶皮腹脇肉,Pork Belly (With Skin),368.2,14.5,33.9,0.0
+豬腹脇排,Pork Belly Ribs,266.9,18.7,20.7,0.0
+豬肝連,Pork Liver,219.9,14.6,17.5,0.0
+豬頰肉,Pork Cheek,182.2,17.5,11.9,1.4
+豬頰肉(2022年取樣),Pork Cheek,157.0,18.9,8.4,2.1
+豬頸肉,Pork Neck,283.8,17.2,23.3,0.8
+豬絞肉平均值,Ground Pork (Average),211.6,18.7,14.6,0.0
+豬絞肉(70％瘦肉率),Ground Pork,217.9,19.0,15.2,0.0
+豬絞肉(90％瘦肉率),Ground Pork,205.4,18.5,14.0,0.0
+豬心,Pork Heart,128.0,13.6,7.8,1.0
+豬白管,Pork Intestine,92.6,14.1,3.6,0.0
+豬皮,Pork Skin,490.9,22.1,44.0,0.0
+豬耳,Pork Ear,218.9,24.2,12.8,0.9
+豬舌,Pork Tongue,185.1,18.5,11.8,0.0
+豬血,Pork Blood,29.4,6.3,0.3,0.5
+豬尾,Pork Tail,294.9,16.2,25.0,7.1
+豬肝,Pork Liver,136.5,20.8,5.3,1.7
+豬肚,Pork Stomach,152.0,12.4,11.0,0.0
+熟豬肚,Cooked Pork Stomach,136.5,16.0,7.6,2.7
+豬油渣,Pork Cracklings,836.9,17.4,84.5,0.0
+豬骨湯平均值,Pork Bone Broth (Average),7.9,0.9,0.4,0.0
+豬大骨湯,Pork Bone Broth,7.0,1.0,0.3,0.4
+豬肋骨湯,Pork Rib Soup,8.7,0.7,0.6,0.0
+豬肩骨湯,Pork Shoulder Soup,8.0,1.1,0.4,0.2
+豬軟骨,Pork Cartilage,332.0,15.6,29.4,0.0
+豬腎,Pork Kidney,81.5,15.0,1.9,1.7
+豬脾臟,Pork Spleen,78.8,15.0,1.6,2.0
+豬大腸,Pork Large Intestine,198.2,6.6,18.9,1.9
+豬小腸,Pork Small Intestine,156.0,12.5,11.4,0.6
+豬空腸,Pork Jejunum,185.6,10.9,15.4,8.6
+豬前腳,Pork Front Leg,252.0,21.9,17.6,0.0
+豬後腳,Pork Hind Leg,252.9,19.5,18.8,0.0
+豬蹄膀,Pork Knuckle,331.0,17.1,28.6,0.0
+豬腳筋,Pork Tendon,71.6,14.4,1.1,0.0
+豬腦,Pork Brain,124.6,10.8,8.7,0.0
+土雞,Free-Range Chicken,196.0,19.0,12.7,0.0
+肉雞,Broiler Chicken,248.2,16.1,19.9,0.0
+烏骨雞,Silkie Chicken,212.2,17.9,15.1,0.9
+里肌肉平均值,Average Loin,109.1,24.2,0.6,0.0
+里肌肉(土雞),Loin,111.6,24.8,0.6,0.0
+里肌肉(肉雞),Loin,106.5,23.7,0.6,0.0
+帶骨去皮對切胸(肉雞),Bone-In Skinless Split Breast,103.8,22.4,0.9,0.0
+帶骨帶皮對切胸(肉雞),Bone-In Skin-On Split Breast,218.6,19.3,15.1,0.0
+去皮清肉平均值,Average Skinless Meat,118.8,23.3,2.1,0.0
+去皮清肉(土雞),Skinless Meat,120.8,23.4,2.3,0.0
+去皮清肉(肉雞),Skinless Meat,116.8,23.3,1.9,0.6
+骨腿平均值,Average Bone-In Leg,162.8,18.0,9.5,0.2
+骨腿(土雞),Bone-In Leg,129.6,21.7,4.1,0.0
+骨腿(肉雞),Bone-In Leg,195.9,14.4,14.9,1.7
+清腿平均值,Average Boneless Leg,157.5,18.5,8.7,0.0
+清腿(土雞),Boneless Leg,142.1,20.4,6.1,0.0
+清腿(肉雞),Boneless Leg,172.8,16.6,11.3,0.0
+棒棒腿平均值,Chicken Drumstick Average,151.2,18.9,7.8,0.0
+棒棒腿(土雞),Chicken Drumstick,142.9,21.0,5.9,0.0
+棒棒腿(肉雞),Chicken Drumstick,159.5,16.8,9.7,0.3
+雞排平均值,Chicken Fillet Average,183.2,17.1,12.2,0.0
+雞排(土雞),Chicken Fillet,158.3,18.9,8.6,0.0
+雞排(肉雞),Chicken Fillet,208.2,15.3,15.8,0.0
+雞排(肉雞)(2021年取樣),Chicken Fillet,251.1,14.9,20.8,0.0
+去皮去骨雞腿(肉雞),Boneless Skinless Chicken Thigh,164.7,19.8,8.9,0.0
+二節翅平均值,Chicken Wing Average,225.6,18.1,16.4,0.0
+二節翅(土雞),Chicken Wing,228.0,19.8,15.9,0.0
+二節翅(肉雞),Chicken Wing,223.2,16.4,17.0,0.6
+三節翅平均值,Three-Joint Wing Average,210.3,18.3,14.6,0.0
+三節翅(土雞),Three-Joint Wing,198.4,19.0,13.0,0.0
+三節翅(肉雞),Three-Joint Wing,222.2,17.7,16.3,0.0
+翅腿(肉雞),Chicken Wing and Drumstick,209.7,17.8,14.8,1.0
+雞絞肉,Ground Chicken,131.3,27.4,1.6,0.0
+雞心(肉雞),Chicken Heart,189.7,13.3,14.8,0.1
+雞心(肉雞)(2021年取樣),Chicken Heart,204.4,14.4,15.8,1.2
+雞尾椎,Chicken Tail,452.3,9.0,45.9,0.1
+雞肝(肉雞),Chicken Liver,111.3,18.8,3.4,2.7
+雞胗(肉雞),Chicken Gizzard,89.0,16.6,2.0,0.3
+雞胸骨湯,Chicken Breast Bone Soup,8.8,1.5,0.3,0.2
+雞睪丸,Chicken Testicle,70.7,10.6,2.8,0.2
+雞腳(肉雞),Chicken Feet,208.5,20.7,13.3,1.2
+雞膝軟骨(肉雞),Chicken Knee Cartilage,107.1,20.4,2.2,0.5
+雞皮(肉雞),Chicken Skin,441.7,11.7,43.4,0.0
+太空鴨,Space Duck,319.2,16.0,27.8,0.0
+番鴨,Muscovy Duck,228.8,18.2,16.7,0.0
+太空鴨(去皮),Space Duck,101.9,20.1,1.8,0.0
+土番鴨,Native Muscovy Duck,110.9,20.9,2.4,0.0
+櫻桃鴨胸肉片,Cherry Duck Breast Slices,226.5,16.7,17.2,4.7
+鴨腿,Duck Leg,282.2,14.4,24.5,3.4
+鴨血,Duck Blood,28.8,6.0,0.3,0.0
+鴨胗,Duck Gizzard,97.3,20.5,1.1,0.3
+去骨鴨掌,Boneless Duck Feet,113.5,12.6,6.6,0.0
+鴨腸,Duck Intestine,93.7,13.8,3.9,0.0
+鴨翅,Duck Wing,170.3,22.8,8.1,0.0
+鴨頭,Duck Head,199.0,16.5,14.3,0.0
+鴨舌,Duck Tongue,187.2,16.0,13.2,0.0
+鵝肉,Goose Meat,187.5,15.6,13.4,2.4
+鵝胸肉,Goose Breast,120.3,23.5,2.2,0.2
+鵝腿肉,Goose Leg,130.4,21.7,4.2,0.0
+鵝心,Goose Heart,241.4,14.5,19.9,0.0
+鵝肝,Goose Liver,123.0,20.5,3.9,0.6
+鵝胗,Goose Gizzard,95.3,17.4,2.3,2.8
+鵝腸,Goose Intestine,62.9,9.2,2.6,0.7
+火雞肉,Turkey,140.6,21.1,5.6,0.0
+鴕鳥菲力肉排,Ostrich Fillet Steak,105.1,22.8,0.8,0.8
+鴕鳥沙朗肉排,Ostrich Sirloin Steak,96.7,20.9,0.8,6.1
+鴕腱肉,Ostrich Shank,107.5,18.7,3.1,0.2
+鴕腩肉,Ostrich Brisket,143.6,21.2,5.9,0.7
+山豬肉片,Wild Boar Slices,465.6,11.9,46.0,0.0
+虎皮蛙,Tiger Skin Frog,93.7,21.1,0.4,0.6
+蛇肉,Snake Meat,84.7,19.0,0.4,0.0
+雙髻鯊,Hammerhead Shark,117.3,27.4,0.1,0.0
+雙髻鯊腹肉,Hammerhead Shark Belly,110.2,25.8,0.0,0.0
+鯊魚切片,Shark Slices,106.0,24.8,0.0,0.0
+魟魚,Stingray,106.4,24.8,0.1,0.0
+日本鰻鱺魚片(生),Japanese Eel Fillet,253.7,18.1,19.6,0.0
+灰海鰻,Gray Conger Eel,96.6,20.5,1.0,0.0
+魩仔魚,Whitebait,55.6,11.1,0.9,0.0
+魩仔魚平均值(加工),Whitebait,123.8,26.2,1.3,1.0
+"魩仔魚(加工,大)",Whitebait,96.9,20.7,1.0,1.1
+"魩仔魚(加工,小)",Whitebait,150.8,31.8,1.7,0.9
+魩仔魚(加工),Whitebait,105.2,23.0,0.8,0.0
+鱙仔魚(加工),Whitebait,101.5,21.0,1.3,0.0
+日本銀帶鯡(加工),Japanese Silver Belt Herring,111.2,21.5,2.1,1.2
+日本銀帶鯡魚干(丁香魚脯),Dried Japanese Silver Belt Herring,274.8,51.8,6.0,1.7
+虱目魚平均值(去皮),Milkfish,178.9,21.8,9.5,0.2
+虱目魚(2月),Milkfish,179.9,19.8,10.6,1.3
+虱目魚(5月),Milkfish,189.4,22.3,10.4,0.0
+虱目魚(8月),Milkfish,124.4,23.7,2.6,0.5
+虱目魚(9月),Milkfish,208.3,22.0,12.7,0.0
+虱目魚(12月),Milkfish,192.3,21.4,11.2,0.1
+虱目魚(含皮),Milkfish,200.4,21.8,11.9,0.0
+虱目魚(2022年取樣),Milkfish,242.5,20.1,17.4,1.4
+虱目魚腹肉(虱目魚肚),Milkfish Belly,341.8,17.4,29.6,0.0
+草魚切片,Grass Carp Slices,166.4,21.4,8.3,2.1
+草魚(含皮),Grass Carp,91.5,17.2,2.0,0.8
+鯉,Carp,90.8,14.5,3.2,2.1
+鱅,Bream,144.8,18.7,7.2,0.0
+鬍鯰,Catfish,194.1,16.3,13.8,0.0
+斑海鯰,Spotted Sea Catfish,86.0,19.2,0.5,0.0
+長體油胡瓜魚,Capelin,103.8,15.0,4.4,0.0
+香魚,Ayu,146.8,18.5,7.5,0.0
+銀魚,Silverfish,69.3,14.3,0.9,0.9
+白肉鮭魚切片,White Salmon Slices,151.2,22.6,6.1,0.3
+紅肉鮭魚切片,Red Salmon Slices,157.9,24.3,6.0,0.0
+大西洋鮭魚平均值(去皮),Atlantic Salmon,220.6,20.2,14.9,0.0
+大西洋鮭魚(台灣養殖),Atlantic Salmon,154.9,23.6,6.0,0.0
+大西洋鮭魚切片(中段),Atlantic Salmon Slices,173.7,20.7,9.5,0.0
+大西洋鮭魚切片(尾段),Atlantic Salmon Slices,203.5,20.7,12.8,0.0
+大西洋鮭魚生魚片,Atlantic Salmon Sashimi,221.8,19.6,15.3,0.0
+大西洋鮭魚腹肉,Atlantic Salmon Belly,349.2,16.4,31.0,0.0
+麥奇鈎吻鮭(去皮),Mackinaw Trout,159.8,20.9,7.8,0.0
+麥奇鈎吻鮭(含皮),Mackinaw Trout,147.2,20.1,6.8,0.4
+姬魚,Capelin,104.5,24.1,0.2,0.0
+印度鐮齒魚,Indian Threadfin,48.6,10.4,0.5,0.4
+狗母魚(蛇鯔),Lizardfish,103.1,20.8,1.6,0.1
+鮟鱇,Monkfish,67.7,14.9,0.5,0.6
+鯔平均值(去皮),Mullet Average,152.4,20.6,7.1,0.3
+鯔(2月),Mullet,137.1,20.4,5.5,1.6
+鯔(4月),Mullet,132.5,20.4,5.0,0.9
+鯔(8月),Mullet,223.9,17.3,16.7,0.0
+"鯔(11月,雄魚)",Mullet,129.1,21.3,4.2,0.0
+"鯔(11月,雌魚)",Mullet,140.9,21.5,5.5,0.0
+"鯔(12月,雄魚)",Mullet,137.1,21.1,5.2,0.9
+"鯔(12月,雌魚)",Mullet,149.1,21.8,6.2,0.2
+鯔切片,Mullet Slices,169.6,21.2,8.8,0.0
+鯔(含皮),Mullet,154.9,20.6,7.4,0.0
+斑鰭飛魚,Flying Fish,94.5,22.0,0.1,0.2
+斑鱵,Halfbeak,91.0,20.6,0.3,0.3
+鱷形叉尾鶴鱵,Crocodile Needlefish,97.7,22.4,0.2,0.2
+金鱗魚,Golden Threadfin Bream,84.7,19.5,0.2,1.3
+鱗馬鞭魚,Whipfin Silver-biddy,83.8,18.5,0.5,0.0
+黃鱔,Yellow Eel,88.1,17.6,1.4,1.0
+石狗公,Stonefish,80.0,18.3,0.2,0.0
+環紋簑鮋,Lionfish,79.5,18.4,0.1,0.0
+深海鱗角魚,Deep-sea Anglerfish,80.0,17.7,0.5,0.0
+尖嘴鱸(去皮),Needlefish,98.3,20.6,1.2,0.1
+尖嘴鱸(含皮),Sharpnose Bass,107.1,19.6,2.6,0.0
+日本花鱸平均值,Japanese Seabass,97.9,19.9,1.5,0.9
+日本花鱸(2月),Japanese Seabass,94.8,20.1,1.0,1.9
+日本花鱸((3月),Japanese Seabass,99.7,20.0,1.6,0.5
+日本花鱸((8月),Japanese Seabass,95.3,19.0,1.6,1.5
+日本花鱸((11月),Japanese Seabass,99.1,20.5,1.3,0.1
+日本花鱸((12月),Japanese Seabass,100.5,19.6,1.9,0.4
+日本花鱸(含皮),Japanese Seabass,111.1,19.2,3.2,0.8
+白鱸,White Bass,76.5,17.7,0.1,1.0
+條紋狼鱸,Striped Bass,146.8,21.4,6.2,0.0
+鱖,Mandarin Fish,89.3,17.7,1.5,0.0
+白緣星鱠,White-edged Star Goby,101.0,19.9,1.8,0.0
+青星九刺鮨平均值,Blue Star Nine-spined Perch,93.5,20.9,0.5,0.0
+青星九刺鮨,Blue Star Nine-spined Perch,83.3,19.3,0.1,0.5
+青星九刺鮨魚片,Blue Star Nine-spined Perch Fillet,103.7,22.6,0.8,0.0
+斑帶石斑魚,Banded Grouper,90.5,20.2,0.5,0.0
+龍虎石斑魚,Dragon Tiger Grouper,121.8,20.6,3.8,1.2
+斑點九刺鮨(去皮),Spotted Nine-spined Perch,81.7,18.8,0.2,0.9
+斑點九刺鮨(含皮),Spotted Nine-spined Perch,83.8,19.4,0.1,0.0
+棕點石斑魚,Brown-spotted Grouper,115.3,19.1,3.7,0.0
+鞍帶石斑魚片,Saddleback Grouper Fillet,155.4,19.1,8.2,0.2
+駝背鱸,Humpback Bass,82.7,18.1,0.6,0.0
+橫紋九刺鮨,Horizontal-striped Nine-spined Perch,85.3,19.2,0.3,0.0
+大口黑鱸,Largemouth Black Bass,130.0,20.7,4.6,0.0
+日本紅目大眼鯛,Japanese Red-eye Snapper,97.2,19.6,1.5,0.0
+血斑異大眼鯛,Blood-spotted Bigeye Snapper,93.4,20.6,0.6,0.0
+多鱗沙鮻,Many-scaled Mullet,90.2,18.6,1.2,0.6
+日本馬頭魚,Japanese Horsehead Fish,85.1,18.7,0.6,0.0
+白馬頭魚,White Horsehead Fish,91.0,19.2,1.0,0.1
+鬼頭刀魚片,Wahoo Fillet,77.8,17.2,0.5,0.0
+鬼頭刀,Wahoo,106.6,21.8,1.5,0.0
+海鱺,Cobia,106.0,20.4,2.1,0.0
+海鱺魚片,Cobia Fillet,264.0,19.3,20.1,0.0
+大口逆鈎鰺,Greater Amberjack,103.0,21.8,1.1,0.1
+大甲鰺,Japanese Jack Mackerel,105.0,21.2,1.6,0.4
+日本竹筴魚,Japanese Horse Mackerel,116.4,23.0,2.0,0.0
+布氏鯧鰺(去皮),Black Pomfret,191.8,20.3,11.7,0.0
+布氏鯧鰺(含皮),Black Pomfret,190.2,17.5,12.8,0.0
+杜氏鰤,Japanese Amberjack,115.0,21.9,2.4,0.2
+長鰭鰤魚,Longfin Yellowtail,114.4,22.8,1.9,2.7
+范氏副葉鰺,Yellowtail Scad,108.3,20.9,2.1,2.1
+泰勃圓鰺,Round Scad,112.6,22.8,1.7,1.4
+烏鯧,Black Pomfret,94.2,20.4,0.8,0.0
+無斑圓鰺,Bluntnose Jack,119.2,23.9,1.9,0.0
+藍圓鰺,Blue Trevally,114.1,24.0,1.3,0.0
+雙帶鰺,Double-Spotted Queenfish,118.2,22.6,2.4,0.0
+眼眶魚,Bigeye Trevally,112.6,20.2,2.9,0.2
+斯氏長鰭烏魴,Longfin Trevally,96.6,22.4,0.1,0.0
+史氏紅諧魚,Red Snapper,96.7,21.1,0.7,0.0
+希氏姬鯛,Golden Snapper,90.9,21.1,0.1,0.5
+赤鰭笛鯛,Red Snapper,88.0,20.4,0.1,0.0
+孟加拉笛鯛,Bengal Snapper,87.3,19.8,0.3,0.0
+前鱗笛鯛,Lattice Snapper,101.3,22.0,0.8,0.9
+馬拉巴笛鯛,Malabar Snapper,86.3,20.2,0.0,0.0
+單斑笛鯛,One-spot Snapper,105.5,20.7,1.9,0.0
+黃擬烏尾鮗,Yellowfin Bream,80.3,18.7,0.0,0.3
+葉唇笛鯛,Lattice Snapper,118.1,19.9,3.7,0.0
+松鯛,Golden Threadfin Bream,98.5,18.2,2.3,0.1
+三線磯鱸,Three-lined Grunt,129.8,19.0,5.4,0.6
+星雞魚,Star Snapper,98.5,20.6,1.2,0.4
+密點少棘胡椒鯛,Pepper Snapper,94.1,19.5,1.2,0.0
+金線魚,Golden Threadfin Bream,119.0,20.9,3.3,0.0
+青嘴龍占魚,Greenmouth Grouper,127.9,22.7,3.4,0.0
+網紋龍占魚,Net-patterned Grouper,101.2,21.7,1.0,0.0
+平鯛,Flatfish,158.3,21.0,7.6,0.5
+阿部牙鯛,Abe's Tooth Snapper,123.7,18.9,4.8,0.0
+真鯛平均值(去皮),Average Sea Bream,110.1,20.6,2.5,0.2
+真鯛(1月),Sea Bream,100.0,20.1,1.6,0.7
+真鯛(3月),Sea Bream,100.6,20.8,1.3,0.7
+真鯛(5月),Sea Bream,86.7,20.0,0.1,0.0
+真鯛(8月),Sea Bream,176.0,20.6,9.8,1.7
+真鯛(9月),Sea Bream,92.2,21.6,0.0,0.0
+真鯛(11月),Sea Bream,105.0,20.3,2.0,0.0
+黃鰭棘鯛,Yellowfin Snapper,136.3,19.2,6.0,0.6
+黑棘鯛(去皮),Black Snapper,136.3,20.3,5.5,0.6
+黑棘鯛(含皮),Black Snapper,164.6,19.5,9.0,0.0
+多鱗四指馬鮁,Many-scaled Fourfinger Threadfin,145.9,19.0,7.2,0.0
+大黃魚,Large Yellow Croaker,142.1,16.8,7.8,0.2
+小黃魚(去皮),Small Yellow Croaker,99.8,20.0,1.6,0.0
+小黃魚(含皮),Small Yellow Croaker,100.1,19.4,1.9,0.0
+白姑魚,White Croaker,96.5,18.8,1.8,0.0
+眼斑擬石首魚,Spotted Drum,94.6,19.7,1.2,0.9
+黃姑魚,Yellow Croaker,89.0,19.4,0.7,0.0
+黑䱛 ,Black Drum,149.1,17.9,8.0,1.2
+鮸,Mián Fish,103.6,23.3,0.5,0.0
+鱗鰭叫姑魚,Scaly Croaker,99.3,18.4,2.3,0.3
+黑斑海緋鯉,Black-spotted Red Snapper,96.5,18.8,1.8,0.0
+斑點雞籠鯧,Spotted Chicken Pomfret,96.9,21.9,0.4,0.0
+花身鯻,Flower-bodied Tilapia,157.2,19.5,8.2,0.0
+花尾唇指翁(翁加魚邊) ,Flower-tailed Lip Fingerfish,115.5,19.8,3.4,0.6
+尼羅口孵非鯽(去皮),Nile Tilapia,112.9,20.4,2.9,0.0
+尼羅口孵非鯽(含皮),Nile Tilapia,125.0,19.4,4.7,0.0
+尼羅口孵非鯽(含皮)(2022年取樣),Nile Tilapia,121.8,20.4,3.9,3.0
+花身副麗魚,Flowerhorn Cichlid,112.5,17.7,4.1,1.1
+紅色吳郭魚,Red Tilapia,107.8,18.3,3.3,1.3
+台灣鯛魚片(生),Taiwan Tilapia Fillet,109.8,18.2,3.6,2.5
+台灣鯛魚片(生)(2021年),Taiwan Tilapia Fillet,109.4,17.9,3.7,1.5
+台灣鯛魚片(水煮),Taiwan Tilapia Fillet,129.9,23.4,3.3,1.3
+台灣鯛魚片(油煎),Taiwan Tilapia Fillet,161.9,23.1,6.9,1.9
+"台灣鯛魚片(烤,190℃,10分鐘)",Taiwan Tilapia Fillet,111.1,19.7,3.0,1.8
+"台灣鯛魚片(烤,190℃,20分鐘)",Taiwan Tilapia Fillet,134.2,23.0,4.0,2.1
+"台灣鯛魚片(烤,230℃,10分鐘)",Taiwan Tilapia Fillet,126.6,21.3,4.0,1.5
+"台灣鯛魚片(烤,230℃,20分鐘)",Taiwan Tilapia Fillet,142.2,24.6,4.1,2.5
+台灣鯛魚片(清蒸),Taiwan Tilapia Fillet,112.0,19.3,3.3,2.2
+台灣鯛魚片(微波),Taiwan Tilapia Fillet,139.9,24.9,3.7,1.4
+台灣鯛魚湯(水煮),Taiwan Tilapia Soup,5.5,0.9,0.2,0.0
+莫三比克口孵非鯽,Mozambique Tilapia,111.8,19.5,3.2,0.0
+薔薇項鰭魚(去皮),Rosefin Fish,95.9,17.3,2.4,0.0
+薔薇項鰭魚(含皮),Rosefin Fish,92.7,17.9,1.8,0.0
+藍豬齒魚,Blue Parrotfish,80.8,18.5,0.2,0.2
+福氏鸚哥魚(去皮),Bicolor Parrotfish,84.2,19.6,0.0,0.2
+橫紋鸚哥魚(含皮),Striped Parrotfish,80.6,18.8,0.0,0.0
+藍點鸚哥魚,Blue-spotted Parrotfish,86.5,20.1,0.0,0.6
+金錢魚,Silver Pomfret,196.0,19.3,12.6,0.0
+褐臭肚魚,Brown Surgeonfish,164.2,19.9,8.8,0.6
+杜氏刺尾鯛,Dusky Surgeonfish,137.3,19.0,6.2,0.6
+後刺尾鯛,Rear Surgeonfish,102.1,20.4,1.7,0.0
+鋸尾鯛,Sawtail Surgeonfish,93.1,19.0,1.4,0.3
+大眼金梭魚,Bigeye Barracuda,157.1,21.8,7.1,0.0
+鱗網帶鰆切片,Spanish Mackerel Slices,272.5,17.3,22.0,0.0
+鱗網帶鰆(含皮),Narrow-barred Spanish Mackerel,263.5,18.0,20.7,0.0
+白帶魚,Ribbonfish,101.7,19.6,2.0,0.0
+大目鮪,Bigeye Tuna,103.5,23.9,0.1,0.0
+正鰹,Skipjack Tuna,149.1,23.1,5.6,0.0
+花腹鯖,Chub Mackerel,138.1,23.9,4.0,0.1
+高麗馬加鰆,Korean Spanish Mackerel,118.6,19.4,4.0,0.3
+康氏馬加鰆切片(去皮),Kawakawa Slices,192.8,18.7,12.5,0.0
+康氏馬加鰆切片(含皮),Kawakawa Slices,176.3,19.3,10.4,1.5
+臺灣馬加鰆,Taiwanese Spanish Mackerel,180.1,20.2,10.4,0.0
+鮪魚生魚片,Tuna Sashimi,100.4,23.3,0.1,0.0
+鯖魚(生),Mackerel,417.0,14.4,39.4,0.2
+鯖魚(炒),Mackerel,410.2,16.7,37.6,0.1
+鯖魚(炸),Mackerel,555.2,17.2,53.4,0.1
+"鯖魚(烤,150度,10分)",Mackerel,411.6,16.5,37.8,0.0
+"鯖魚(烤,150度,20分)",Mackerel,395.5,19.0,34.8,0.0
+"鯖魚(烤,150度,30分)",Mackerel,536.0,19.9,50.0,0.0
+"鯖魚(烤,180度,10分)",Mackerel,373.1,20.2,31.8,0.0
+"鯖魚(烤,210度,10分)",Mackerel,472.5,19.0,43.4,0.0
+鯖魚(煮),Mackerel,374.8,14.9,34.5,0.4
+鯖魚(煎),Mackerel,403.3,20.0,35.9,0.0
+鯖魚(蒸),Mackerel,391.7,14.6,36.5,0.7
+旗魚切片,Swordfish Slices,110.9,26.0,0.0,0.8
+旗魚腹肉,Swordfish Belly,104.7,22.2,1.1,0.0
+刺鯧(去皮),Pomfret,94.6,18.8,1.6,0.1
+刺鯧(含皮),Pomfret,154.5,17.8,8.7,0.0
+星斑真鯧,Starry Pomfret,213.6,15.6,16.3,0.0
+銀鯧平均值(去皮),Silver Pomfret Average,115.0,17.7,4.4,0.2
+銀鯧(2月),Silver Pomfret,122.6,17.9,5.1,0.0
+銀鯧(3月),Silver Pomfret,119.7,17.6,5.0,0.7
+銀鯧(5月),Silver Pomfret,105.2,16.4,3.9,0.0
+銀鯧(8月),Silver Pomfret,101.4,17.7,2.9,1.6
+銀鯧(12月),Silver Pomfret,126.1,19.1,5.0,0.2
+銀鯧(含皮),Silver Pomfret,124.0,16.8,5.8,1.1
+斑鱧,Grouper,118.7,18.3,4.5,0.0
+大口鰜切片(含皮),Largemouth Bass Slices,166.5,14.7,11.5,0.0
+鰈魚切片,Flounder Slices,201.2,13.2,16.1,0.0
+雙線鬚鰨,Double-Lined Sole,92.2,19.9,0.8,0.3
+單角革單棘魨(去皮),Unicorn Leatherjacket,78.7,17.2,0.6,0.0
+單角革單棘魨(含皮),Unicorn Leatherjacket,76.4,17.9,0.0,0.0
+克氏兔頭魨,Krefft's Rabbitfish,76.9,17.8,0.1,0.0
+翻車魨腹肉,Mola Mola Belly,47.5,10.2,0.4,0.7
+犬牙南極魚切片,Toothfish Slices,281.8,12.1,25.5,0.0
+低眼無齒芒魚片(芒加魚邊),Low-Eye Cod Fillet,75.6,14.2,1.7,0.0
+秋刀魚,Pacific Saury,276.6,18.8,21.8,4.1
+毛鱗魚,Roughscale Sole,145.1,14.1,9.4,0.4
+圓鱈魚鰓肉,Round Cod Gill Meat,84.1,14.5,2.5,3.9
+鯛魚下巴,Snapper Jaw,245.1,16.1,19.6,0.0
+鯊魚翅,Shark Fin,185.7,43.5,0.0,0.0
+魚翅唇,Fish Fin Lip,47.5,9.9,0.6,0.0
+翻車魨魚皮,Mola Mola Skin,27.7,6.5,0.0,0.0
+鯊魚皮,Shark Skin,54.4,12.4,0.2,0.0
+魚漿(旗魚),Fish Paste,110.1,16.8,1.3,7.8
+鮸魚卵(加工),Croaker Roe,184.1,21.9,10.1,3.6
+鯔魚卵,Mullet Roe,256.1,26.3,15.9,3.2
+鰆魚卵,Spanish Mackerel Roe,192.5,23.5,10.2,0.2
+鰹魚卵,Bonito Roe,183.7,21.5,10.2,0.6
+鯔魚精囊,Mullet Milt,88.8,17.3,1.7,0.0
+鮟鱇魚肝,Monkfish Liver,135.8,13.6,8.6,1.9
+旗魚肚,Swordfish Belly,99.5,22.5,0.4,2.9
+鮪魚肚,Tuna Belly,105.8,23.4,0.7,0.0
+小魚干,Dried Anchovies,335.2,69.2,4.4,0.0
+扁魚干,Dried Flatfish,354.3,66.3,7.9,1.1
+柴魚片,Bonito Flakes,382.6,76.5,6.2,2.6
+羅氏沼蝦,Giant River Prawn,88.0,20.3,0.2,0.2
+北方長額蝦(加工),Northern Prawn,122.0,19.9,4.1,2.7
+東方異腕蝦,Oriental Shrimp,78.5,17.7,0.3,0.0
+胭脂蝦,Scarlet Shrimp,114.4,13.8,6.1,0.7
+日本玻璃蝦,Japanese Glass Shrimp,82.6,16.2,1.5,2.0
+相模後海螯蝦,Sagami Bay Lobster,79.1,17.9,0.3,0.0
+中國對蝦,Chinese White Shrimp,84.2,19.3,0.2,1.0
+日本對蝦平均值,Japanese Shrimp,96.8,21.3,0.7,0.4
+日本對蝦(大),Japanese Shrimp,97.3,21.6,0.5,0.0
+日本對蝦(小),Japanese Shrimp,96.3,20.9,0.8,1.8
+白對蝦平均值,White Shrimp,99.4,21.3,0.9,0.0
+白對蝦(大),White Shrimp,109.2,22.3,1.5,0.0
+白對蝦(小),White Shrimp,96.2,21.4,0.5,0.0
+白對蝦(小)(2022年取樣),White Shrimp,92.7,20.3,0.7,1.3
+哈氏彷對蝦,Kuruma Shrimp,81.9,18.7,0.2,0.6
+草對蝦,Grass Shrimp,100.2,22.0,0.7,1.0
+藍對蝦,Blue Shrimp,95.2,20.9,0.6,0.0
+鬚赤蝦,Red Shrimp,92.1,20.7,0.4,0.6
+大管鞭蝦,Giant Tiger Prawn,87.7,19.8,0.3,0.6
+隆脊管鞭蝦,Ridgeback Prawn,96.2,22.1,0.2,0.6
+螳螂蝦,Mantis Shrimp,66.8,14.7,0.4,0.0
+日本龍蝦,Japanese Lobster,92.7,21.5,0.1,1.0
+正櫻蝦(生),Sakura Shrimp,88.4,17.9,1.3,0.0
+正櫻蝦(熟),Sakura Shrimp,96.7,19.6,1.4,0.0
+正櫻蝦乾,Dried Sakura Shrimp,252.7,52.6,3.1,13.4
+大頭蝦仁,Peeled Prawn,39.9,8.8,0.2,0.0
+明蝦仁,Peeled Prawn,51.7,11.9,0.1,0.0
+紅蝦仁,Red Shrimp,43.4,9.5,0.3,1.5
+海鱸蝦仁,Sea Bass Shrimp,73.5,16.3,0.4,1.3
+草蝦仁,Grass Shrimp,44.0,9.7,0.3,0.9
+鳳尾蝦仁,Phoenix Tail Shrimp,64.5,13.4,0.8,0.3
+鬚赤蝦仁,Beard Red Shrimp,79.6,17.1,0.7,0.0
+蝦皮,Dried Shrimp,155.2,33.6,1.3,2.7
+蝦米,Small Dried Shrimp,263.7,57.1,2.2,0.0
+金鉤蝦乾,Golden Hook Dried Shrimp,256.7,54.6,2.6,0.0
+紅蟳,Red Crab,121.7,20.9,3.6,6.5
+蛙形蟹,Frog Crab,71.8,16.6,0.1,2.8
+蟹腳肉,Crab Leg Meat,52.6,11.6,0.3,1.2
+竹蟶(冷凍),Bamboo Clam,41.5,9.0,0.3,1.2
+真牡蠣平均值,True Oyster,54.3,9.4,1.6,4.2
+真牡蠣,True Oyster,49.3,9.0,1.2,1.8
+帶殼真牡蠣(生蠔),Shell-on True Oyster,59.2,9.8,1.9,6.7
+黑齒牡蠣,Black Tooth Oyster,55.4,9.7,1.5,3.1
+蝦夷海扇蛤,Ezo Scallop,69.6,13.7,1.2,2.3
+綠殼菜蛤,Green Shell Mussel,95.6,17.8,2.2,2.6
+綠殼菜蛤干,Dried Green Shell Mussel,263.1,43.7,8.5,23.9
+西施舌,Pen Shell,52.9,8.9,1.6,5.4
+台灣蜆,Taiwan Clam,51.2,8.9,1.4,9.8
+大文蛤,Large Clam,20.5,4.4,0.2,1.5
+文蛤,Clam,36.9,7.6,0.5,2.7
+波紋橫簾蛤 ,Rippled Carpet Clam,48.3,9.2,1.0,4.6
+菲律賓簾蛤,Philippine Carpet Clam,36.8,7.5,0.5,4.1
+環文蛤,Ring Clam,46.0,8.7,1.0,3.7
+干貝(冷凍),Scallop,57.5,12.7,0.4,1.7
+干貝(乾)平均值,Scallop,242.2,53.7,1.4,10.8
+干貝(乾),Scallop,256.1,58.5,0.7,15.5
+珠貝(乾),Pearl Oyster,228.4,48.9,2.2,6.1
+牡蠣干,Dried Oyster,242.7,41.0,7.5,26.2
+真烏賊平均值,Cuttlefish,57.2,12.2,0.6,3.7
+真烏賊(大),Cuttlefish,61.4,13.8,0.2,0.8
+真烏賊(小),Cuttlefish,53.0,10.5,0.9,6.6
+章魚,Octopus,60.9,13.0,0.6,0.9
+阿根廷魷,Argentinian Squid,70.8,12.4,2.0,0.4
+泡魷魚,Marinated Squid,50.3,11.3,0.2,3.0
+台灣鎖管,Taiwanese Squid,71.9,16.0,0.4,1.6
+尖鎖管 ,Pointed Squid,100.1,20.2,1.5,2.4
+軟翅仔,Soft Squid,70.0,14.7,0.8,0.8
+香螺 ,Sea Snail,86.0,19.9,0.1,0.0
+象牙鳳螺,Ivory Conch,78.1,16.9,0.7,3.6
+泥螺,Mud Snail,94.6,21.5,0.3,0.3
+雪螺,Snow Snail,40.2,8.9,0.3,0.0
+九孔螺,Nine-hole Snail,73.1,15.0,1.0,5.8
+鮑魚,Abalone,68.7,15.8,0.1,9.5
+蝸牛肉,Snail Meat,77.6,16.7,0.7,0.0
+烏賊精囊,Cuttlefish Ink Sac,43.5,9.8,0.2,6.4
+小卷干,Dried Small Squid,246.4,53.2,2.1,4.7
+白海參,White Sea Cucumber,32.4,7.4,0.1,0.0
+仿刺參,Imitation Sea Cucumber,35.8,8.2,0.1,0.8
+南美刺參,South American Sea Cucumber,51.5,12.0,0.0,0.0
+紅海參,Red Sea Cucumber,32.7,7.5,0.1,0.0
+黑烏參,Black Sea Cucumber,28.8,6.5,0.1,0.0
+海蜇皮,Jellyfish Skin,18.7,4.4,0.0,2.2
+雞蛋平均值,Egg,135.4,12.7,8.9,1.6
+雞蛋(白殼),Egg,139.0,12.9,9.2,1.3
+雞蛋(黃殼),Egg,131.8,12.5,8.6,2.0
+土雞蛋,Free-range Egg,129.1,12.9,8.1,1.7
+土雞蛋(2022年取樣),Free-range Egg,137.0,12.2,9.3,1.8
+烏骨雞蛋,Silkie Chicken Egg,159.7,12.7,11.6,2.4
+雞蛋(高DHA),Egg,131.9,12.5,8.6,1.8
+雞蛋(高次亞麻油酸),Egg,139.1,12.4,9.4,2.8
+雞蛋(高亞麻油酸),Egg,132.6,13.0,8.4,0.8
+初卵雞蛋,First Laid Egg,136.1,12.3,9.2,1.4
+雞蛋(高維生素A&E),Egg,134.0,12.1,9.0,0.0
+雞蛋(高維生素E),Egg,143.2,12.8,9.7,1.4
+雞蛋白平均值,Average Egg White,50.0,11.2,0.1,0.5
+雞蛋白(白殼),Egg White,47.6,10.7,0.1,0.0
+雞蛋白(黃殼),Egg White,52.5,11.6,0.2,1.2
+烏骨雞蛋白,Silkie Chicken Egg White,46.8,10.6,0.0,1.7
+雞蛋黃平均值,Average Egg Yolk,308.0,15.2,26.8,3.6
+雞蛋黃(白殼),Egg Yolk,330.1,16.0,28.9,1.6
+雞蛋黃(黃殼),Egg Yolk,285.9,14.5,24.7,5.6
+烏骨雞蛋黃,Silkie Chicken Egg Yolk,343.7,15.5,30.6,1.4
+雞蛋黃(高維生素E),Egg Yolk,314.3,16.2,27.0,5.4
+溫泉蛋,Hot Spring Egg,137.5,12.9,7.8,3.8
+雞水煮蛋,Boiled Egg,144.2,14.0,9.2,1.7
+雞水煮蛋白,Boiled Egg White,60.8,13.6,0.2,1.5
+雞水煮蛋黃,Boiled Egg Yolk,342.6,15.5,30.5,2.9
+茶葉蛋平均值,Average Tea Egg,145.0,13.7,9.1,2.2
+茶葉蛋(市售),Tea Egg,146.7,13.5,8.7,3.5
+茶葉蛋(浸泡隔夜),Tea Egg,143.4,13.8,9.4,0.9
+茶葉蛋白(浸泡隔夜),Tea Egg White,54.4,12.9,0.1,0.4
+茶葉蛋黃(浸泡隔夜),Tea Egg Yolk,344.1,15.7,30.3,2.2
+雞皮蛋平均值,Average Century Egg,134.3,12.5,8.1,3.0
+雞皮蛋,Century Egg,141.9,12.8,8.5,3.6
+土雞皮蛋,Free-range Century Egg,126.8,12.2,7.6,2.3
+滷蛋平均值,Average Braised Egg,183.8,16.4,11.1,4.6
+雞滷蛋(市售),Braised Egg,190.8,15.7,11.4,6.4
+雞滷蛋(現煮),Braised Chicken Egg,178.4,16.6,11.1,3.1
+雞滷蛋(浸泡隔夜),Braised Chicken Egg,182.1,16.9,10.8,4.4
+滷蛋白平均值,Average Braised Egg White,86.7,16.7,0.2,4.6
+雞滷蛋白(現煮),Braised Chicken Egg White,83.9,16.6,0.2,3.9
+雞滷蛋白(浸泡隔夜),Braised Chicken Egg White,89.5,16.7,0.2,5.2
+滷蛋黃平均值,Average Braised Egg Yolk,379.1,17.0,33.7,1.9
+雞滷蛋黃(現煮),Braised Chicken Egg Yolk,375.7,16.6,33.8,1.3
+雞滷蛋黃(浸泡隔夜),Braised Chicken Egg Yolk,382.4,17.4,33.6,2.6
+雞鐵蛋,Iron Egg,287.5,26.6,17.5,5.9
+雞水波蛋,Poached Chicken Egg,147.0,11.6,10.7,0.8
+荷包蛋(不加油),Fried Egg,161.9,14.0,11.2,1.4
+荷包蛋(加油1小匙),Fried Egg,192.2,13.0,14.9,1.6
+煎蛋(不加油),Pan-fried Egg,160.5,13.5,11.3,4.9
+炒蛋(加油3大匙),Scrambled Egg,214.5,12.9,16.1,4.6
+蒸蛋平均值,Average Steamed Egg,64.4,5.3,4.6,2.2
+蒸蛋(市售),Steamed Egg,31.6,3.6,1.8,3.4
+蒸蛋(微波爐),Steamed Egg,82.2,6.4,6.0,1.8
+蒸蛋(電鍋),Steamed Egg,79.5,5.8,6.0,1.3
+鴨蛋,Duck Egg,187.0,13.1,14.4,0.2
+紅面番鴨蛋,Red-faced Muscovy Duck Egg,198.0,13.1,15.6,0.0
+鴨蛋白,Duck Egg White,47.1,10.8,0.0,1.4
+鴨蛋黃,Duck Egg Yolk,346.7,15.8,30.8,2.0
+鴨皮蛋,Century Egg,163.9,12.8,11.4,2.7
+鴨鹹蛋平均值,Average Salted Duck Egg,184.6,13.3,14.1,1.1
+鴨生鹹蛋,Raw Salted Duck Egg,177.7,12.5,14.7,0.0
+鴨熟鹹蛋,Cooked Salted Duck Egg,182.6,13.7,13.8,0.8
+鴨熟鹹蛋(薄鹽),Cooked Salted Duck Egg,193.5,13.7,13.8,3.5
+鴨鹹蛋黃,Salted Duck Egg Yolk,528.3,23.6,47.6,1.3
+鵪鶉蛋,Quail Egg,172.2,12.7,13.0,1.2
+鵪鶉水煮蛋,Boiled Quail Egg,162.8,12.3,12.1,0.0
+鵪鶉皮蛋,Quail Century Egg,160.4,13.8,10.9,1.8
+鵪鶉鹹蛋,Quail Salted Egg,173.2,13.7,12.3,1.9
+鵪鶉滷蛋,Quail Braised Egg,238.2,16.2,14.3,11.1
+鵪鶉鐵蛋,Quail Iron Egg,439.1,28.8,26.9,20.4
+鴿蛋,Pigeon Egg,96.2,10.2,5.7,2.5
+鵝蛋,Goose Egg,178.8,10.0,15.0,3.2
+高脂鮮乳,High-Fat Fresh Milk,72.5,3.2,4.0,6.1
+全脂鮮乳平均值,Whole Milk,63.2,3.1,3.6,4.8
+全脂鮮乳(1月取樣),Whole Milk,62.4,2.9,3.6,4.7
+全脂鮮乳(4月取樣),Whole Milk,61.8,2.9,3.6,4.6
+全脂鮮乳(6月取樣),Whole Milk,62.7,3.2,3.6,4.6
+全脂鮮乳(9月取樣),Whole Milk,63.8,2.8,3.6,5.3
+全脂鮮乳(10月取樣),Whole Milk,64.0,3.0,3.7,4.8
+全脂鮮乳(11月取樣),Whole Milk,61.8,3.1,3.5,4.6
+全脂鮮乳(12月取樣),Whole Milk,64.2,3.2,3.4,5.2
+全脂鮮乳(7月取樣),Whole Milk,64.8,3.7,3.7,4.2
+中脂鮮乳,Medium-Fat Fresh Milk,48.5,3.1,1.9,4.8
+低脂鮮乳,Low-Fat Fresh Milk,42.6,3.3,1.1,5.0
+高脂強化鮮乳(鈣強化),High-Fat Fortified Milk,68.1,3.2,3.9,5.2
+高脂強化鮮乳(寡醣強化),High-Fat Fortified Milk,69.2,3.2,4.1,5.1
+中脂強化鮮乳(脂肪酸調整),Medium-Fat Fortified Milk,59.3,2.0,2.0,8.6
+低脂強化鮮乳(維生素E強化),Low-Fat Fortified Milk,40.7,3.0,1.3,4.2
+低脂強化鮮乳(寡醣強化),Low-Fat Fortified Milk,46.2,3.1,1.3,5.5
+脫脂強化鮮乳(鈣強化),Skim Fortified Milk,42.2,3.5,0.3,6.3
+脫脂強化鮮乳(寡醣強化),Skim Fortified Milk,36.5,3.1,0.4,5.2
+脫脂強化鮮乳(鐵強化),Skim Fortified Milk,40.8,4.2,0.2,5.6
+中脂調味乳(巧克力),Medium-Fat Flavored Milk,62.5,1.9,2.0,9.2
+中脂調味乳(多穀類),Medium-Fat Flavored Milk,67.5,2.4,3.1,7.6
+中脂調味乳(果汁),Medium-Fat Flavored Milk,54.2,1.6,1.6,8.4
+中脂調味乳(鈣強化),Medium-Fat Flavored Milk,68.0,2.3,2.6,8.9
+中脂調味乳(維生素強化),Medium Fat Flavored Milk,59.6,2.0,1.9,8.6
+中脂調味乳(纖維&維生素E強化),Medium Fat Flavored Milk,65.7,2.4,2.1,9.3
+低脂調味乳(木瓜),Low Fat Flavored Milk,60.9,1.8,1.3,10.5
+高脂保久乳,High Fat Long-Life Milk,71.0,3.1,5.1,3.4
+全脂保久乳,Whole Milk Long-Life Milk,62.0,3.0,3.4,5.1
+中脂保久乳,Medium Fat Long-Life Milk,48.5,3.2,1.8,4.8
+低脂強化保久乳(寡糖強化),Low Fat Fortified Long-Life Milk,45.9,3.2,1.0,6.0
+中脂調味保久乳(巧克力),Medium Fat Flavored Long-Life Milk,60.3,1.9,1.7,9.3
+中脂調味保久乳(布丁),Medium Fat Flavored Long-Life Milk,60.9,1.6,1.7,9.8
+全脂奶粉,Whole Milk Powder,504.2,26.4,28.2,37.0
+部份脫脂奶粉,Partially Skimmed Milk Powder,420.5,32.8,11.6,46.1
+部份脫脂奶粉(即溶),Partially Skimmed Milk Powder,445.3,23.7,16.4,51.6
+部份脫脂低乳糖奶粉,Partially Skimmed Low Lactose Milk Powder,415.8,34.6,10.4,45.6
+脫脂奶粉,Skimmed Milk Powder,360.7,36.2,0.9,51.2
+脫脂奶粉(即溶),Skimmed Milk Powder,359.7,38.0,1.0,48.8
+全脂強化奶粉(纖維強化),Whole Fortified Milk Powder,499.5,25.6,27.0,39.5
+部份脫脂強化奶粉(鈣強化),Partially Skimmed Fortified Milk Powder,408.0,25.0,11.8,51.0
+部份脫脂強化奶粉(纖維&DHA強化),Partially Skimmed Fortified Milk Powder,475.9,23.2,22.1,47.3
+部份脫脂強化奶粉(纖維&鈣強化),Partially Skimmed Fortified Milk Powder,375.0,35.9,3.7,48.9
+部份脫脂強化奶粉(脂肪酸調整),Partially Skimmed Fortified Milk Powder,481.1,22.7,23.5,45.9
+脫脂強化奶粉(抗氧化),Skimmed Fortified Milk Powder,365.9,32.3,1.0,56.6
+脫脂強化奶粉(鈣&維生素A強化),Skimmed Fortified Milk Powder,360.0,38.0,1.0,48.8
+"脫脂強化奶粉(鈣&維生素C,E強化)",Skimmed Fortified Milk Powder,360.2,32.8,0.7,55.4
+脫脂強化奶粉(鈣&鐵強化),Skimmed Fortified Milk Powder,360.2,35.6,0.7,52.3
+部份脫脂調味奶粉(巧克力),Partially Skimmed Flavored Milk Powder,405.8,14.1,6.9,71.9
+部份脫脂調味奶粉(果汁),Partially Skimmed Flavored Milk Powder,435.3,19.8,12.3,61.4
+脫脂稀釋發酵乳,Skimmed Diluted Fermented Milk,68.1,1.1,0.1,15.8
+脫脂稀釋發酵乳(鈣強化),Skimmed Diluted Fermented Milk,72.2,1.0,0.1,16.9
+全脂濃稠發酵乳,Whole Thick Fermented Milk,90.2,4.1,3.2,11.3
+中脂濃稠發酵乳,Medium Fat Thick Fermented Milk,82.3,2.9,2.3,12.6
+中脂濃稠發酵乳(無糖&纖維強化),Medium Fat Thick Yogurt,74.4,3.2,2.2,10.4
+中脂濃稠發酵乳(草莓),Medium Fat Thick Yogurt,88.6,3.1,2.7,13.0
+低脂濃稠發酵乳,Low Fat Thick Yogurt,73.3,2.3,1.1,13.6
+脫脂濃稠發酵乳,Non-Fat Thick Yogurt,63.7,3.0,0.4,12.1
+脫脂濃稠發酵乳(低熱量),Non-Fat Thick Yogurt,37.0,2.0,0.1,6.9
+脫脂濃稠發酵乳(草莓),Non-Fat Thick Yogurt,67.9,2.3,0.4,13.8
+脫脂濃稠發酵乳(啤酒酵母),Non-Fat Thick Yogurt,34.5,2.1,0.1,6.4
+高脂凝態發酵乳(纖維強化),High Fat Set Yogurt,94.7,3.2,3.8,11.9
+全脂凝態發酵乳,Whole Milk Set Yogurt,97.2,3.1,3.3,13.6
+中脂凝態發酵乳(草莓),Medium Fat Set Yogurt,102.0,3.7,2.7,15.7
+中脂凝態發酵乳(蘆薈),Medium Fat Set Yogurt,90.0,1.7,2.5,15.1
+脫脂凝態發酵乳(纖維強化),Non-Fat Set Yogurt,84.1,4.1,0.5,15.9
+脫脂保久稀釋發酵乳,Non-Fat Long-Life Diluted Yogurt,45.7,0.1,0.1,11.0
+脫脂保久濃稠發酵乳(草莓&蘋果),Non-Fat Long-Life Thick Yogurt,68.2,3.0,0.2,13.6
+淡煉乳,Evaporated Milk,137.1,6.5,8.3,9.1
+加糖部份脫脂煉乳,Sweetened Partially Skimmed Condensed Milk,325.2,7.5,7.8,56.2
+切片乾酪,Sliced Cheese,309.3,18.3,23.7,5.9
+切片乾酪(低脂),Sliced Cheese,240.7,21.7,13.0,8.8
+刨絲乾酪,Shredded Cheese,323.0,25.1,22.6,4.4
+乾酪粉,Cheese Powder,480.5,40.4,34.0,3.1
+鮮奶可可,Fresh Milk Cocoa,79.7,2.1,2.7,11.6
+木瓜牛奶,Papaya Milk,42.5,1.7,0.6,7.7
+高脂鮮羊乳,High Fat Fresh Goat Milk,65.3,3.4,4.0,4.2
+中脂鮮羊乳,Medium Fat Fresh Goat Milk,47.7,2.7,2.4,3.9
+保久羊乳,Long-Life Goat Milk,58.9,3.0,3.3,4.5
+中脂調味保久羊乳(巧克力),Medium Fat Flavored Long-Life Goat Milk,58.6,1.1,1.5,10.3
+中脂調味保久羊乳(果汁),Medium Fat Flavored Long-Life Goat Milk,75.3,2.9,2.8,9.5
+全脂羊奶粉,Whole Goat Milk Powder,510.4,26.7,29.8,34.8
+全脂羊奶粉(即溶),Whole Goat Milk Powder,517.4,25.9,30.8,35.1
+牛油(未精煉),Butter,642.3,0.0,71.9,4.2
+牛油(精煉),Butter,885.3,0.0,99.1,0.6
+豬油,Lard,889.9,0.0,99.7,0.0
+豬油(2022年取樣),Lard,891.7,0.0,99.8,0.0
+高油酸豬油,High Oleic Lard,893.0,0.0,100.0,0.0
+雞油,Chicken Fat,890.8,0.0,99.8,0.0
+"奶油(固態,不加鹽)",Cream,733.0,0.6,82.7,0.9
+"奶油(固態,加鹽)",Cream,698.9,0.7,77.5,3.7
+奶油(液態),Cream,340.0,2.0,39.1,0.0
+人造奶油(維生素強化),Margarine,725.1,0.1,82.0,0.0
+人造奶油(2021年取樣),Margarine,722.1,0.1,81.7,1.7
+中脂人造奶油,Medium Fat Margarine,673.8,0.0,76.2,1.3
+人造奶油(低熱量),Margarine,94.0,2.5,10.6,29.6
+大豆油,Soybean Oil,883.9,0.0,100.0,0.0
+大豆油(卵磷脂強化),Soybean Oil,880.1,0.0,99.6,0.0
+大豆油(多種維生素強化),Soybean Oil,883.1,0.0,99.9,0.0
+玉米油,Corn Oil,882.6,0.0,99.8,0.1
+米油(秈米),Rice Bran Oil,883.5,0.1,99.9,0.0
+米油(粳米),Rice Bran Oil,883.1,0.0,99.9,0.0
+亞麻仁油,Flaxseed Oil,820.4,0.2,92.8,6.9
+白芝麻油,White Sesame Oil,883.7,0.1,100.0,0.0
+黑芝麻油,Black Sesame Oil,881.0,0.1,99.7,0.2
+調合芝麻油,Blended Sesame Oil,883.8,0.1,100.0,0.0
+花生油,Peanut Oil,883.1,0.0,99.9,0.0
+調合花生油,Blended Peanut Oil,883.6,0.0,100.0,0.0
+油菜籽油,Rapeseed Oil,883.1,0.0,99.9,0.0
+芥花油,Canola Oil,883.0,0.0,99.9,0.0
+南瓜籽油,Pumpkin Seed Oil,883.1,0.0,99.9,0.0
+紅花籽油,Safflower Oil,883.6,0.0,100.0,0.0
+高油酸紅花籽油,High Oleic Safflower Oil,880.2,0.0,99.6,0.4
+核桃油,Walnut Oil,883.1,0.0,99.9,0.0
+油茶油,Tea Oil,883.4,0.0,99.9,0.0
+熟油茶油,Roasted Tea Oil,883.1,0.0,99.9,0.0
+高油酸棕櫚油,High Oleic Palm Oil,883.1,0.0,99.9,0.0
+椰子油,Coconut Oil,882.8,0.0,99.9,0.0
+葵花籽油,Sunflower Oil,883.6,0.0,100.0,0.0
+葵花籽油(多種維生素強化),Sunflower Oil,883.0,0.0,99.9,0.0
+高油酸葵花籽油,High Oleic Sunflower Oil,883.1,0.0,99.9,0.0
+葡萄籽油,Grape Seed Oil,883.8,0.0,100.0,0.0
+橄欖油,Olive Oil,883.6,0.0,100.0,0.0
+烤酥油,Ghee,882.9,0.0,99.9,0.0
+調合植物油,Blended Vegetable Oil,886.7,0.0,100.3,0.0
+中鏈脂肪酸油,Medium Chain Triglyceride Oil,883.1,0.0,99.9,0.0
+方糖,Sugar Cubes,385.5,,,99.6
+冰糖,Rock Sugar,386.6,,,99.9
+紅砂糖,Brown Sugar,384.5,0.0,0.5,99.3
+黑砂糖,Dark Brown Sugar,368.9,0.5,0.7,95.3
+麥芽糖,Maltose,325.4,,,84.1
+果糖,Fructose,297.4,,,76.9
+果寡糖,Oligofructose,299.8,,,77.5
+楓糖,Maple Syrup,257.8,0.1,0.1,66.6
+蜂蜜(冬蜜),Honey,315.2,0.1,0.1,81.4
+蜂蜜(春蜜),Honey,308.2,0.2,0.2,79.6
+黑糖蜜,Molasses,280.3,0.2,0.0,72.4
+冬瓜糖磚,Winter Melon Sugar Brick,360.3,,,93.1
+西瓜汁(非原汁),Watermelon Juice,29.9,1.1,0.1,6.1
+芭樂汁(非原汁),Guava Juice,45.1,0.2,0.1,11.0
+柳橙汁(非原汁),Orange Juice,50.2,0.1,0.1,12.3
+柳橙汁(100%),Orange Juice,47.6,0.6,0.3,10.7
+烏梅汁,Plum Juice,57.8,0.3,0.2,13.8
+黑棗茶,Black Date Tea,46.4,0.0,,11.6
+楊桃汁(非原汁),Starfruit Juice,48.5,0.0,0.1,12.0
+葡萄柚汁(非原汁),Grapefruit Juice,41.3,0.2,0.2,9.6
+鳳梨汁(非原汁),Pineapple Juice,47.6,0.3,0.2,11.3
+蔓越莓汁(非原汁),Cranberry Juice,44.9,0.9,0.1,10.0
+檸檬汁(非原汁),Lemon Juice,32.6,0.8,0.1,7.1
+蘋果汁(非原汁),Apple Juice,47.0,0.1,0.4,10.9
+蘋果汁(100%),Apple Juice,51.1,0.1,0.2,12.2
+蕃茄汁(非原汁),Tomato Juice,22.4,0.7,0.2,4.4
+仙草蜜,Grass Jelly Drink,35.2,0.0,0.0,8.8
+薑母茶,Ginger Tea,28.0,,,7.0
+蘆薈露飲料,Aloe Vera Drink,43.6,0.0,,10.9
+黑豆茶,Black Bean Tea,12.8,,,3.2
+龜苓茶,Herbal Jelly Tea,33.0,0.0,0.0,8.3
+麥茶,Barley Tea,17.8,,,4.4
+黑麥汁,Malt Drink,51.9,0.3,0.0,12.6
+果汁醋飲料(綜合),Fruit Vinegar Drink,37.2,,,9.3
+可樂,Cola,51.4,,,12.8
+可樂(低熱量),Cola,1.3,,,0.3
+沙士,Sarsaparilla,36.7,,,9.2
+加鹽沙士,Salted Sarsaparilla,40.8,0.8,0.0,9.4
+沙士(低糖),Sarsaparilla,43.4,0.0,0.0,10.9
+汽水(綜合口味),Soda,42.3,,,10.6
+汽水(維生素強化),Soda,45.9,,,11.5
+美式咖啡(無糖),Americano,2.4,0.2,0.1,0.3
+無糖咖啡飲料,Unsweetened Coffee Drink,3.8,0.2,0.1,0.5
+拿鐵咖啡(無糖),Latte,43.0,3.0,2.0,3.4
+咖啡(三合一),Coffee,39.4,0.9,0.4,8.2
+紅茶茶湯,Black Tea,0.1,0.1,,0.0
+紅茶(大麥),Black Tea,34.4,0.0,,8.6
+紅茶(蘋果),Black Tea,36.7,0.0,,9.2
+烏龍茶茶湯,Oolong Tea Soup,0.1,0.0,,0.0
+烏龍茶,Oolong Tea,0.4,0.0,,0.0
+"烏龍茶(去冰,微糖)",Oolong Tea,15.5,0.1,0.0,3.8
+"烏龍茶(去冰,半糖)",Oolong Tea,21.1,0.1,0.0,5.2
+"烏龍茶(去冰,全糖)",Oolong Tea,35.7,0.1,0.0,8.8
+綠茶茶湯,Green Tea Soup,0.4,0.1,,0.0
+綠茶,Green Tea,21.5,0.0,,5.4
+鮮奶茶(無糖),Fresh Milk Tea,26.5,2.0,1.4,1.4
+奶茶(三合一),Milk Tea,42.0,0.5,0.2,9.5
+"烏龍奶茶(去冰,微糖)",Oolong Milk Tea,59.3,0.2,2.9,8.1
+"烏龍奶茶(去冰,半糖)",Oolong Milk Tea,62.3,0.2,2.6,9.6
+"烏龍奶茶(去冰,全糖)",Oolong Milk Tea,74.8,0.2,2.8,12.3
+"珍珠奶茶(去冰,微糖)",Bubble Milk Tea,75.3,0.2,2.3,13.5
+"珍珠奶茶(去冰,半糖)",Bubble Milk Tea,83.5,0.2,2.7,14.5
+"珍珠奶茶(去冰,全糖)",Bubble Milk Tea,94.0,0.2,2.4,17.9
+奶茶沖泡包(三合一),Milk Tea Instant Pack,451.9,1.7,12.8,82.3
+茉莉花茶湯,Jasmine Tea Soup,0.3,0.1,,0.0
+茉莉花茶,Jasmine Tea,28.5,0.1,,7.1
+菊花茶,Chrysanthemum Tea,29.6,0.0,,7.4
+多多綠茶(全糖),Yakult Green Tea,49.0,1.1,0.1,11.0
+冬瓜茶,Winter Melon Tea,33.0,0.0,,8.3
+乳酸飲料,Lactic Acid Drink,44.7,0.2,0.0,11.0
+維生素強化飲料(胡蘿蔔素),Vitamin Fortified Drink,39.4,0.0,,9.8
+維生素強化飲料(綜合),Vitamin Fortified Drink,54.1,0.2,,13.4
+維生素強化飲料(維生素C),Vitamin Fortified Drink,57.0,,,14.3
+運動飲料,Sports Drink,28.4,0.1,,7.0
+米醋飲料,Rice Vinegar Drink,52.2,,,13.0
+即溶咖啡粉,Instant Coffee Powder,362.7,16.6,1.3,71.2
+咖啡沖泡包(二合一),Coffee Instant Pack,491.1,6.8,23.3,63.6
+咖啡沖泡包(三合一),Coffee Instant Pack,436.6,4.8,9.5,83.0
+紅茶沖泡包(檸檬),Black Tea Bags,397.9,,,99.5
+薑茶沖泡包,Ginger Tea Bags,398.6,0.3,0.3,98.7
+抹茶粉,Matcha Powder,361.0,23.4,6.4,63.0
+可可粉,Cocoa Powder,463.9,20.8,22.8,43.8
+小麥草粉,Wheatgrass Powder,370.1,34.0,7.4,41.9
+椰奶,Coconut Milk,49.0,0.2,2.1,7.4
+八角,Star Anise,359.7,4.9,3.9,76.2
+小茴香粉,Fennel Powder,411.5,19.5,25.8,37.0
+山葵粉,Wasabi Powder,386.6,10.1,6.1,72.9
+五香粉,Five Spice Powder,362.7,8.7,8.9,68.1
+甘草粉,Licorice Powder,340.8,9.2,3.6,73.4
+肉桂粉,Cinnamon Powder,342.6,4.2,2.9,78.8
+西洋芹菜片,Celery Flakes,315.4,24.4,6.8,49.9
+花椒粉,Sichuan Pepper Powder,368.9,10.0,9.2,63.2
+洋香菜片,Parsley Flakes,312.4,24.4,7.5,47.7
+洋蔥粉,Onion Powder,377.2,8.1,1.8,82.1
+白胡椒粉,White Pepper Powder,342.3,3.7,1.1,78.8
+紅胡椒粒,Red Peppercorns,376.5,5.9,13.7,59.3
+黑胡椒粉,Black Pepper Powder,371.8,11.6,6.7,67.7
+綠胡椒粒,Green Peppercorns,378.6,11.3,7.3,68.4
+迷迭香粉,Rosemary Powder,431.6,5.9,21.9,59.8
+荳蔻粉,Nutmeg Powder,448.2,6.7,26.2,50.6
+蒜粉,Garlic Powder,331.5,18.1,0.4,71.9
+辣椒粉,Chili Powder,387.3,14.7,14.1,59.1
+薑黃粉,Turmeric Powder,358.5,14.6,2.7,69.0
+薑粉,Ginger Powder,332.5,10.4,3.6,70.5
+羅勒片,Basil Flakes,289.1,23.3,5.8,46.1
+花椒粒,Sichuan Peppercorns,358.8,10.3,12.5,53.6
+七味唐辛子,Shichimi Togarashi,463.1,15.8,24.1,45.8
+沙茶粉,Sacha Powder,506.9,15.0,28.8,47.0
+豆酥,Soybean Crumble,539.6,30.1,38.1,19.2
+咖哩粉,Curry Powder,416.8,13.9,14.1,58.5
+咖哩塊,Curry Block,514.8,5.6,34.5,45.4
+油蔥酥,Fried Shallots,517.7,7.4,28.8,57.1
+梅子粉,Plum Powder,285.8,2.0,3.9,60.8
+椰子粉,Coconut Powder,629.2,7.2,60.3,27.8
+蒜頭酥,Fried Garlic,451.7,11.7,17.8,61.2
+糖粉,Powdered Sugar,398.9,0.0,0.2,99.3
+椰漿,Coconut Milk,207.5,1.1,23.1,0.0
+黃耆水,Astragalus Water,14.2,0.9,0.0,2.9
+黃耆片,Astragalus Slices,320.5,14.9,1.6,68.7
+陳皮,Dried Tangerine Peel,348.6,6.9,2.4,74.8
+山楂,Hawthorn,344.6,1.9,2.5,78.7
+岩鹽,Rock Salt,2.5,0.0,0.1,0.4
+低鈉鹽,Low Sodium Salt,11.4,0.0,0.0,2.8
+味精,MSG,250.5,44.5,,18.1
+高鮮味精,Enhanced MSG,269.3,45.0,,22.3
+鮮雞精,Chicken Essence,267.0,10.8,10.1,33.3
+鰹魚粉,Bonito Powder,240.1,21.9,1.0,35.8
+高湯塊(排骨),Bouillon Cube,362.8,12.5,23.9,24.5
+高湯塊(雞肉),Bouillon Cube,340.3,14.7,24.8,14.5
+高湯(豬大骨),Broth,49.1,4.2,0.7,6.6
+低脂高湯,Low Fat Broth,2.2,0.3,0.0,0.3
+素食高湯,Vegetarian Broth,17.0,0.3,0.0,4.0
+米醋,Rice Vinegar,9.7,,,2.4
+糯米醋,Glutinous Rice Vinegar,16.8,0.1,0.0,4.1
+高梁醋,Sorghum Vinegar,27.2,,,6.8
+薏仁醋,Coix Seed Vinegar,13.1,,,3.3
+紅醋,Red Vinegar,4.5,0.3,0.0,0.8
+香醋,Black Vinegar,2.8,,,0.7
+烏醋,Black Vinegar,36.8,0.5,0.0,8.7
+素食烏醋,Vegetarian Black Vinegar,41.8,,,10.4
+壽司醋,Sushi Vinegar,180.7,,,45.2
+醬油,Soy Sauce,90.0,7.8,,14.7
+薏仁醬油,Barley Soy Sauce,83.5,9.3,,11.5
+黑豆醬油,Black Bean Soy Sauce,113.7,7.5,0.2,20.6
+淡色醬油,Light Soy Sauce,77.8,7.1,0.4,11.5
+薄鹽醬油(低鈉),Low Salt Soy Sauce,77.4,7.4,,11.9
+薄鹽醬油(低鈉高鉀),Low Salt Soy Sauce,56.3,6.5,,7.6
+醬油膏,Soy Paste,103.4,6.8,,19.0
+黑豆油膏,Black Bean Paste,146.3,7.8,0.1,28.6
+薄鹽黑豆醬油膏,Low Salt Black Bean Paste,124.4,7.6,0.1,23.3
+味醂,Mirin,219.8,0.5,0.0,54.5
+鮮味露,Umami Sauce,74.6,20.1,0.1,0.0
+蠔油,Oyster Sauce,156.0,6.5,0.1,32.2
+魚露,Fish Sauce,64.3,10.2,0.2,5.3
+紅辣椒油,Red Chili Oil,898.9,0.0,99.8,0.1
+香油,Sesame Oil,883.1,,99.9,0.0
+蝦油,Shrimp Oil,56.1,7.4,0.1,6.4
+干貝醬,Scallop Sauce,557.7,16.7,51.0,8.0
+牛肉醬,Beef Sauce,507.1,17.0,38.9,22.2
+肉燥,Minced Pork Sauce,397.3,9.5,38.0,4.2
+素肉燥,Vegetarian Minced Pork Sauce,482.7,12.4,42.6,12.5
+義式乳酪醬,Italian Cheese Sauce,215.5,8.8,17.0,6.9
+炸醬,Fried Sauce,397.6,14.6,34.7,6.7
+素食炸醬,Vegetarian Fried Sauce,391.2,13.9,35.3,4.5
+海苔醬,Seaweed Sauce,223.0,6.4,0.0,49.3
+麻醬,Sesame Sauce,643.5,20.8,52.8,21.3
+速食乾麵麻醬包,Instant Noodles Sesame Sauce Packet,676.4,13.2,64.0,11.8
+白醬,White Sauce,61.4,1.2,3.2,6.8
+青醬,Pesto,83.1,0.9,5.4,7.7
+蕃茄義大利麵醬,Tomato Pasta Sauce,70.3,3.2,2.5,8.9
+五味醬,Five Spice Sauce,139.9,1.3,0.8,31.9
+牛排醬,Steak Sauce,130.3,2.5,0.0,30.1
+羊肉爐醬,Lamb Hot Pot Sauce,129.7,7.3,7.2,8.9
+沙茶醬,Satay Sauce,728.8,10.2,71.8,10.4
+素沙茶醬,Vegetarian Satay Sauce,670.3,7.6,66.0,11.4
+黃芥茉醬,Yellow Mustard Sauce,74.5,4.1,3.7,6.2
+山葵醬,Wasabi Sauce,338.2,1.1,5.9,70.2
+金桔醬,Kumquat Sauce,84.1,0.5,0.4,19.5
+海鮮醬,Seafood Sauce,228.4,1.8,2.2,50.3
+烤肉醬,Barbecue Sauce,156.8,5.2,0.8,32.1
+排骨醬,Spare Rib Sauce,221.1,2.3,4.4,43.1
+甜辣醬,Sweet Chili Sauce,116.2,1.0,0.0,28.1
+甜麵醬,Sweet Bean Sauce,215.6,4.5,2.4,44.0
+朝鮮醬,Korean Sauce,106.1,1.6,2.3,19.7
+黑胡椒醬,Black Pepper Sauce,116.9,2.5,0.5,25.5
+日式照燒醬,Japanese Teriyaki Sauce,227.2,3.0,0.5,52.6
+蒜蓉醬,Garlic Sauce,281.6,4.2,20.0,21.2
+辣蒜蓉醬,Spicy Garlic Sauce,78.5,2.3,4.2,7.8
+辣椒醬,Chili Sauce,82.6,2.6,2.9,11.5
+蔥醬,Scallion Sauce,148.7,2.2,6.8,19.5
+糖醋醬,Sweet and Sour Sauce,130.7,1.9,2.6,25.1
+蕃茄醬,Tomato Sauce,113.8,1.6,0.1,26.7
+薑蓉醬,Ginger Sauce,64.7,1.0,2.6,9.4
+蘑菇醬,Mushroom Sauce,58.1,1.5,2.4,7.7
+米豆醬,Fermented Rice Bean Sauce,128.5,7.4,3.0,17.9
+蒜味豆豉醬,Garlic Black Bean Sauce,269.6,9.5,17.0,19.7
+豆酥醬,Soybean Crumble Sauce,671.2,12.2,64.5,10.4
+豆瓣醬,Broad Bean Sauce,178.4,14.2,8.1,12.2
+辣豆瓣醬,Spicy Bean Paste,100.3,4.5,3.3,13.1
+紅麴醬,Red Yeast Paste,163.2,4.6,0.5,35.0
+韭花醬,Chive Flower Paste,29.1,2.1,0.3,4.5
+香椿醬,Toona Paste,507.2,8.1,51.7,2.3
+麻婆醬,Mapo Sauce,190.0,2.9,9.5,23.1
+蝦醬,Shrimp Paste,99.1,19.6,1.7,1.3
+沙拉醬,Salad Dressing,644.5,1.9,65.7,11.4
+沙拉醬(2021年取樣),Salad Dressing,629.5,1.9,61.7,16.8
+無蛋沙拉醬,Egg-Free Salad Dressing,479.4,1.8,44.0,19.0
+無蛋沙拉醬(2021年取樣),Egg-Free Salad Dressing,631.3,0.3,59.8,22.9
+千島沙拉醬,Thousand Island Dressing,515.0,1.0,49.3,16.7
+和風沙拉醬,Japanese Style Dressing,128.6,2.1,1.7,26.3
+凱撒沙拉醬,Caesar Dressing,336.5,1.4,29.1,17.3
+味噌,Miso,215.2,10.6,4.5,33.1
+法式奶酥醬,French Buttercream,596.1,6.7,46.5,37.6
+巧克力醬(液體),Chocolate Sauce,276.7,2.0,0.8,65.4
+草莓果醬,Strawberry Jam,272.2,0.4,1.2,65.0
+葡萄果醬,Grape Jam,260.6,0.0,1.9,60.9
+柚子果醬,Yuzu Jam,267.7,0.6,0.8,64.5
+桑葚果醬,Mulberry Jam,226.9,0.9,0.4,54.9
+白芝麻麵包醬,White Sesame Spread,684.8,20.0,60.4,15.3
+黑芝麻麵包醬,Black Sesame Spread,666.7,10.6,57.4,27.0
+花生醬,Peanut Butter,656.5,24.0,54.3,17.9
+洋蔥麵包醬,Onion Spread,276.4,1.0,26.1,9.5
+法式香蒜醬,French Garlic Sauce,790.9,1.1,85.7,3.8
+無糖黑芝麻醬,Sugar-Free Black Sesame Paste,612.4,20.7,56.0,17.7
+液體奶精,Liquid Creamer,262.2,3.9,26.3,2.5
+液體奶精(2021年),Liquid Creamer,242.2,2.2,24.0,4.2
+奶精粉,Creamer Powder,543.8,2.2,33.0,59.5
+奶精粉(2021年),Creamer Powder,549.7,2.1,34.6,57.6
+奶精粉(低脂),Creamer Powder,450.1,2.1,15.6,75.2
+炸排粉,Fried Pork Powder,343.7,11.9,1.8,70.0
+炸雞粉,Fried Chicken Powder,332.9,8.3,1.7,71.0
+蒸肉粉(五香),Steamed Meat Powder,349.8,10.3,1.1,74.8
+熱狗粉,Hot Dog Powder,355.0,8.4,0.9,78.4
+麵包粉,Breadcrumbs,369.6,14.4,1.5,74.6
+酵母粉,Yeast Powder,346.9,46.3,0.0,40.4
+冷藏寧波年糕,Refrigerated Ningbo Rice Cake,219.6,3.9,0.6,49.7
+冷藏甜年糕,Refrigerated Sweet Rice Cake,241.6,2.3,0.4,57.2
+冷藏廣式芋頭粿,Refrigerated Cantonese Taro Cake,108.7,2.1,1.6,21.5
+冷藏廣式蘿蔔糕,Refrigerated Cantonese Radish Cake,110.9,2.2,2.3,20.4
+包餡甜麻糬(紅豆),Stuffed Sweet Mochi,329.1,10.0,2.9,65.7
+鹹麻糬,Savory Mochi,248.1,8.7,4.5,43.2
+芋仔餅,Taro Pastry,353.7,4.6,12.1,56.6
+月餅(棗泥),Mooncake,419.4,6.0,18.2,57.9
+綠豆凸,Green Bean Cake,393.9,6.9,15.9,55.8
+蕃薯餅,Sweet Potato Cake,330.6,3.9,10.6,54.9
+車輪餅(紅豆),Wheel Cake,187.0,2.1,1.1,42.3
+車輪餅(菜脯),Wheel Cake,183.4,1.4,5.7,31.6
+太陽餅,Sun Cake,460.2,5.3,20.5,63.6
+牛舌餅,Ox Tongue Pastry,411.3,5.7,13.2,67.4
+蛋黃芋頭酥,Taro Pastry with Salted Egg Yolk,216.6,3.1,3.0,44.2
+蛋黃酥,Salted Egg Yolk Pastry,461.3,11.4,26.4,44.5
+鳳梨酥,Pineapple Cake,484.2,4.2,24.4,62.0
+蘿蔔酥,Radish Pastry,427.3,7.5,20.9,52.3
+鳳眼糕,Phoenix Eye Cake,378.6,3.8,0.8,89.0
+米粩,Rice Crisp,441.5,2.6,13.7,76.9
+可頌,Croissant,452.5,7.3,26.1,47.1
+泡芙(巧克力),Cream Puff,589.6,10.3,40.4,46.2
+蛋塔,Egg Tart,376.0,4.1,21.7,41.1
+蛋塔(葡式),Egg Tart,375.1,3.7,25.8,31.9
+鬆餅,Pancake,256.7,3.2,2.6,55.1
+冷凍馬拉糕,Frozen Ma Lai Cake,320.0,7.0,12.9,44.0
+銅鑼燒,Dorayaki,332.0,3.4,9.9,57.2
+冷凍馬蹄條,Frozen Water Chestnut Cake,194.5,4.2,1.9,40.1
+乳酪蛋糕,Cheesecake,295.7,7.0,21.3,19.1
+海綿蛋糕(圓形),Sponge Cake,343.8,5.1,18.1,40.2
+提拉米蘇(圓形),Tiramisu,327.8,4.4,25.1,21.1
+蜂蜜蛋糕(原味),Honey Cake,346.5,6.5,14.5,47.4
+蜂蜜蛋糕(巧克力),Honey Cake,340.8,6.9,15.6,43.1
+蜂蜜蛋糕(起司),Honey Cake,352.3,7.4,18.1,39.9
+黑森林蛋糕,Black Forest Cake,276.7,4.2,17.8,25.0
+土司,Toast,288.9,9.5,6.3,48.6
+土司(含全穀粉),Toast,291.6,10.0,6.1,49.2
+紅豆土司,Red Bean Toast,319.3,9.2,10.2,47.7
+奶酥麵包,Milk Custard Bread,376.7,9.1,15.7,49.8
+肉鬆麵包,Pork Floss Bread,428.9,8.1,22.9,47.6
+蜜糖甜甜圈(波/摩堤),Honey Donut,396.3,2.0,20.7,50.6
+糖粒甜甜圈(油炸),Sugar Donut,401.0,5.3,19.8,50.3
+菠蘿麵包,Pineapple Bun,377.9,9.2,15.0,51.5
+葡萄乾奶酥麵包,Raisin Milk Custard Bread,306.1,8.4,7.9,50.4
+漢堡包,Hamburger Bun,321.9,9.1,7.4,54.9
+餐包,Dinner Roll,365.2,7.2,14.9,50.5
+雙胞胎麵包,Twin Bread,341.2,8.4,7.7,59.6
+仙草凍,Grass Jelly,19.3,0.9,0.1,3.7
+仙草凍(2020取樣),Grass Jelly,19.3,0.3,0.2,4.1
+咖啡凍,Coffee Jelly,74.7,0.1,0.2,18.1
+果凍,Jelly,91.0,,0.2,22.3
+原味愛玉凍,Plain Aiyu Jelly,1.7,,,0.4
+檸檬愛玉凍,Lemon Aiyu Jelly,52.5,,,13.1
+粉粿,Rice Cake,65.1,0.0,0.1,15.5
+鮮奶布丁,Milk Pudding,110.1,3.0,5.1,13.1
+烤布丁,Baked Pudding,138.2,4.7,7.1,13.8
+黃布丁,Yellow Pudding,109.8,2.3,3.5,17.3
+豆花(花生),Tofu Pudding,60.1,2.0,0.9,10.9
+傳統豆花(未加糖),Traditional Tofu Pudding,38.5,3.2,1.9,2.1
+羊羹,Sweet Bean Jelly,288.7,3.0,0.7,67.6
+巧克力冰淇淋,Chocolate Ice Cream,191.8,4.2,10.6,19.9
+香草冰淇淋,Vanilla Ice Cream,182.1,2.5,9.1,22.6
+紅豆牛奶冰棒,Red Bean Milk Popsicle,154.9,3.5,4.9,24.3
+花生仁湯,Peanut Soup,108.4,2.8,5.1,12.7
+方塊酥,Square Pastry,509.5,7.1,24.1,66.1
+夾心餅乾(草莓),Sandwich Cookie,516.9,4.8,27.4,62.8
+捲心酥,Wafer Roll,490.2,6.1,19.9,71.7
+蛋捲(芝麻),Egg Roll,548.8,6.8,33.3,55.5
+煎餅,Pancake,443.6,6.3,11.7,78.3
+營養口糧,Nutritional Biscuit,424.2,6.8,8.7,79.7
+蘇打餅乾(蔬菜),Soda Cracker,511.9,7.8,24.7,64.5
+玉米餅乾(原味),Corn Cracker,504.3,7.6,24.3,63.8
+洋芋片,Potato Chips,552.9,5.2,34.3,55.8
+魚酥,Fish Crisp,563.8,8.3,36.6,50.3
+零食泡麵,Instant Noodle Snack,483.8,11.3,21.5,61.3
+雪餅,Snow Cake,486.6,5.8,19.4,72.3
+沙其馬,Sachima,487.0,5.6,24.8,60.2
+牛奶巧克力,Milk Chocolate,546.5,9.4,32.6,54.0
+花生牛奶巧克力,Peanut Milk Chocolate,488.7,13.0,23.2,56.9
+榛果牛奶巧克力,Hazelnut Milk Chocolate,589.9,9.0,40.4,47.5
+糖衣牛奶巧克力,Candy Coated Milk Chocolate,481.2,4.8,18.6,73.6
+白巧克力風味糖,White Chocolate Flavored Candy,561.9,8.6,34.7,53.8
+黑巧克力(85%),Dark Chocolate,613.1,10.9,46.1,38.7
+白芝麻糖,White Sesame Candy,521.0,8.4,26.2,62.9
+黑芝麻糖,Black Sesame Candy,535.7,8.5,30.4,57.0
+花生糖,Peanut Candy,562.4,17.9,35.3,43.3
+花生貢糖,Peanut Nougat,511.2,13.5,26.3,55.0
+牛軋糖,Nougat,477.0,9.7,21.7,60.8
+核棗糕,Date and Walnut Cake,425.4,2.5,14.6,71.1
+水果軟糖,Fruit Gummies,411.2,1.2,8.4,82.6
+水果QQ軟糖,Fruit Chewy Candy,342.6,6.8,0.2,78.3
+牛奶軟糖,Milk Candy,423.8,2.8,11.1,78.0
+巧克力牛奶軟糖,Chocolate Milk Candy,422.2,3.4,11.3,76.7
+太妃糖,Toffee,438.3,2.7,13.9,75.6
+蓮藕糖,Lotus Root Candy,395.4,0.2,0.4,97.8
+枇杷糖,Loquat Candy,393.7,0.2,0.1,98.0
+苦茶糖,Bitter Tea Candy,396.4,0.1,0.2,98.5
+薑糖,Ginger Candy,359.4,0.3,2.5,84.0
+巧克力夾心糖,Chocolate Filled Candy,402.6,0.7,2.8,93.7
+維生素C口含錠(檸檬),Vitamin C Lozenges,398.7,0.2,0.6,98.3
+酵母菌咀嚼錠,Yeast Chewable Tablets,390.6,23.6,5.6,61.4
+乳酸球,Lactic Acid Balls,474.4,3.8,21.6,66.1
+羊乳片,Goat Milk Tablets,410.0,23.4,10.0,56.6
+紅豆球,Red Bean Balls,350.8,7.1,1.0,78.4
+綠豆球,Green Bean Balls,345.9,6.2,1.1,77.9
+棉花糖,Marshmallow,331.3,3.2,0.3,78.9
+甘薯蜜餞,Candied Sweet Potato,346.8,0.9,0.6,84.3
+芒果青,Green Mango,223.0,0.6,0.4,54.2
+芭樂果乾,Guava Dried Fruit,346.9,1.1,0.2,85.2
+鳳梨果乾,Pineapple Dried Fruit,348.5,2.0,0.2,84.6
+檸檬果乾,Lemon Dried Fruit,343.6,0.8,0.2,84.6
+豆干丁(五香),Diced Tofu,382.6,35.4,18.1,19.6
+豆干片(沙茶),Sliced Tofu,464.3,16.2,28.2,36.4
+布丁粉,Pudding Mix,418.7,2.7,7.1,86.1
+冰淇淋粉(香草),Ice Cream Mix,430.1,15.9,11.7,65.3
+起酥片,Puff Pastry Sheets,403.6,6.7,26.9,33.8
+廣東粥,Cantonese Congee,81.4,4.9,2.8,9.1
+冷凍火腿炒飯,Frozen Ham Fried Rice,189.2,5.0,5.6,29.7
+冷凍蝦仁炒飯,Frozen Shrimp Fried Rice,147.9,4.7,3.4,24.6
+三角飯糰(肉鬆),Rice Triangle,218.8,5.8,5.5,36.6
+糯米飯糰,Sticky Rice Ball,335.2,5.9,17.6,38.3
+壽司(豆皮壽司),Sushi,194.3,6.3,4.7,31.7
+肉粽,Meat Zongzi,234.8,8.2,8.8,30.7
+鹼粽,Alkaline Zongzi,131.2,2.1,1.7,26.8
+冷凍筒仔米糕,Frozen Tube Rice Cake,212.1,6.5,5.8,33.6
+筒仔米糕,Tube Rice Cake,245.8,6.6,8.6,35.5
+豬血糕,Pork Blood Cake,193.9,8.6,0.9,37.8
+鴨血糕,Duck Blood Cake,192.8,6.7,1.1,39.1
+肉圓,Meatball,136.0,3.1,1.6,27.3
+清蒸蝦仁肉圓,Steamed Shrimp Meatball,151.8,4.6,7.4,16.7
+甜酒釀,Sweet Fermented Rice,163.1,5.0,0.4,34.8
+紫米酒釀,Purple Rice Fermented Wine,154.9,4.2,0.4,33.6
+冷凍芝麻湯圓,Frozen Sesame Rice Balls,352.5,4.8,16.3,46.7
+冷凍花生湯圓,Frozen Peanut Rice Balls,349.8,5.2,15.6,47.1
+冷凍豬肉湯圓,Frozen Pork Rice Balls,281.4,6.5,12.1,36.6
+免煮飯,Instant Rice,168.1,3.2,0.3,37.0
+埔里米粉,Puli Rice Noodles,357.7,0.5,0.5,87.7
+細米粉,Thin Rice Noodles,355.3,0.4,0.6,87.2
+濁水米粉,Zhuoshui Rice Noodles,357.2,5.2,1.3,81.1
+米粄條,Rice Noodle Strips,129.5,1.0,0.9,29.2
+米苔目,Rice Noodles,121.2,0.6,0.0,29.6
+粿仔條,Rice Cake Strips,193.3,0.5,1.2,45.0
+米漿(散裝),Rice Milk,61.7,0.6,0.5,13.7
+保久米漿,Rice Milk,62.4,1.0,1.5,11.3
+糙米漿,Brown Rice Milk,71.1,1.3,2.2,11.6
+糙秈米漿,Brown Rice Milk,68.2,0.9,2.1,11.4
+糯米漿,Glutinous Rice Milk,50.9,0.8,0.8,10.2
+黑糯米漿,Black Glutinous Rice Milk,50.1,0.4,0.2,11.6
+米漿粉,Rice Milk Powder,444.1,9.1,12.3,74.3
+燕麥奶,Oat Milk,43.9,1.0,0.8,8.1
+玉米粒罐頭,Canned Corn Kernels,90.0,2.3,1.4,16.9
+玉米醬罐頭,Canned Corn Sauce,65.5,1.4,0.4,14.0
+麵筋(未調味),Wheat Gluten,642.9,42.5,53.0,0.0
+麵腸(未調味),Wheat Sausage,137.9,20.6,1.8,9.7
+水餃皮,Dumpling Wrappers,263.5,7.8,0.5,57.0
+春捲皮,Spring Roll Wrappers,240.8,8.3,0.7,50.4
+餛飩皮,Wonton Wrappers,271.0,8.3,0.5,58.2
+長麵線,Long Rice Noodles,309.9,10.7,1.1,64.3
+紅麵線,Red Rice Noodles,307.0,11.3,1.4,62.3
+麵線,Rice Noodles,349.8,11.7,1.5,72.4
+雞絲麵,Shredded Chicken Noodles,463.0,9.4,22.8,55.0
+乾麵條,Dried Noodles,350.0,11.6,1.5,72.5
+油麵條,Oil Noodles,361.5,11.4,1.2,76.3
+紅蘿蔔麵,Carrot Noodles,352.1,12.1,1.0,73.8
+通心麵,Macaroni,358.5,13.8,1.4,72.6
+菠菜麵,Spinach Noodles,355.6,11.8,1.2,74.4
+鍋燒意麵,Pot Noodles,479.0,10.0,22.8,58.5
+雞蛋麵,Egg Noodles,357.8,12.5,0.9,74.8
+刀削麵,Knife-Cut Noodles,266.6,8.4,0.9,56.2
+拉麵,Ramen,292.3,9.1,0.8,62.1
+意麵,Yi Noodles,289.6,10.1,1.0,60.1
+衛生油麵,Sanitary Oil Noodles,163.2,5.5,1.8,31.2
+金門黃麵,Kinmen Yellow Noodles,158.0,6.4,0.5,31.9
+冷凍烏龍麵,Frozen Udon Noodles,128.6,3.4,0.3,28.2
+鍋燒麵,Hot Pot Noodles,119.8,4.5,0.4,24.6
+蕎麥麵(乾),Soba Noodles,348.7,12.7,1.7,70.6
+蕎麥麵(濕),Soba Noodles,153.2,6.3,1.5,28.6
+炒板條,Stir-Fried Rice Noodles,149.4,4.2,4.2,23.7
+泡麵(牛肉口味),Instant Noodles,473.3,9.6,24.5,53.6
+泡麵(鮮蝦口味),Instant Noodles,474.8,9.6,23.8,55.5
+擔仔麵,Dan Zai Noodles,123.7,4.4,6.5,11.9
+冷凍牛肉水餃,Frozen Beef Dumplings,215.2,8.9,9.7,23.1
+冷凍豬肉水餃,Frozen Pork Dumplings,207.7,8.1,9.7,22.1
+冷凍豬肉韭菜水餃,Frozen Pork and Chive Dumplings,228.9,8.4,11.5,23.0
+冷凍豬肉蟹黃水餃,Frozen Pork and Crab Roe Dumplings,223.2,7.8,9.8,26.0
+冷凍香菇雞肉水餃,Frozen Mushroom and Chicken Dumplings,220.9,9.5,10.2,22.7
+冷凍素食水餃,Frozen Vegetarian Dumplings,175.0,8.7,4.1,25.8
+冷凍鮪魚水餃,Frozen Tuna Dumplings,196.0,9.0,8.5,20.8
+冷凍豬肉熟水餃,Frozen Cooked Pork Dumplings,235.2,7.2,10.1,28.9
+冷凍素食熟水餃,Frozen Cooked Vegetarian Dumplings,208.6,7.2,5.4,32.9
+冷凍冬菜蝦仁餛飩,Frozen Shrimp and Pickled Vegetable Wontons,190.9,9.1,6.3,24.5
+冷凍豬肉餛飩,Frozen Pork Wontons,239.7,11.1,12.6,20.5
+冷凍菜肉餛飩,Frozen Vegetable and Meat Wontons,236.5,9.1,16.3,13.3
+溫州餛飩,Wenzhou Wontons,144.9,6.5,7.9,11.9
+豬肉鍋貼,Pork Potstickers,237.6,7.8,11.3,26.2
+熟水餃(高麗菜水餃),Cooked Dumplings,199.3,7.4,10.1,19.7
+冷凍叉燒包,Frozen BBQ Pork Buns,266.2,8.8,4.8,47.0
+冷凍酸菜焢肉包子,Frozen Pickled Cabbage and Braised Pork Buns,301.0,8.6,13.1,37.2
+冷凍芋泥包,Frozen Taro Paste Buns,263.0,6.6,3.6,51.1
+冷凍豆沙包,Frozen Red Bean Buns,246.6,7.4,1.1,51.8
+冷凍芝麻包,Frozen Sesame Buns,340.8,7.2,11.7,51.7
+冷凍蓮蓉包,Frozen Lotus Seed Paste Buns,292.3,7.9,5.5,52.8
+冷凍叉燒包子,Frozen BBQ Pork Buns,266.8,7.1,6.1,46.0
+冷凍牛肉包子,Frozen Beef Buns,268.7,10.8,4.6,46.1
+冷凍豬肉包子,Frozen Pork Buns,266.3,7.6,9.2,38.2
+冷凍豬肉湯包,Frozen Pork Soup Dumplings,234.5,10.1,14.3,16.3
+小籠包,Soup Dumplings,241.5,9.6,15.5,15.9
+冷凍素菜包子,Frozen Vegetable Buns,234.0,8.6,3.8,41.4
+竹筍包,Bamboo Shoot Buns,208.5,6.9,5.5,32.9
+冷凍白饅頭,Frozen Plain Steamed Buns,279.1,7.4,2.4,57.0
+白饅頭,Plain Steamed Buns,248.4,8.1,1.2,51.3
+芋頭饅頭,Taro Steamed Buns,154.8,5.7,0.6,31.5
+花捲,Twisted Rolls,227.4,5.7,1.9,47.0
+冷藏堅果饅頭,Chilled Nut Steamed Buns,307.0,9.6,8.8,47.3
+黑糖饅頭,Brown Sugar Steamed Buns,234.9,6.8,0.9,50.0
+冷凍銀絲卷(奶黃),Frozen Silver Thread Rolls,282.9,8.9,3.2,54.5
+火腿蛋三明治,Ham and Egg Sandwich,274.9,10.9,13.2,28.2
+披薩(夏威夷),Pizza,270.1,12.0,8.7,35.9
+冷凍披薩(黑胡椒火腿),Frozen Pizza,209.9,9.3,6.8,27.7
+蔥油餅,Scallion Pancakes,304.8,8.3,9.3,46.9
+冷凍蔥油餅,Frozen Scallion Pancakes,258.0,9.1,3.1,48.5
+冷凍蛋餅皮,Frozen Egg Pancake Wrappers,230.9,5.7,3.7,43.7
+燒餅,Sesame Flatbread,322.7,9.1,9.1,51.1
+韭菜盒子,Chive Pockets,217.1,7.5,12.1,19.5
+大餅包小餅(紅豆),Big Pancake Wrapped with Small Pancake,375.7,8.3,16.5,48.5
+水煎包,Pan-Fried Buns,166.5,4.3,5.4,25.2
+牛肉餡餅,Beef Meat Pie,225.0,9.6,10.4,23.3
+豬肉餡餅,Pork Meat Pie,327.2,6.2,23.3,23.1
+冷凍燒賣,Frozen Siu Mai,187.8,9.9,9.7,15.3
+冷凍水晶包,Frozen Crystal Buns,211.0,4.8,7.8,30.4
+"冷凍,水晶餃",Frozen Crystal Dumplings,190.2,2.8,3.5,36.8
+油條,Fried Dough Sticks,551.3,10.1,40.2,37.3
+冷凍春捲,Frozen Spring Rolls,271.8,5.1,13.9,31.5
+蚵仔煎,Oyster Omelette,192.2,4.9,10.4,19.7
+棺材板,Coffin Bread,264.3,7.0,17.5,19.7
+油豆腐粉絲(阿給),Tofu and Vermicelli,146.2,6.9,6.2,15.7
+冷凍可樂餅(奶汁),Frozen Croquettes,114.3,3.6,2.3,19.8
+芋圓,Taro Balls,213.7,0.9,0.2,52.1
+粉圓,Tapioca Pearls,346.0,0.2,0.0,86.2
+冷凍甘薯條,Frozen Sweet Potato Fries,181.7,1.8,6.5,29.0
+冷凍馬鈴薯條,Frozen French Fries,151.1,2.2,4.5,25.5
+西谷米,Sago,360.3,0.1,0.1,89.7
+台式泡菜,Taiwanese Kimchi,58.8,0.9,0.3,13.1
+黃金泡菜,Golden Kimchi,110.9,2.4,5.7,12.5
+韓式泡菜,Korean Kimchi,35.2,2.0,0.4,5.8
+花瓜罐頭,Pickled Melon,88.7,2.9,0.2,18.8
+冷凍洋蔥圈,Frozen Onion Rings,281.1,4.0,11.0,41.4
+醃辣椒,Pickled Chili Peppers,53.1,1.9,0.3,10.6
+桂竹筍片,Bamboo Shoots,19.1,1.0,0.2,3.3
+麻竹筍干,Dried Bamboo Shoots,400.0,,,100.0
+薤,Chinese Chives,11.2,0.5,0.2,1.9
+甘藍乾,Dried Cabbage,194.4,7.2,1.1,38.9
+酸甘藍菜,Sauerkraut,24.4,1.4,0.2,4.2
+梅乾菜,Preserved Mustard Greens,115.6,5.5,1.1,20.8
+榨菜,Pickled Mustard Stems,27.0,1.3,0.4,4.6
+酸菜,Pickled Cabbage,19.0,0.8,0.3,3.2
+醃漬冬瓜,Pickled Winter Melon,27.6,2.5,0.2,4.1
+醃漬花胡瓜,Pickled Cucumber,89.0,3.0,0.5,18.1
+醃漬越瓜,Pickled Gourd,18.0,1.1,0.2,3.0
+銀耳罐頭,Canned White Fungus,49.0,0.1,0.1,12.0
+草菇罐頭,Canned Straw Mushrooms,35.7,3.3,0.1,5.4
+醃漬香菇,Pickled Mushrooms,55.8,3.0,0.1,10.6
+秀珍菇罐頭,Canned Oyster Mushrooms,30.0,1.7,0.5,4.7
+金針菇罐頭,Enoki Mushroom Can,27.0,1.7,0.2,4.5
+洋菇罐頭,Button Mushroom Can,31.2,2.9,0.3,4.3
+猴頭菇罐頭,Lion's Mane Mushroom Can,30.7,1.0,0.1,6.5
+高纖胚芽冬粉,High-Fiber Vermicelli,363.6,0.6,0.2,90.0
+冬粉,Vermicelli,351.4,0.1,0.1,87.5
+寬粉,Wide Noodles,349.4,0.1,0.1,86.9
+佃煮黑豆,Simmered Black Beans,271.5,10.5,6.2,43.5
+豆干絲,Shredded Tofu,170.1,18.3,8.6,4.8
+五香豆干,Five-Spice Tofu,196.8,19.3,10.6,6.2
+小方豆干,Small Square Tofu,161.0,17.4,8.6,3.5
+黑豆干,Black Tofu,197.1,19.0,12.5,2.1
+豆腐皮,Tofu Skin,209.4,25.3,11.0,2.4
+日式炸豆皮,Japanese Fried Tofu Skin,388.0,19.2,32.4,4.9
+豆豉,Fermented Black Beans,236.6,20.4,11.5,12.8
+豆棗,Bean Jujube,420.3,11.7,19.2,50.0
+百頁豆腐,Thin Tofu Sheets,196.4,13.4,13.1,6.3
+傳統豆腐,Traditional Tofu,88.4,8.5,3.4,6.0
+傳統豆腐(2022年取樣),Traditional Tofu,95.7,9.6,5.5,1.9
+冷凍豆腐,Frozen Tofu,130.9,12.9,7.1,3.9
+小三角油豆腐,Small Triangle Fried Tofu,159.7,12.7,13.3,0.0
+嫩豆腐,Soft Tofu,53.1,4.9,3.0,1.6
+雞蛋豆腐,Egg Tofu,79.4,6.9,4.6,2.7
+麻油辣腐乳,Spicy Fermented Bean Curd with Sesame Oil,107.0,9.0,5.8,4.8
+素肉,Vegetarian Meat,210.2,23.9,10.1,6.0
+冷凍素雞塊,Frozen Vegetarian Chicken Nuggets,205.8,14.2,8.1,19.0
+花生麵筋罐頭,Peanut Gluten Can,205.8,11.0,11.1,15.5
+香菇麵筋罐頭,Mushroom Gluten Can,192.4,10.7,10.0,14.9
+花豆罐頭(糖漬),Kidney Bean Can,204.3,7.6,0.0,43.5
+紅豆罐頭(糖漬),Red Bean Can,232.5,8.0,0.3,49.5
+甘納豆,Candied Beans,333.1,6.6,1.0,74.5
+豌豆仁罐頭,Canned Peas,125.5,7.2,0.9,22.1
+鹽酥蠶豆,Salted Broad Beans,480.6,26.9,20.9,46.3
+豆漿,Soy Milk,60.0,3.2,1.3,9.0
+雞蛋豆漿,Egg Soy Milk,55.7,1.8,1.3,9.2
+鹹豆漿,Savory Soy Milk,37.0,3.5,1.8,1.7
+豆漿優酪乳,Soy Milk Yogurt,70.2,2.0,1.2,12.9
+DHA豆奶,DHA Soy Milk,43.5,1.7,0.5,8.0
+豆漿粉,Soy Milk Powder,433.7,37.4,17.1,32.5
+叉燒肉,Char Siu,252.6,17.2,13.1,16.5
+切片火腿(牛肉),Sliced Ham,121.0,15.9,2.2,9.4
+切片火腿(豬肉),Sliced Ham,146.6,16.5,4.9,9.0
+切片火腿(雞肉),Sliced Ham,148.4,15.3,5.3,10.0
+"條狀火腿(牛肉,黑胡椒)",Striped Ham,112.9,18.8,2.3,4.1
+條狀火腿(豬肉),Striped Ham,145.5,16.2,3.8,11.5
+醬肘子,Braised Pork Knuckle,134.0,19.0,6.6,0.0
+培根,Bacon,372.5,13.5,35.6,0.0
+臘肉(五花肉),Cured Meat,524.6,18.4,49.0,2.4
+臘肉(腿肉),Cured Meat,376.9,26.7,27.2,6.4
+滷牛筋,Braised Beef Tendon,119.4,21.1,2.8,2.6
+滷豬腳,Braised Pig Trotters,237.4,28.4,15.4,0.0
+醃燻豬肝,Smoked Pork Liver,166.5,26.8,4.7,4.2
+膽肝,Gallbladder Liver,251.5,31.2,7.9,13.9
+片狀肉乾(牛肉),Sliced Jerky,335.2,30.3,5.2,41.8
+"片狀肉乾(牛肉,辣味)",Sliced Jerky,334.9,38.0,7.0,29.9
+片狀肉乾(豬肉),Sliced Jerky,329.2,30.0,5.0,41.0
+條狀肉乾(豬肉),Striped Jerky,344.6,43.2,7.9,25.1
+牛肉香腸,Beef Sausage,298.1,20.7,20.4,7.8
+香腸,Sausage,354.2,17.0,26.3,12.3
+香腸(蒜味),Sausage,387.3,16.6,27.8,17.7
+蒟蒻香腸(蒜味),Konjac Sausage,288.7,19.4,14.9,19.3
+小巧香腸,Mini Sausages,362.1,15.1,28.2,11.9
+雞肉香腸(大),Chicken Sausages,283.2,22.4,16.3,11.8
+雞肉香腸(小),Chicken Sausages,458.6,13.9,37.7,15.9
+熱狗,Hot Dog,257.3,13.3,18.1,10.2
+德國香腸,German Sausage,274.7,15.9,21.4,4.6
+冷凍小香腸,Frozen Mini Sausages,248.9,14.8,17.8,7.4
+冷凍珍珠丸,Frozen Pearl Meatballs,225.4,9.5,11.5,20.9
+冷凍貢丸,Frozen Pork Meatballs,244.1,16.6,20.3,0.0
+冷凍雞肉丸,Frozen Chicken Meatballs,201.9,10.5,12.3,12.3
+冷凍牛肉漢堡肉,Frozen Beef Burger Patty,249.4,14.4,18.5,6.3
+冷凍雞塊,Frozen Chicken Nuggets,227.7,15.3,12.9,12.6
+豬肉脯,Pork Jerky,440.7,33.4,25.1,20.3
+豬肉酥,Pork Floss,513.0,33.0,28.3,31.6
+雞肉酥,Chicken Floss,450.6,26.7,14.6,53.2
+肉羹,Meat Soup,246.8,9.7,14.7,18.9
+冷凍咕咾肉,Frozen Sweet and Sour Pork,184.3,6.4,9.5,18.3
+豬腳凍,Pig's Feet Jelly,144.6,16.6,7.8,2.0
+冷凍花枝丸,Frozen Cuttlefish Balls,165.7,12.7,7.0,13.0
+冷凍虱目魚丸,Frozen Milkfish Balls,205.8,13.7,11.9,11.0
+冷凍文蛤丸,Frozen Clam Balls,210.6,16.2,9.2,15.8
+冷凍旗魚丸,Frozen Swordfish Balls,159.7,12.8,6.7,12.0
+冷凍鱈魚丸,Frozen Codfish Balls,98.9,8.5,2.4,10.7
+冷凍蝦丸,Frozen Shrimp Balls,122.7,10.8,2.3,14.7
+冷凍花枝排,Frozen Cuttlefish Patties,187.2,5.5,7.3,24.9
+冷凍鮪排,Frozen Tuna Patties,143.3,13.4,0.9,20.4
+冷凍蝦餅,Frozen Shrimp Cakes,126.5,9.6,2.1,17.3
+冷凍干貝酥,Frozen Scallop Floss,146.1,8.3,0.2,27.7
+冷凍花枝塊,Frozen Cuttlefish Chunks,180.2,11.2,7.4,17.0
+冷凍旗魚塊,Frozen Swordfish Chunks,178.0,15.3,6.5,14.7
+冷凍蚵捲,Frozen Oyster Rolls,213.4,6.9,17.5,7.0
+冷凍魚捲,Frozen Fish Roll,126.3,13.8,0.3,17.1
+冷凍蝦捲,Frozen Shrimp Roll,155.9,10.3,5.7,16.0
+冷凍魷魚圈,Frozen Squid Ring,143.2,15.7,0.4,19.2
+冷凍花枝餃,Frozen Cuttlefish Dumpling,177.0,12.4,5.6,19.2
+冷凍香菇餃,Frozen Mushroom Dumpling,232.8,12.3,15.3,11.5
+冷凍蛋餃,Frozen Egg Dumpling,183.1,12.1,14.1,2.1
+冷凍雪螺餃,Frozen Snail Dumpling,203.6,11.6,10.0,16.7
+冷凍魚餃,Frozen Fish Dumpling,277.5,12.5,19.5,12.9
+冷凍蝦餃,Frozen Shrimp Dumpling,273.3,11.4,19.3,13.5
+冷凍燕餃,Frozen Swallow Dumpling,321.5,12.8,23.6,14.5
+冷凍蟹味棒,Frozen Crab Stick,117.8,9.3,0.7,18.6
+冷凍魚卵卷,Frozen Fish Roe Roll,115.3,12.9,0.2,15.5
+魚板,Fish Cake,127.8,10.0,2.0,17.6
+天婦羅,Tempura,175.9,12.4,4.7,21.0
+冷凍花枝漿,Frozen Cuttlefish Paste,226.9,11.2,12.6,17.1
+冷凍花枝羹,Frozen Cuttlefish Soup,125.5,11.4,4.7,9.4
+魚肉脯,Fish Jerky,103.7,21.9,1.7,0.2
+鯖魚肉脯,Mackerel Jerky,684.6,33.8,60.4,1.5
+魚肉鬆,Fish Floss,469.8,28.2,20.2,43.8
+旗魚鬆,Swordfish Floss,480.9,31.3,22.9,37.4
+鮭魚鬆,Salmon Floss,451.8,29.0,21.6,35.3
+香筍鮪魚罐頭,Tuna with Bamboo Shoots Can,260.5,10.0,24.1,0.9
+茄汁鯖魚罐頭,Mackerel in Tomato Sauce Can,116.3,17.6,3.8,2.8
+蒜味甘扁桃仁,Garlic Almonds,648.1,23.3,53.6,18.0
+杏仁霜,Almond Cream,554.5,9.7,36.4,47.1
+蜜汁松子仁,Honey Pine Nuts,697.1,14.9,62.4,19.0
+鹽酥夏威夷豆,Salted Macadamia Nuts,772.6,9.4,76.3,12.0
+甜核桃,Sweet Walnuts,723.4,14.4,67.4,14.7
+糖炒栗子,Candied Chestnuts,209.0,4.2,0.8,46.3
+蜜汁腰果,Honey Cashews,599.6,17.6,43.6,34.3
+玉桂西瓜子,Cinnamon Watermelon Seeds,528.9,31.0,34.4,23.8
+醬油西瓜子,Soy Sauce Watermelon Seeds,547.0,29.5,37.7,22.5
+鹽酥帶殼花生(熟),Salted Crispy Peanuts with Shell,568.2,28.2,38.1,28.1
+醃漬花生仁,Pickled Peanuts,288.0,10.6,26.0,2.9
+糖漬花生仁,Candied Peanuts,381.6,14.2,23.3,28.8
+油炸花生仁,Fried Peanuts,623.4,28.9,48.4,18.0
+蛋酥花生仁,Egg Coated Peanuts,606.2,21.1,43.8,31.8
+鹽酥花生仁,Salted Crispy Peanuts,556.5,28.8,35.9,29.6
+調味南瓜子(去殼),Seasoned Pumpkin Seeds,606.8,30.4,47.9,13.5
+調味南瓜子(帶殼),Seasoned Pumpkin Seeds,606.5,25.9,47.2,19.5
+甘草葵瓜子(帶殼),Licorice Sunflower Seeds,563.6,26.8,39.3,25.8
+鹽酥葵瓜子(帶殼),Salted Crispy Sunflower Seeds,618.6,25.9,49.3,17.8
+糖漬蓮子,Candied Lotus Seeds,229.9,5.7,0.1,51.4
+烤雞,Roast Chicken,232.9,22.8,14.2,3.6
+冷凍烤雞翅,Frozen Roast Chicken Wings,217.4,18.8,14.2,3.6
+鴨賞,Smoked Duck,304.0,31.1,17.6,5.3
+茶鵝,Tea Smoked Goose,351.9,15.6,32.6,0.0
+熟鵝腿肉,Cooked Goose Leg Meat,284.8,18.5,23.6,0.0
+鯊魚煙,Smoked Shark,68.0,22.3,0.4,0.0
+日本鰻鱺魚片(蒲燒),Japanese Eel Fillet,272.2,25.0,18.7,0.9
+鹽漬小鱗脂眼鯡(鹹馧仔),Salted Herring,223.8,17.4,17.0,0.3
+鯖魚(醃製),Mackerel,280.8,14.9,24.0,1.3
+鯖魚(醃製)(2022年取樣),Mackerel,296.5,17.0,21.0,9.8
+毛鱗魚(柳葉魚)(裹粉未炸),Roughscale Sole,171.3,12.9,4.9,19.0
+油魚卵(加工),Fish Roe,416.3,46.6,27.3,0.0
+圓鱈魚卵(加工),Cod Roe,84.4,11.2,4.4,0.0
+鯔魚卵(加工),Mullet Roe,297.3,36.6,8.5,18.7
+鯔魚卵(加工)(2022年取樣),Mullet Roe,431.2,38.9,28.7,4.4
+醃漬鮭魚卵,Pickled Salmon Roe,218.2,24.9,10.2,6.7
+香魚片,Sweetfish Fillet,307.1,36.1,0.7,39.1
+龍蝦卵(調味),Lobster Roe,63.9,6.7,1.8,5.2
+蠑螺(加工),Sea Snail,105.0,14.8,0.2,11.0
+鹹小卷,Salted Squid,99.7,20.1,1.3,1.9
+沖泡濃湯(海鮮),Instant Soup,354.7,11.2,6.9,62.0
+玉米濃湯調理包,Corn Chowder Mix,369.3,4.4,5.9,74.7
+麥片沖泡包(三合一),Instant Oatmeal,408.7,11.0,7.5,74.3
+三合一麥片(野菜蘑菇),3-in-1 Oatmeal,399.2,6.8,9.0,72.7
+糙米麩,Brown Rice Bran,386.9,7.8,3.3,81.4
+麵茶粉,Malt Tea Powder,423.1,7.2,7.0,82.9
+植物燕麥奶粉(營養強化),Plant-Based Oat Milk Powder,436.8,12.0,13.2,67.5
+杏仁茶沖泡包,Instant Almond Tea,399.3,3.5,5.2,84.7
+芝麻糊沖泡包,Instant Black Sesame Paste,458.3,9.3,15.4,70.7
+綜合堅果穀物沖泡包,Mixed Nut and Grain Drink,453.1,13.3,15.4,65.4
+寒天脆藻,Crispy Kanten Seaweed,10.6,0.0,0.0,2.5
+生啤酒,Draft Beer,49.5,0.4,0.0,8.2
+啤酒,Beer,49.0,,0.0,8.9
+陳年紹興酒,Aged Shaoxing Wine,133.1,1.8,0.0,19.1
+白葡萄酒,White Wine,90.3,0.1,0.0,14.2
+紅葡萄酒,Red Wine,92.6,0.1,0.0,14.8
+雞精,Chicken Essence,34.1,8.6,0.0,0.0
