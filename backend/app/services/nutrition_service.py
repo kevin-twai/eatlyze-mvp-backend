@@ -7,7 +7,7 @@ import re
 from difflib import get_close_matches
 from typing import Dict, List, Tuple, Optional
 
-# ---- 欄位鍵定義 ----
+# ---- 欄位鍵定義（相容多種表頭）----
 NAME_KEYS  = ("name", "食品名稱", "食材", "canonical_zh")
 CANON_KEYS = ("canonical", "標準名", "英文名")
 KCAL_KEYS  = ("kcal", "熱量(kcal)", "熱量", "能量kcal")
@@ -16,6 +16,7 @@ FAT_KEYS   = ("fat_g", "脂肪(g)", "脂肪")
 CARB_KEYS  = ("carb_g", "碳水(g)", "碳水化合物", "碳水")
 
 # ---- 英中別名（原始表）----
+# 鍵為模型可能輸出的名稱，值為顯示用中文（或 CSV 內常用中文名）
 ALIAS_MAP_RAW: Dict[str, str] = {
     # 肉/蛋/乳
     "chicken": "雞肉",
@@ -30,13 +31,17 @@ ALIAS_MAP_RAW: Dict[str, str] = {
     "black egg": "皮蛋",
     "century egg": "皮蛋",
     "century eggs": "皮蛋",
+    "preserved egg": "皮蛋",
+    "black preserved egg": "皮蛋",
 
     # 豆/豆製品
     "tofu": "豆腐",
     "silken tofu": "嫩豆腐",
+    "soft tofu": "嫩豆腐",
     "firm tofu": "板豆腐",
+    "egg tofu": "蛋豆腐",
 
-    # 蔬菜
+    # 蔬菜/香草
     "pumpkin": "南瓜",
     "carrot": "胡蘿蔔",
     "eggplant": "茄子",
@@ -45,29 +50,35 @@ ALIAS_MAP_RAW: Dict[str, str] = {
     "green bell pepper": "青椒",
     "red bell pepper": "紅甜椒",
     "onion": "洋蔥",
+    "green onion": "蔥",
+    "spring onion": "蔥",
+    "scallion": "蔥",
     "garlic": "蒜頭",
     "broccoli": "花椰菜",
     "baby corn": "玉米筍",
     "small corn": "玉米筍",
     "mushroom": "蘑菇",
+    "mushrooms": "蘑菇",
     "shiitake": "香菇",
+    "shiitake mushroom": "香菇",
     "enoki": "金針菇",
+    "enoki mushroom": "金針菇",
     "shishito pepper": "獅子唐椒",
     "parsley": "巴西里",
-
-    # 海藻/海鮮調料
     "nori": "海苔",
     "nori seaweed": "海苔",
 
-    # 日式配料
+    # 日式配料 / 柴魚
     "katsuobushi": "柴魚片",
     "dried bonito flakes": "柴魚片",
     "bonito flakes": "柴魚片",
     "katsuobushi (dried bonito flakes)": "柴魚片",
 
-    # 醬/醬料
+    # 醬/醬料（盡量對應常見中文）
     "soy sauce": "醬油",
-    "sweet soy sauce": "甜醬油",
+    "sweet soy sauce": "醬油膏",           # 甜醬油 / kecap manis → 多數情境像醬油膏
+    "kecap manis": "醬油膏",
+    "soy sauce paste": "醬油膏",
     "sweet and sour sauce": "糖醋醬",
     "teriyaki sauce": "照燒醬",
     "oyster sauce": "蠔油",
@@ -87,9 +98,9 @@ def _strip_parens(text: str) -> str:
     return re.sub(r"\(.*?\)", "", text or "").strip()
 
 def _norm(s: str) -> str:
-    """小寫、去空白/連字號/底線、簡單複數處理"""
+    """小寫、去空白/連字號/底線/部分標點、簡單複數處理"""
     s = (s or "").strip().lower()
-    for ch in (" ", "-", "_"):
+    for ch in (" ", "-", "_", "(", ")", "[", "]", ",", "·", "’", "'"):
         s = s.replace(ch, "")
     if s.endswith("es") and len(s) > 3:
         s = s[:-2]
@@ -102,8 +113,8 @@ _NORM_ALIAS: Dict[str, str] = {}
 for k, v in ALIAS_MAP_RAW.items():
     _NORM_ALIAS[_norm(k)] = v
     k2 = _strip_parens(k)
-    if k2 and _norm(k2) not in _NORM_ALIAS:
-        _NORM_ALIAS[_norm(k2)] = v
+    if k2:
+        _NORM_ALIAS.setdefault(_norm(k2), v)
 
 def _alias_to_zh(name: str) -> str:
     """先去括號再查別名表；查不到回傳原字串"""
@@ -160,14 +171,14 @@ def _all_names_for_row(r: dict) -> List[str]:
     names = []
     if zh:
         names.append(zh)
-        # 若 CSV 中文在別名表中（極少見），也加入
+        # 若 CSV 中文剛好也出現在別名（極少），加入對應
         zh_alias = _NORM_ALIAS.get(_norm(zh))
         if zh_alias and zh_alias != zh:
             names.append(zh_alias)
 
     if en:
         names.append(en)
-        # 若英文可映射中文，也加入
+        # 英文可映射中文，也加入
         zh_from_alias = _NORM_ALIAS.get(_norm(en)) or _NORM_ALIAS.get(_norm(_strip_parens(en)))
         if zh_from_alias:
             names.append(zh_from_alias)
@@ -183,7 +194,7 @@ def _all_names_for_row(r: dict) -> List[str]:
     return dedup
 
 def _fuzzy_find(name: str, pool: Optional[List[dict]] = None, cutoff: float = 0.65) -> Optional[dict]:
-    """更寬鬆的模糊匹配，預設 cutoff=0.65"""
+    """較寬鬆的模糊匹配，預設 cutoff=0.65（針對括號/複合詞較穩健）"""
     if not name:
         return None
     pool = pool or _FOODS
@@ -213,7 +224,7 @@ def _find_food(name: str) -> Optional[dict]:
     if not name:
         return None
 
-    # exact（中文/英文/別名中文）
+    # exact（中文/英文/別名中文 + 去括號版）
     key = _norm(name)
     key2 = _norm(_strip_parens(name))
     for r in _FOODS:
@@ -222,7 +233,7 @@ def _find_food(name: str) -> Optional[dict]:
             if kn == key or kn == key2:
                 return r
 
-    # fuzzy
+    # fuzzy（較寬鬆，容忍括號/多字）
     return _fuzzy_find(name, _FOODS, cutoff=0.65)
 
 def _coerce_items(items):
