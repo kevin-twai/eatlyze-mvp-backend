@@ -1,0 +1,122 @@
+[
+  {
+    "id": "fish_yellowback_seabream",
+    "name_zh": "赤鯮",
+    "name_en": "Yellowback sea bream",
+    "canonical": "yellowback sea bream",
+    "aliases": ["yellowback fish", "golden threadfin bream", "sea bream", "snapper", "madai"],
+    "category": "魚類"
+  },
+  {
+    "id": "fish_mackerel",
+    "name_zh": "鯖魚",
+    "name_en": "Mackerel",
+    "canonical": "mackerel",
+    "aliases": ["saba", "mackarel"],
+    "category": "魚類"
+  },
+  {
+    "id": "fish_salmon",
+    "name_zh": "鮭魚",
+    "name_en": "Salmon",
+    "canonical": "salmon",
+    "aliases": ["grilled salmon", "sake fish", "salmon fillet"],
+    "category": "魚類"
+  },
+  {
+    "id": "meat_chicken_breast",
+    "name_zh": "雞胸肉",
+    "name_en": "Chicken breast",
+    "canonical": "chicken breast",
+    "aliases": ["chicken fillet", "grilled chicken breast"],
+    "category": "肉類"
+  },
+  {
+    "id": "meat_beef_steak",
+    "name_zh": "牛排",
+    "name_en": "Beef steak",
+    "canonical": "beef steak",
+    "aliases": ["steak", "beef fillet", "grilled beef"],
+    "category": "肉類"
+  },
+  {
+    "id": "soy_silken_tofu",
+    "name_zh": "嫩豆腐",
+    "name_en": "Silken tofu",
+    "canonical": "silken tofu",
+    "aliases": ["soft tofu", "tofu silken"],
+    "category": "豆製品"
+  },
+  {
+    "id": "soy_firm_tofu",
+    "name_zh": "板豆腐",
+    "name_en": "Firm tofu",
+    "canonical": "firm tofu",
+    "aliases": ["hard tofu", "pressed tofu"],
+    "category": "豆製品"
+  },
+  {
+    "id": "soy_egg_tofu",
+    "name_zh": "玉子豆腐",
+    "name_en": "Egg tofu",
+    "canonical": "egg tofu",
+    "aliases": ["japanese egg tofu"],
+    "category": "豆製品"
+  },
+  {
+    "id": "vegetable_broccoli",
+    "name_zh": "花椰菜",
+    "name_en": "Broccoli",
+    "canonical": "broccoli",
+    "aliases": ["green broccoli"],
+    "category": "蔬菜"
+  },
+  {
+    "id": "vegetable_baby_corn",
+    "name_zh": "玉米筍",
+    "name_en": "Baby corn",
+    "canonical": "baby corn",
+    "aliases": ["small corn", "young corn"],
+    "category": "蔬菜"
+  },
+  {
+    "id": "vegetable_cabbage",
+    "name_zh": "高麗菜",
+    "name_en": "Cabbage",
+    "canonical": "cabbage",
+    "aliases": ["white cabbage", "chinese cabbage"],
+    "category": "蔬菜"
+  },
+  {
+    "id": "condiment_soy_sauce",
+    "name_zh": "醬油",
+    "name_en": "Soy sauce",
+    "canonical": "soy sauce",
+    "aliases": ["shoyu", "soy sauce paste"],
+    "category": "醬料"
+  },
+  {
+    "id": "condiment_katsuobushi",
+    "name_zh": "柴魚片",
+    "name_en": "Bonito flakes",
+    "canonical": "bonito flakes",
+    "aliases": ["dried bonito flakes", "katsuobushi"],
+    "category": "醬料"
+  },
+  {
+    "id": "staple_white_rice",
+    "name_zh": "白飯",
+    "name_en": "White rice",
+    "canonical": "white rice",
+    "aliases": ["rice", "plain rice", "steamed rice"],
+    "category": "主食"
+  },
+  {
+    "id": "staple_ramen",
+    "name_zh": "拉麵",
+    "name_en": "Ramen",
+    "canonical": "ramen",
+    "aliases": ["japanese ramen", "ramen noodles"],
+    "category": "主食"
+  }
+]
