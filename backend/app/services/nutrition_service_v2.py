@@ -1,12 +1,11 @@
 # backend/app/services/nutrition_service_v2.py
 from __future__ import annotations
 
-import csv
-import os
-from difflib import get_close_matches
+import os, csv, re
 from typing import Dict, List, Tuple, Optional
+from difflib import get_close_matches
 
-# ---- 欄位鍵定義 ----
+# 欄位鍵
 NAME_KEYS  = ("name", "食品名稱", "食材", "canonical_zh")
 CANON_KEYS = ("canonical", "標準名", "英文名")
 KCAL_KEYS  = ("kcal", "熱量(kcal)", "熱量", "能量kcal")
@@ -14,62 +13,21 @@ PROT_KEYS  = ("protein_g", "蛋白質(g)", "蛋白質", "蛋白")
 FAT_KEYS   = ("fat_g", "脂肪(g)", "脂肪")
 CARB_KEYS  = ("carb_g", "碳水(g)", "碳水化合物", "碳水")
 
-# ---- 常用別名（英文→中文）----
-ALIAS_MAP = {
-    # 蔬菜類
+# 配菜忽略門檻（若 include_garnish=False 時才生效）
+GARNISH_IGNORE_GRAMS = 5.0
+
+# 常見別名（可視需要擴增）
+ALIAS_RAW = {
     "cucumber": "小黃瓜",
-    "cucumbers": "小黃瓜",
-    "persian cucumber": "小黃瓜",
-    "japanese cucumber": "小黃瓜",
-
     "carrot": "紅蘿蔔",
-    "carrots": "紅蘿蔔",
-
-    "green pepper": "青椒",
-    "bell pepper": "青椒",
-    "green bell pepper": "青椒",
-    "red bell pepper": "紅甜椒",
-
-    "onion": "洋蔥",
-    "white onion": "白洋蔥",
-    "garlic": "蒜頭",
-    "ginger": "薑",
-
-    # 豆腐/豆干
-    "tofu": "豆腐",
-    "silken tofu": "嫩豆腐",
-    "firm tofu": "板豆腐",
-    "dried tofu": "豆干",
-    "tofu strips": "豆干絲",
-    "tofu shreds": "豆干絲",
-    "bean curd strips": "豆干絲",
-    "bean curd": "豆干",
-    "bean curd sheet": "豆皮",
-
-    # 其他常見
-    "bonito flakes": "柴魚片",
-    "katsuobushi": "柴魚片",
-    "soy sauce": "醬油",
-    "sweet soy sauce": "甜醬油",
-    "sweet and sour sauce": "糖醋醬",
-    "teriyaki sauce": "照燒醬",
-    "oyster sauce": "蠔油",
-    "hoisin sauce": "海鮮醬",
-
-    "century egg": "皮蛋",
-    "black egg": "皮蛋",
-
-    "rice": "白飯",
-    "white rice": "白飯",
-    "noodles": "麵",
-    "ramen noodles": "拉麵",
-    "udon": "烏龍麵",
-    "soba noodles": "蕎麥麵",
-
-    "salmon": "鮭魚",
-    "fish": "魚肉",
-    "chicken breast": "雞胸肉",
+    "shredded tofu": "豆干絲",
+    "tofu strip": "豆干絲",
+    "tofu threads": "豆干絲",
+    "bell pepper": "甜椒",
 }
+
+def _strip_parens(s: str) -> str:
+    return re.sub(r"\(.*?\)", "", s or "").strip()
 
 def _norm(s: str) -> str:
     s = (s or "").strip().lower()
@@ -81,15 +39,19 @@ def _norm(s: str) -> str:
         s = s[:-1]
     return s
 
-_NORM_ALIAS = {_norm(k): v for k, v in ALIAS_MAP.items()}
+# 正規化別名表
+NORM_ALIAS: Dict[str, str] = {}
+for k, v in ALIAS_RAW.items():
+    NORM_ALIAS[_norm(k)] = v
+    k2 = _strip_parens(k)
+    if k2 and _norm(k2) not in NORM_ALIAS:
+        NORM_ALIAS[_norm(k2)] = v
 
-
-def _col(r: dict, keys: Tuple[str, ...], default=None):
+def _col(row: dict, keys: Tuple[str, ...], default=None):
     for k in keys:
-        if k in r and r[k] not in (None, ""):
-            return r[k]
+        if k in row and row[k] not in (None, ""):
+            return row[k]
     return default
-
 
 def _as_float(x, default=0.0):
     try:
@@ -97,163 +59,137 @@ def _as_float(x, default=0.0):
     except Exception:
         return default
 
-
-def _load_csv(csv_path: str) -> List[dict]:
+def _load_foods(csv_path: str) -> List[dict]:
     with open(csv_path, "r", encoding="utf-8") as f:
-        return [dict(row) for row in csv.DictReader(f)]
-
+        rdr = csv.DictReader(f)
+        return [dict(r) for r in rdr]
 
 _FOODS: List[dict] = []
-
 
 def _ensure_loaded():
     global _FOODS
     if _FOODS:
         return
-    candidates = [
+    cands = [
         os.path.join(os.path.dirname(__file__), "..", "data", "foods_tw.csv"),
         os.path.join(os.getcwd(), "backend", "app", "data", "foods_tw.csv"),
         os.path.join(os.getcwd(), "app", "data", "foods_tw.csv"),
     ]
-    for p in candidates:
+    for p in cands:
         p = os.path.normpath(p)
         if os.path.exists(p):
-            _FOODS = _load_csv(p)
+            _FOODS = _load_foods(p)
             break
     if not _FOODS:
         raise FileNotFoundError("foods_tw.csv not found")
 
+def _display_label(name: str, canonical: str) -> str:
+    # 優先 CSV 的中文，否則用別名把英文轉中文
+    return name or NORM_ALIAS.get(_norm(canonical), canonical)
 
-def _all_names(r: dict) -> List[str]:
-    zh = (_col(r, NAME_KEYS, "") or "").strip()
-    en = (_col(r, CANON_KEYS, "") or "").strip()
-    names = []
-    if zh:
-        names.append(zh)
-    if en:
-        names.append(en)
-        alias_zh = _NORM_ALIAS.get(_norm(en))
-        if alias_zh:
-            names.append(alias_zh)
+def _names_for_row(r: dict) -> List[str]:
+    zh = _col(r, NAME_KEYS, "") or ""
+    en = _col(r, CANON_KEYS, "") or ""
+    names = [zh, en]
+    alias = NORM_ALIAS.get(_norm(en))
+    if alias:
+        names.append(alias)
     # 去重
-    out, seen = [], set()
+    got, seen = [], set()
     for n in names:
         k = _norm(n)
         if k and k not in seen:
-            seen.add(k)
-            out.append(n)
-    return out
+            seen.add(k); got.append(n)
+    return got
 
-
-def _find_food(name: str) -> Optional[dict]:
-    _ensure_loaded()
-    if not name:
+def _fuzzy_find(key: str, cutoff: float = 0.7) -> Optional[dict]:
+    key = _norm(key)
+    cands = []
+    for r in _FOODS:
+        for n in _names_for_row(r):
+            cands.append((_norm(n), r))
+    pool = [c[0] for c in cands if c[0]]
+    hits = get_close_matches(key, pool, n=1, cutoff=cutoff)
+    if not hits:
         return None
-    key = _norm(name)
-
-    # exact
-    for r in _FOODS:
-        for n in _all_names(r):
-            if _norm(n) == key:
-                return r
-
-    # alias zh
-    alias_zh = _NORM_ALIAS.get(key)
-    if alias_zh:
-        for r in _FOODS:
-            if _norm(_col(r, NAME_KEYS, "") or "") == _norm(alias_zh):
-                return r
-
-    # fuzzy（略鬆）
-    candidates = []
-    for r in _FOODS:
-        for n in _all_names(r):
-            candidates.append((_norm(n), r))
-    corpus = [c[0] for c in candidates]
-    hits = get_close_matches(key, corpus, n=1, cutoff=0.82)
-    if hits:
-        h = hits[0]
-        for k2, r in candidates:
-            if k2 == h:
-                return r
+    hit = hits[0]
+    for n, r in cands:
+        if n == hit:
+            return r
     return None
 
+def _find_food(name_or_canonical: str) -> Optional[dict]:
+    _ensure_loaded()
+    if not name_or_canonical:
+        return None
+    key = _norm(name_or_canonical)
+    key2 = _norm(_strip_parens(name_or_canonical))
+    for r in _FOODS:
+        for n in _names_for_row(r):
+            kn = _norm(n)
+            if kn == key or kn == key2:
+                return r
+    return _fuzzy_find(name_or_canonical, cutoff=0.7)
 
-def _coerce_items(items):
-    if isinstance(items, dict):
-        return [items]
-    if not isinstance(items, list):
-        return []
-    return items
+def _coerce_list(x):
+    if isinstance(x, list): return x
+    if isinstance(x, dict): return [x]
+    return []
 
-
-def calc(items: List[Dict], include_garnish: bool = False):
+def calc(items: List[Dict], include_garnish: bool = True):
     """
-    items: [{'name':..., 'canonical':..., 'weight_g':..., 'is_garnish':bool}, ...]
-    回傳: (enriched_items, totals)
+    include_garnish=True -> 一律計入配菜營養
+    若 include_garnish=False，且 is_garnish=True 且 weight < 門檻，才忽略。
     """
     _ensure_loaded()
-    items = _coerce_items(items)
+    items = _coerce_list(items)
+    out, totals = [], dict(kcal=0.0, protein_g=0.0, fat_g=0.0, carb_g=0.0)
 
-    enriched: List[Dict] = []
-    totals = dict(kcal=0.0, protein_g=0.0, fat_g=0.0, carb_g=0.0)
+    for it in items:
+        it = dict(it or {})
+        w = _as_float(it.get("weight_g", 0), 0.0)
+        nm = (it.get("name") or "").strip()
+        cano = (it.get("canonical") or "").strip()
 
-    for it in items or []:
-        if not include_garnish and bool(it.get("is_garnish")):
-            out = {
-                **it,
+        # 忽略條件（只有在 include_garnish=False 且 重量小於門檻 才忽略）
+        if not include_garnish and bool(it.get("is_garnish")) and w < GARNISH_IGNORE_GRAMS:
+            out.append({
+                **it, "label": it.get("name") or it.get("canonical"),
                 "kcal": 0.0, "protein_g": 0.0, "fat_g": 0.0, "carb_g": 0.0,
-                "matched": False,
-                "label": it.get("name") or it.get("canonical"),
-            }
-            enriched.append(out)
+                "matched": False
+            })
             continue
 
-        nm = str(it.get("name") or "").strip()
-        ca = str(it.get("canonical") or "").strip()
-
-        row = _find_food(nm) or _find_food(ca)
-        w = _as_float(it.get("weight_g", 0.0), 0.0)
-        if w < 0:
-            w = 0.0
-
+        row = _find_food(nm) or _find_food(cano)
         if row:
             per100_kcal = _as_float(_col(row, KCAL_KEYS, 0))
             per100_p    = _as_float(_col(row, PROT_KEYS, 0))
-            per100_f    = _as_float(_col(row, FAT_KEYS,  0))
+            per100_f    = _as_float(_col(row, FAT_KEYS, 0))
             per100_c    = _as_float(_col(row, CARB_KEYS, 0))
             ratio = w / 100.0
             kcal = round(per100_kcal * ratio, 1)
-            p    = round(per100_p    * ratio, 1)
-            f    = round(per100_f    * ratio, 1)
-            c    = round(per100_c    * ratio, 1)
+            p    = round(per100_p * ratio, 1)
+            f    = round(per100_f * ratio, 1)
+            c    = round(per100_c * ratio, 1)
+            lbl  = _display_label(_col(row, NAME_KEYS, ""), _col(row, CANON_KEYS, cano))
             matched = True
-
-            label = _col(row, NAME_KEYS) or ALIAS_MAP.get(_norm(ca), nm or ca)
-            canonical = _col(row, CANON_KEYS, ca or nm)
         else:
             kcal = p = f = c = 0.0
+            lbl = _display_label(nm, cano)
             matched = False
-            # 沒有對上 CSV，也至少用別名中文顯示，避免英文落地
-            label = ALIAS_MAP.get(_norm(nm or ca), nm or ca)
-            canonical = ca or nm
 
-        out = {
-            **it,
-            "label": label,
-            "canonical": canonical,
-            "kcal": kcal,
-            "protein_g": p,
-            "fat_g": f,
-            "carb_g": c,
-            "matched": matched,
-        }
-        enriched.append(out)
+        out.append({
+            **it, "label": lbl,
+            "kcal": kcal, "protein_g": p, "fat_g": f, "carb_g": c,
+            "matched": matched
+        })
 
         totals["kcal"]      += kcal
         totals["protein_g"] += p
         totals["fat_g"]     += f
         totals["carb_g"]    += c
 
-    totals = {k: (round(v, 1) if isinstance(v, float) else v) for k, v in totals.items()}
-    return enriched, totals
+    for k in totals:
+        if isinstance(totals[k], float):
+            totals[k] = round(totals[k], 1)
+    return out, totals

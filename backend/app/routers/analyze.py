@@ -1,43 +1,52 @@
 # backend/app/routers/analyze.py
 from __future__ import annotations
 
-import base64
-from fastapi import APIRouter, File, UploadFile
+from fastapi import APIRouter, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse
-
 from app.services.openai_client import vision_analyze_base64
-from app.services import nutrition_service_v2 as nutrition
-from app.services.storage import store_image_and_get_url
+from app.services import nutrition_service_v2 as nutrition  # ⬅ 使用 v2
+import base64
 
-router = APIRouter(prefix="/analyze", tags=["Analyze"])
+router = APIRouter(prefix="/analyze", tags=["analyze"])
 
+# 略保守的配菜忽略門檻（g）
+GARNISH_IGNORE_GRAMS = 5
+
+def _should_force_include(item: dict) -> bool:
+    """重量 >= 門檻就一定納入計算（即使被標記 is_garnish）"""
+    try:
+        w = float(item.get("weight_g", 0) or 0)
+    except Exception:
+        w = 0.0
+    return w >= GARNISH_IGNORE_GRAMS
 
 @router.post("/image")
 async def analyze_image(file: UploadFile = File(...)):
-    # 讀入原始 bytes
-    raw = await file.read()
-
-    # 存檔取可公開 URL
-    image_url = store_image_and_get_url(raw, file.filename)
-
-    # 轉 base64 給 Vision
-    img_b64 = base64.b64encode(raw).decode("utf-8")
-
     try:
-        # Vision -> {"items":[...]}
-        parsed = await vision_analyze_base64(img_b64)
+        b = await file.read()
+        img_b64 = base64.b64encode(b).decode("utf-8")
+    except Exception:
+        raise HTTPException(status_code=400, detail="上傳檔案無法讀取")
+
+    # 1) 先用 Vision 取得辨識項目
+    try:
+        parsed = await vision_analyze_base64(img_b64)  # 預期 {"items":[...]}
     except Exception as e:
-        # 失敗時仍回傳 image_url，前端可以顯示照片
-        return JSONResponse(
-            {"error": f"vision failed: {e}", "image_url": image_url, "items": [], "summary": {"kcal": 0, "protein_g": 0, "fat_g": 0, "carb_g": 0}},
-            status_code=502,
-        )
+        raise HTTPException(status_code=502, detail=f"Vision 失敗: {e}")
 
-    # 營養計算（不將「配菜/裝飾」計算入內）
-    enriched, totals = nutrition.calc(parsed.get("items", []), include_garnish=False)
+    items = parsed.get("items") or []
+    if not isinstance(items, list):
+        items = []
 
-    return {
-        "image_url": image_url,
-        "items": enriched,
-        "summary": totals,
-    }
+    # 2) 預處理：重量足夠的配菜強制納入；其餘照原樣
+    normalized = []
+    for it in items:
+        it = dict(it or {})
+        if _should_force_include(it):
+            it["is_garnish"] = False
+        normalized.append(it)
+
+    # 3) 計算營養（關鍵：直接把 include_garnish 設成 True）
+    enriched, totals = nutrition.calc(normalized, include_garnish=True)
+
+    return JSONResponse({"items": enriched, "summary": totals})
