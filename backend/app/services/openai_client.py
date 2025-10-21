@@ -9,8 +9,6 @@ import csv
 from typing import List, Dict, Any
 
 from openai import OpenAI
-from aiohttp import ClientSession  # 若你不想帶 aiohttp，可移除；這裡保留以便未來做外部取檔
-
 
 # -----------------------------
 # 讀 CSV 取出 canonical 與常見別名（簡單作法）
@@ -91,7 +89,6 @@ def _build_vision_messages(image_b64: str) -> List[Dict[str, Any]]:
 
 
 def _clean_json(s: str) -> dict:
-    # 容錯：把可能包裝 code block 的字去掉
     s = s.strip()
     s = re.sub(r"^```json\s*|\s*```$", "", s)
     return json.loads(s)
@@ -103,7 +100,6 @@ async def vision_analyze_base64(image_b64: str, model_primary="gpt-4o-mini", mod
     """
     b64 = _strip_b64_prefix(image_b64)
     try:
-        # 驗證 base64
         base64.b64decode(b64, validate=True)
     except Exception as e:
         raise RuntimeError(f"invalid base64 image: {e}")
@@ -111,7 +107,7 @@ async def vision_analyze_base64(image_b64: str, model_primary="gpt-4o-mini", mod
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     messages = _build_vision_messages(b64)
 
-    async def _call(model: str) -> dict:
+    def _call(model: str) -> dict:
         res = client.chat.completions.create(
             model=model,
             temperature=0.2,
@@ -123,12 +119,12 @@ async def vision_analyze_base64(image_b64: str, model_primary="gpt-4o-mini", mod
 
     # primary
     try:
-        return await _call(model_primary)
+        return _call(model_primary)
     except Exception:
         pass
 
     # fallback
     try:
-        return await _call(model_fallback)
+        return _call(model_fallback)
     except Exception as e:
         raise RuntimeError(f"OpenAI API failed after retries: {e}")
