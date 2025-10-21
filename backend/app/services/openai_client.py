@@ -1,60 +1,134 @@
 # backend/app/services/openai_client.py
 from __future__ import annotations
 
-import os, httpx, json, asyncio
+import json
+import os
+import re
+import base64
+import csv
+from typing import List, Dict, Any
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-OPENAI_BASE = os.getenv("OPENAI_BASE", "https://api.openai.com/v1")
-PRIMARY_MODEL = os.getenv("VISION_MODEL", "gpt-4o-mini")
-FALLBACK_MODEL = os.getenv("VISION_FALLBACK", "gpt-4o")
+from openai import OpenAI
+from aiohttp import ClientSession  # 若你不想帶 aiohttp，可移除；這裡保留以便未來做外部取檔
 
-PROMPT = """
-You are a food vision assistant. Return a strict JSON with an array `items`.
-Each `item` has: name (en), canonical (en), weight_g (float), is_garnish (bool).
 
-Rules:
-- Prefer concrete ingredient names over broad categories (e.g., "shredded tofu" not just "tofu").
-- Synonyms you may use:
-  * shredded tofu = tofu strips = tofu threads
-  * cucumber = small cucumber
-  * bell pepper = sweet pepper
-- Only set is_garnish=true when the portion is tiny (sprinkle-level).
-  If a vegetable portion is visible in spoonfuls (>= ~5 g), set is_garnish=false.
-- Guess reasonable weights in grams.
+# -----------------------------
+# 讀 CSV 取出 canonical 與常見別名（簡單作法）
+# -----------------------------
+FOODS_CSV_PATHS = [
+    os.path.join(os.path.dirname(__file__), "..", "data", "foods_tw.csv"),
+    os.path.join(os.getcwd(), "backend", "app", "data", "foods_tw.csv"),
+    os.path.join(os.getcwd(), "app", "data", "foods_tw.csv"),
+]
 
-Return JSON only.
+
+def _load_csv_vocab() -> List[str]:
+    for p in FOODS_CSV_PATHS:
+        p = os.path.normpath(p)
+        if os.path.exists(p):
+            with open(p, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                words = set()
+                for r in reader:
+                    cano = (r.get("canonical") or "").strip()
+                    if cano:
+                        words.add(cano.lower())
+                # 補幾個常用 alias（你可再擴充或改從 nutrition_service_v2 載入）
+                words.update(
+                    {
+                        "cucumber", "shredded tofu", "tamagoyaki", "soy sauce", "dashi",
+                        "carrot", "onion", "garlic", "egg", "white rice",
+                        "bell pepper", "green pepper", "red bell pepper",
+                    }
+                )
+                return sorted(list(words))
+    return []
+
+
+VOCAB = _load_csv_vocab()
+
+VISION_GUIDE = f"""
+You are a food ingredient detector. Return STRICT JSON only.
+
+Output shape:
+{{
+  "items":[
+    {{"name":"(中文或英文)","canonical":"(MUST be from allowed list)","weight_g":(float),"is_garnish":(true|false)}},
+    ...
+  ]
+}}
+
+Rules (IMPORTANT):
+1) Use ONLY the following allowed canonical list (case-insensitive, prefer lower-case): {", ".join(VOCAB) or "[]"}.
+2) 'name' use Chinese if obvious (e.g., 小黃瓜、豆乾絲、玉子燒), otherwise English.
+3) 'is_garnish' TRUE only for decorative, tiny amount (<5 g): parsley, cilantro, sesame sprinkle, scallion garnish, lemon zest etc.
+   In cold dishes like cucumber salad, carrot shreds/garlic slices ARE ingredients, DO NOT mark as garnish.
+4) If you see tamagoyaki/dashimaki tamago (Japanese omelette), you MAY return just one item with "canonical":"tamagoyaki",
+   the backend will expand it to egg + dashi + soy sauce.
+5) 'weight_g' is a rough per-portion estimate from the photo (±30% is acceptable).
+6) Return pure JSON, no commentary.
 """
 
-async def _openai_chat_json(image_b64: str, model: str, temp=0.2, max_tokens=600):
-    headers = {"Authorization": f"Bearer {OPENAI_API_KEY}", "Content-Type": "application/json"}
-    body = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": PROMPT},
-            {"role": "user", "content": [
-                {"type": "text", "text": "Analyze this meal and list items."},
-                {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_b64}"}}
-            ]}
-        ],
-        "temperature": temp,
-        "max_tokens": max_tokens,
-        "response_format": {"type": "json_object"}
-    }
-    async with httpx.AsyncClient(timeout=60) as client:
-        r = await client.post(f"{OPENAI_BASE}/chat/completions", headers=headers, json=body)
-        r.raise_for_status()
-        data = r.json()
-        try:
-            content = data["choices"][0]["message"]["content"]
-            return json.loads(content)
-        except Exception:
-            return {"items": []}
 
-async def vision_analyze_base64(image_b64: str):
-    # 先主模型
+def _strip_b64_prefix(b64: str) -> str:
+    return re.sub(r"^data:image/[^;]+;base64,", "", b64.strip(), flags=re.I)
+
+
+def _build_vision_messages(image_b64: str) -> List[Dict[str, Any]]:
+    return [
+        {
+            "role": "system",
+            "content": VISION_GUIDE.strip(),
+        },
+        {
+            "role": "user",
+            "content": [
+                {"type": "input_text", "text": "Identify ingredients from this photo and return JSON."},
+                {"type": "input_image", "image_url": {"url": f"data:image/jpeg;base64,{image_b64}"}},
+            ],
+        },
+    ]
+
+
+def _clean_json(s: str) -> dict:
+    # 容錯：把可能包裝 code block 的字去掉
+    s = s.strip()
+    s = re.sub(r"^```json\s*|\s*```$", "", s)
+    return json.loads(s)
+
+
+async def vision_analyze_base64(image_b64: str, model_primary="gpt-4o-mini", model_fallback="gpt-4o") -> dict:
+    """
+    回傳 {"items":[{name, canonical, weight_g, is_garnish}, ...]}
+    """
+    b64 = _strip_b64_prefix(image_b64)
     try:
-        return await _openai_chat_json(image_b64, PRIMARY_MODEL, temp=0.2, max_tokens=700)
+        # 驗證 base64
+        base64.b64decode(b64, validate=True)
+    except Exception as e:
+        raise RuntimeError(f"invalid base64 image: {e}")
+
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    messages = _build_vision_messages(b64)
+
+    async def _call(model: str) -> dict:
+        res = client.chat.completions.create(
+            model=model,
+            temperature=0.2,
+            response_format={"type": "json_object"},
+            messages=messages,
+        )
+        txt = res.choices[0].message.content
+        return _clean_json(txt)
+
+    # primary
+    try:
+        return await _call(model_primary)
     except Exception:
         pass
-    # 退備援
-    return await _openai_chat_json(image_b64, FALLBACK_MODEL, temp=0.3, max_tokens=700)
+
+    # fallback
+    try:
+        return await _call(model_fallback)
+    except Exception as e:
+        raise RuntimeError(f"OpenAI API failed after retries: {e}")
