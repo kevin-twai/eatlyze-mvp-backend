@@ -21,6 +21,23 @@ def _empty_payload() -> Dict[str, Any]:
     }
 
 
+def _strip_data_url_prefix(b64: str) -> str:
+    """
+    剝掉 data URL 前綴，例如：
+    data:image/jpeg;base64,/9j/4AAQSk... -> /9j/4AAQSk...
+    """
+    if not b64:
+        return b64
+    s = b64.strip()
+    # 如果含逗號，通常逗號之後才是純 base64
+    if "base64," in s:
+        return s.split("base64,", 1)[-1].strip()
+    # 少數前綴沒寫 base64 但仍有逗號的情況
+    if s.startswith("data:") and "," in s:
+        return s.split(",", 1)[-1].strip()
+    return s
+
+
 async def _parse_image_b64(request: Request) -> Tuple[str, bool]:
     """
     盡量容錯地把請求體轉成 base64 字串，並回傳 include_garnish。
@@ -39,11 +56,16 @@ async def _parse_image_b64(request: Request) -> Tuple[str, bool]:
                     or data.get("includeGarnish")
                     or False
                 )
-                b64 = data.get("image_base64") or data.get("imageBase64") or ""
+                b64 = (
+                    data.get("image_base64")
+                    or data.get("imageBase64")
+                    or data.get("image_b64")
+                    or data.get("imageB64")
+                    or ""
+                )
                 if isinstance(b64, bytes):
-                    # 若是 bytes 就直接當作已是 base64 的 bytes
                     b64 = b64.decode("utf-8", errors="ignore")
-                return (b64 or "").strip(), include_garnish
+                return _strip_data_url_prefix(b64 or ""), include_garnish
         except Exception:
             pass  # fallthrough to raw parsing
 
@@ -51,17 +73,31 @@ async def _parse_image_b64(request: Request) -> Tuple[str, bool]:
     if "multipart/form-data" in ct:
         try:
             form = await request.form()
-            # 常見欄位名：file / image
+
+            # 解析 include_garnish（表單布林/字串都接受）
+            ig_val = form.get("include_garnish") or form.get("includeGarnish")
+            if isinstance(ig_val, str):
+                include_garnish = ig_val.lower() in ("1", "true", "yes", "y", "on")
+            elif ig_val is not None:
+                include_garnish = bool(ig_val)
+
+            # 常見檔案欄位：file / image
             upload = form.get("file") or form.get("image")
             if upload is not None and hasattr(upload, "read"):
                 content: bytes = await upload.read()
                 return base64.b64encode(content).decode("ascii"), include_garnish
 
-            # 也支援直接傳 image_base64 欄位
-            b64 = form.get("image_base64") or form.get("imageBase64") or ""
+            # 也支援直接傳 base64 欄位
+            b64 = (
+                form.get("image_base64")
+                or form.get("imageBase64")
+                or form.get("image_b64")
+                or form.get("imageB64")
+                or ""
+            )
             if isinstance(b64, bytes):
                 b64 = b64.decode("utf-8", errors="ignore")
-            return (b64 or "").strip(), include_garnish
+            return _strip_data_url_prefix(b64 or ""), include_garnish
         except Exception:
             pass  # fallthrough to raw parsing
 
@@ -72,16 +108,21 @@ async def _parse_image_b64(request: Request) -> Tuple[str, bool]:
             return "", include_garnish
         # 嘗試把 bytes 解成文字（若本來就是 base64 字串）
         try:
-            text = raw.decode("utf-8")
-            # 粗略判斷是否像 base64
-            if any(k in text for k in ("data:image", "/", "+")) and len(text) > 16:
-                return text.strip(), include_garnish
+            text = raw.decode("utf-8", errors="ignore").strip()
+            # 看起來像 data-url 或 base64 字串就直接用
+            if (text.startswith("data:") and "," in text) or len(text) > 32:
+                return _strip_data_url_prefix(text), include_garnish
         except Exception:
             pass
         # 直接把二進位轉 base64
         return base64.b64encode(raw).decode("ascii"), include_garnish
     except Exception:
         return "", include_garnish
+
+
+@router.get("/ping")
+async def ping():
+    return {"ok": True, "route": "/analyze/image"}
 
 
 @router.post("/image")

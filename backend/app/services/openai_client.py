@@ -3,110 +3,142 @@ from __future__ import annotations
 
 import json
 import os
-import re
 from typing import Any, Dict, List, Tuple
 
-from openai import OpenAI
+from openai import OpenAI, OpenAIError
 
-# 你可以改用環境變數切換模型
+# === 可調參數 ===
 PRIMARY_MODEL = os.getenv("VISION_PRIMARY_MODEL", "gpt-4o-mini")
 FALLBACK_MODEL = os.getenv("VISION_FALLBACK_MODEL", "gpt-4o")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+_client: OpenAI | None = None
+
+
+def _client_ok() -> OpenAI:
+    global _client
+    if _client is None:
+        if not OPENAI_API_KEY:
+            raise RuntimeError("OPENAI_API_KEY is not set")
+        _client = OpenAI(api_key=OPENAI_API_KEY)
+    return _client
+
 
 SYSTEM_PROMPT = (
-    "You are a nutrition photo analyzer. "
-    "Return ONLY a JSON object with key 'items'. "
-    "Each item must be an object with keys: "
-    "name (string), canonical (string), weight_g (number), is_garnish (boolean). "
-    "No explanations."
+    "You are a nutrition vision assistant. Look at the photo and extract a short "
+    "list of food items with weights (in grams). Output STRICT JSON with this schema:\n"
+    "{ \"items\": [ {\"name\": str, \"canonical\": str, \"weight_g\": number, \"is_garnish\": bool} ] }\n"
+    "- name: human-readable label (English) you see/decide\n"
+    "- canonical: lowercase english key usable to join nutrition table (e.g. 'silken tofu', 'cucumber')\n"
+    "- weight_g: best estimate in grams for each item\n"
+    "- is_garnish: True for tiny toppings (spring onion, parsley, etc.)\n"
+    "If unsure, keep the list small. If it's miso soup, typical components can be "
+    "[\"silken tofu\", \"miso paste\", \"spring onion\", \"wakame\", \"dashi\"] with reasonable weights."
 )
 
-ALLOWED_KEYS = {"name", "canonical", "weight_g", "is_garnish"}
+# 常見品項 → 建議 canonical（避免模型產生奇怪大小寫/同義字）
+_CANON_SUGGEST = {
+    # soups
+    "miso soup": "miso soup",
+    "silken tofu": "silken tofu",
+    "tofu": "silken tofu",
+    "spring onion": "spring onion",
+    "green onion": "spring onion",
+    "scallion": "spring onion",
+    "wakame": "wakame",
+    "seaweed": "wakame",
+    "dashi": "dashi",
+    # salads / cold plates
+    "cucumber": "cucumber",
+    "carrot": "carrot",
+    "shredded carrot": "carrot",
+    "shredded tofu": "shredded tofu",
+    "bean curd strips": "shredded tofu",
+    "red pepper": "red pepper",
+    "sweet pepper": "red pepper",
+}
 
-JSON_BLOCK = re.compile(r"\{[\s\S]*\}", re.MULTILINE)
 
-def _extract_json(text: str) -> Dict[str, Any] | None:
-    """從任意文字中盡力抽出 JSON 物件（抓第一個大括號區塊再 parse）"""
-    if not text:
-        return None
-    # 先試直接 parse
-    try:
-        obj = json.loads(text)
-        if isinstance(obj, dict):
-            return obj
-    except Exception:
-        pass
-    # 抓第一個 { ... } 區塊
-    m = JSON_BLOCK.search(text)
-    if not m:
-        return None
-    snippet = m.group(0)
-    try:
-        obj = json.loads(snippet)
-        if isinstance(obj, dict):
-            return obj
-    except Exception:
-        return None
-    return None
+def _norm(s: str) -> str:
+    s = (s or "").strip().lower()
+    for ch in (" ", "_"):
+        s = s.replace(ch, " ")
+    return " ".join(s.split())
 
-def _sanitize_items(raw_items: Any) -> List[Dict[str, Any]]:
-    """只保留允許欄位，補上預設值，過濾掉壞 item"""
-    out: List[Dict[str, Any]] = []
-    if not isinstance(raw_items, list):
-        return out
-    for it in raw_items:
-        if not isinstance(it, dict):
-            continue
-        clean = {
-            "name": str(it.get("name") or "").strip(),
-            "canonical": str(it.get("canonical") or "").strip(),
-            "weight_g": float(it.get("weight_g") or 0.0),
-            "is_garnish": bool(it.get("is_garnish") or False),
-        }
-        # 允許 name/canonical 其一為空，但兩個都空就跳過
-        if not clean["name"] and not clean["canonical"]:
-            continue
-        out.append(clean)
-    return out
+
+def _post_fixup(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """把模型輸出的 canonical 做最小校正，並確保欄位完整可序列化。"""
+    fixed: List[Dict[str, Any]] = []
+    for it in items or []:
+        name = str(it.get("name") or "").strip()
+        canonical = str(it.get("canonical") or name).strip()
+        weight = it.get("weight_g", 0)
+        is_garnish = bool(it.get("is_garnish", False))
+
+        nkey = _norm(canonical or name)
+        canonical2 = _CANON_SUGGEST.get(nkey, nkey)  # 統一小寫 key
+
+        try:
+            weight = float(weight) if weight is not None else 0.0
+        except Exception:
+            weight = 0.0
+
+        fixed.append(
+            {
+                "name": name or canonical2 or "item",
+                "canonical": canonical2 or "item",
+                "weight_g": round(weight, 1),
+                "is_garnish": bool(is_garnish),
+            }
+        )
+    return fixed
+
 
 def vision_analyze_base64(image_b64: str) -> Dict[str, Any]:
-    """回傳 dict: {items: [...]} 或 {items: [], reason: "..."}"""
-    if not image_b64:
-        return {"items": [], "reason": "no_image"}
+    """
+    以 base64 圖片做食材抽取。必定回傳可 JSON 化的 dict：
+    { "items": [...], "model": "...", "error": None|str }
+    """
+    client = _client_ok()
 
-    def _call(model: str) -> str:
+    # 建立 Chat 請求（強制輸出 JSON 物件）
+    def _call(model: str) -> Dict[str, Any]:
         resp = client.chat.completions.create(
             model=model,
-            temperature=0,
+            response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": "Analyze this meal photo and respond with JSON only."},
-                        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_b64}"}},
+                        {"type": "input_text", "text": "Extract food items."},
+                        {"type": "input_image", "image_url": f"data:image/jpeg;base64,{image_b64}"},
                     ],
                 },
             ],
+            temperature=0.2,
         )
-        return resp.choices[0].message.content or ""
-
-    # 主模型
-    text = ""
-    try:
-        text = _call(PRIMARY_MODEL)
-    except Exception as e:
-        # 備援模型
+        txt = (resp.choices[0].message.content or "").strip()
+        # 有些版本會把 json 包在 ```json 區塊
+        if txt.startswith("```"):
+            txt = txt.strip("`")
+            if txt.lower().startswith("json"):
+                txt = txt[4:].strip()
         try:
-            text = _call(FALLBACK_MODEL)
-        except Exception as e2:
-            return {"items": [], "reason": f"vision_error: {e2}"}
+            data = json.loads(txt)
+        except Exception:
+            # 如果不是 JSON，嘗試容錯
+            data = {"items": []}
+        # 強制結構與後處理
+        items = _post_fixup(list(data.get("items") or []))
+        return {"items": items, "model": model, "error": None}
 
-    data = _extract_json(text)
-    if not data:
-        return {"items": [], "reason": "parse_fail", "raw": text[:4000]}
-
-    raw_items = data.get("items")
-    items = _sanitize_items(raw_items)
-    return {"items": items}
+    try:
+        try:
+            return _call(PRIMARY_MODEL)
+        except OpenAIError:
+            # 轉用備援模型
+            return _call(FALLBACK_MODEL)
+    except Exception as e:
+        # 保證回傳可序列化
+        return {"items": [], "model": PRIMARY_MODEL, "error": f"{type(e).__name__}: {e}"}
