@@ -7,7 +7,7 @@ from typing import Any, Dict, Tuple
 from fastapi import APIRouter, Request
 from starlette.responses import JSONResponse
 
-from app.services.openai_client import vision_analyze_base64
+from app.services.openai_client import vision_analyze_base64  # 同步函式
 from app.services import nutrition_service_v2 as nutrition
 
 router = APIRouter(prefix="/analyze", tags=["analyze"])
@@ -29,10 +29,8 @@ def _strip_data_url_prefix(b64: str) -> str:
     if not b64:
         return b64
     s = b64.strip()
-    # 如果含逗號，通常逗號之後才是純 base64
     if "base64," in s:
         return s.split("base64,", 1)[-1].strip()
-    # 少數前綴沒寫 base64 但仍有逗號的情況
     if s.startswith("data:") and "," in s:
         return s.split(",", 1)[-1].strip()
     return s
@@ -74,20 +72,17 @@ async def _parse_image_b64(request: Request) -> Tuple[str, bool]:
         try:
             form = await request.form()
 
-            # 解析 include_garnish（表單布林/字串都接受）
             ig_val = form.get("include_garnish") or form.get("includeGarnish")
             if isinstance(ig_val, str):
                 include_garnish = ig_val.lower() in ("1", "true", "yes", "y", "on")
             elif ig_val is not None:
                 include_garnish = bool(ig_val)
 
-            # 常見檔案欄位：file / image
             upload = form.get("file") or form.get("image")
             if upload is not None and hasattr(upload, "read"):
                 content: bytes = await upload.read()
                 return base64.b64encode(content).decode("ascii"), include_garnish
 
-            # 也支援直接傳 base64 欄位
             b64 = (
                 form.get("image_base64")
                 or form.get("imageBase64")
@@ -106,15 +101,12 @@ async def _parse_image_b64(request: Request) -> Tuple[str, bool]:
         raw = await request.body()  # bytes
         if not raw:
             return "", include_garnish
-        # 嘗試把 bytes 解成文字（若本來就是 base64 字串）
         try:
             text = raw.decode("utf-8", errors="ignore").strip()
-            # 看起來像 data-url 或 base64 字串就直接用
             if (text.startswith("data:") and "," in text) or len(text) > 32:
                 return _strip_data_url_prefix(text), include_garnish
         except Exception:
             pass
-        # 直接把二進位轉 base64
         return base64.b64encode(raw).decode("ascii"), include_garnish
     except Exception:
         return "", include_garnish
@@ -135,9 +127,9 @@ async def analyze_image(request: Request) -> JSONResponse:
             payload["error"] = "no_image"
             return JSONResponse(payload, status_code=200)
 
-        # 1) 視覺辨識（容錯）
+        # 1) 視覺辨識（注意：此函式為同步，不能 await）
         try:
-            detected_items = await vision_analyze_base64(image_b64)
+            detected_items = vision_analyze_base64(image_b64)
         except Exception as e:
             detected_items = []
             payload["error"] = f"vision_error:{type(e).__name__}"
