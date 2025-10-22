@@ -1,146 +1,112 @@
 # backend/app/services/openai_client.py
 from __future__ import annotations
 
-import os
 import json
+import os
 import re
-import asyncio
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Tuple
 
-import httpx
+from openai import OpenAI
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-OPENAI_BASE = os.getenv("OPENAI_BASE", "https://api.openai.com/v1")
-PRIMARY_MODEL = os.getenv("OPENAI_VISION_MODEL_PRIMARY", "gpt-4o-mini")
-FALLBACK_MODEL = os.getenv("OPENAI_VISION_MODEL_FALLBACK", "gpt-4o")
+# 你可以改用環境變數切換模型
+PRIMARY_MODEL = os.getenv("VISION_PRIMARY_MODEL", "gpt-4o-mini")
+FALLBACK_MODEL = os.getenv("VISION_FALLBACK_MODEL", "gpt-4o")
 
-_HEADERS = {
-    "Authorization": f"Bearer {OPENAI_API_KEY}",
-    "Content-Type": "application/json",
-}
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# 允許的再試狀態碼
-_RETRY_STATUSES = {408, 409, 429, 500, 502, 503, 504}
-
-PROMPT = (
-    "You are a nutrition photo analyzer. Identify distinct food items you see, with Chinese names when possible. "
-    "Return ONLY a JSON object with an 'items' array. Each item: "
-    "{name: <中文或常見名>, canonical: <英文標準名>, weight_g: <估重 g 整數>, is_garnish: <true|false>}. "
-    "Keep weights realistic. No markdown code fences."
+SYSTEM_PROMPT = (
+    "You are a nutrition photo analyzer. "
+    "Return ONLY a JSON object with key 'items'. "
+    "Each item must be an object with keys: "
+    "name (string), canonical (string), weight_g (number), is_garnish (boolean). "
+    "No explanations."
 )
 
-def _strip_code_fences(s: str) -> str:
-    if not s:
-        return s
-    s = s.strip()
-    # ```json ... ``` 或 ``` ...
-    if s.startswith("```"):
-        s = re.sub(r"^```[a-zA-Z]*\s*", "", s).strip()
-        s = re.sub(r"\s*```$", "", s).strip()
-    return s
+ALLOWED_KEYS = {"name", "canonical", "weight_g", "is_garnish"}
 
-def _force_items_dict(s: str) -> Dict[str, Any]:
-    """
-    嘗試把模型輸出解析成 dict，至少包含 {"items": [...]}
-    """
-    if not s:
-        return {"items": []}
-    text = _strip_code_fences(s)
+JSON_BLOCK = re.compile(r"\{[\s\S]*\}", re.MULTILINE)
+
+def _extract_json(text: str) -> Dict[str, Any] | None:
+    """從任意文字中盡力抽出 JSON 物件（抓第一個大括號區塊再 parse）"""
+    if not text:
+        return None
+    # 先試直接 parse
     try:
-        data = json.loads(text)
-        if isinstance(data, dict) and "items" in data and isinstance(data["items"], list):
-            return data
-        if isinstance(data, list):
-            return {"items": data}
-        # 不是 dict/list，回空
-        return {"items": []}
+        obj = json.loads(text)
+        if isinstance(obj, dict):
+            return obj
     except Exception:
-        # 嘗試抓出最像 JSON 的片段
-        m = re.search(r"\{.*\}", text, flags=re.S)
-        if m:
-            try:
-                data = json.loads(m.group(0))
-                if isinstance(data, dict) and "items" in data and isinstance(data["items"], list):
-                    return data
-            except Exception:
-                pass
-        return {"items": []}
-
-async def _chat_json(image_b64: str, *, model: str, temp: float = 0.25, max_tokens: int = 600, retries: int = 3) -> Dict[str, Any]:
-    """
-    呼叫 Chat Completions 取得 JSON 結果（含重試與解析）
-    """
-    if not OPENAI_API_KEY:
-        raise RuntimeError("OPENAI_API_KEY is missing")
-
-    payload = {
-        "model": model,
-        "temperature": temp,
-        "max_tokens": max_tokens,
-        "response_format": {"type": "json_object"},
-        "messages": [
-            {"role": "system", "content": PROMPT},
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": "Analyze this food photo."},
-                    {
-                        "type": "image_url",
-                        "image_url": {
-                            # 正確的資料 URL 格式
-                            "url": f"data:image/jpeg;base64,{image_b64}"
-                        },
-                    },
-                ],
-            },
-        ],
-    }
-
-    backoff = 3
-    last_err = None
-
-    async with httpx.AsyncClient(timeout=60) as client:
-        for attempt in range(1, retries + 1):
-            try:
-                r = await client.post(f"{OPENAI_BASE}/chat/completions", headers=_HEADERS, json=payload)
-                if r.status_code == 200:
-                    data = r.json()
-                    content = data["choices"][0]["message"]["content"]
-                    return _force_items_dict(content)
-                # 非 200
-                if r.status_code in _RETRY_STATUSES:
-                    print(f"[openai] transient {r.status_code}, retry {attempt}/{retries} in {backoff}s…")
-                    await asyncio.sleep(backoff)
-                    backoff *= 2
-                    continue
-                # 其他直接報錯（但回傳錯誤內容方便除錯）
-                try:
-                    print(f"[openai] HTTP error ({model}): {r.status_code} {r.text[:300]}")
-                except Exception:
-                    print(f"[openai] HTTP error ({model}): {r.status_code}")
-                r.raise_for_status()
-            except Exception as e:
-                last_err = e
-                if attempt < retries:
-                    print(f"[openai] exception {e}, retry {attempt}/{retries} in {backoff}s…")
-                    await asyncio.sleep(backoff)
-                    backoff *= 2
-                else:
-                    break
-
-    raise RuntimeError(f"OpenAI API failed after retries (model={model})") from last_err
-
-async def vision_analyze_base64(image_b64: str) -> Dict[str, Any]:
-    """
-    先用 primary，再 fallback。統一回傳 dict 形式，至少含 items 陣列。
-    """
+        pass
+    # 抓第一個 { ... } 區塊
+    m = JSON_BLOCK.search(text)
+    if not m:
+        return None
+    snippet = m.group(0)
     try:
-        return await _chat_json(image_b64, model=PRIMARY_MODEL, temp=0.25, max_tokens=550, retries=3)
-    except Exception as e1:
-        print(f"[vision] primary {PRIMARY_MODEL} failed: {e1}, fallback to {FALLBACK_MODEL}")
+        obj = json.loads(snippet)
+        if isinstance(obj, dict):
+            return obj
+    except Exception:
+        return None
+    return None
+
+def _sanitize_items(raw_items: Any) -> List[Dict[str, Any]]:
+    """只保留允許欄位，補上預設值，過濾掉壞 item"""
+    out: List[Dict[str, Any]] = []
+    if not isinstance(raw_items, list):
+        return out
+    for it in raw_items:
+        if not isinstance(it, dict):
+            continue
+        clean = {
+            "name": str(it.get("name") or "").strip(),
+            "canonical": str(it.get("canonical") or "").strip(),
+            "weight_g": float(it.get("weight_g") or 0.0),
+            "is_garnish": bool(it.get("is_garnish") or False),
+        }
+        # 允許 name/canonical 其一為空，但兩個都空就跳過
+        if not clean["name"] and not clean["canonical"]:
+            continue
+        out.append(clean)
+    return out
+
+def vision_analyze_base64(image_b64: str) -> Dict[str, Any]:
+    """回傳 dict: {items: [...]} 或 {items: [], reason: "..."}"""
+    if not image_b64:
+        return {"items": [], "reason": "no_image"}
+
+    def _call(model: str) -> str:
+        resp = client.chat.completions.create(
+            model=model,
+            temperature=0,
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": "Analyze this meal photo and respond with JSON only."},
+                        {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_b64}"}},
+                    ],
+                },
+            ],
+        )
+        return resp.choices[0].message.content or ""
+
+    # 主模型
+    text = ""
+    try:
+        text = _call(PRIMARY_MODEL)
+    except Exception as e:
+        # 備援模型
         try:
-            return await _chat_json(image_b64, model=FALLBACK_MODEL, temp=0.3, max_tokens=600, retries=3)
+            text = _call(FALLBACK_MODEL)
         except Exception as e2:
-            print(f"[vision] fallback {FALLBACK_MODEL} failed too: {e2}")
-            # 最終失敗：回傳空 items，讓上層不會 502
-            return {"items": [], "error": f"vision_failed: {str(e2)}"}
+            return {"items": [], "reason": f"vision_error: {e2}"}
+
+    data = _extract_json(text)
+    if not data:
+        return {"items": [], "reason": "parse_fail", "raw": text[:4000]}
+
+    raw_items = data.get("items")
+    items = _sanitize_items(raw_items)
+    return {"items": items}
