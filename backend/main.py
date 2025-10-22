@@ -1,24 +1,30 @@
-# backend/app/main.py
+# backend/main.py
 from __future__ import annotations
-
 import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 
-# ----------------- 建立 App -----------------
 app = FastAPI(title="eatlyze-backend", version="1.0.0")
 
-# ----------------- 簡單請求日誌 -----------------
+# --- 日誌中介層 ---
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     print(f">>> {request.method} {request.url.path}")
-    resp = await call_next(request)
-    print(f"<<< {resp.status_code} {request.url.path}")
-    return resp
+    try:
+        resp = await call_next(request)
+        print(f"<<< {resp.status_code} {request.url.path}")
+        return resp
+    except Exception as e:
+        print(f"[ERROR] {request.url.path}: {e}")
+        # 保證回應（避免 Starlette 進一步處理 bytes）
+        from starlette.responses import JSONResponse
+        return JSONResponse(
+            {"items": [], "totals": {"kcal": 0, "protein_g": 0, "fat_g": 0, "carb_g": 0}, "error": "server_error"},
+            status_code=200,
+        )
 
-# ----------------- CORS -----------------
+# --- CORS ---
 _allowed = os.getenv(
     "ALLOWED_ORIGINS",
     "http://localhost:5173,https://eatlyze-mvp-frontend.onrender.com",
@@ -34,26 +40,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ----------------- 靜態檔案：上傳目錄 -----------------
-UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
+# --- 靜態 CSV 與上傳圖檔 ---
+BASE_DIR = os.path.dirname(__file__)
+UPLOAD_DIR = os.path.join(BASE_DIR, "app", "uploads")
+DATA_DIR = os.path.join(BASE_DIR, "app", "data")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+# /image/xxx.jpg -> backend/app/uploads/xxx.jpg
 app.mount("/image", StaticFiles(directory=UPLOAD_DIR), name="image")
 
-# ----------------- 直接提供 CSV 給前端讀 -----------------
-CSV_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "data", "foods_tw.csv"))
+# /data/foods_tw.csv -> backend/app/data/foods_tw.csv
+app.mount("/data", StaticFiles(directory=DATA_DIR), name="data")
 
-@app.get("/data/foods_tw.csv")
-def get_foods_csv():
-    if not os.path.exists(CSV_PATH):
-        return {"error": "foods_tw.csv not found"}
-    return FileResponse(CSV_PATH, media_type="text/csv")
-
-# ----------------- 路由註冊 -----------------
-# 注意：檔案放在 backend/app/routers/analyze.py
+# --- 路由 ---
 from app.routers import analyze as analyze_router  # noqa: E402
 app.include_router(analyze_router.router)
 
-# ----------------- 健康檢查 -----------------
+# --- 健檢 ---
 @app.get("/")
 def root():
     return {"status": "ok", "service": "eatlyze-backend"}
