@@ -3,139 +3,144 @@ from __future__ import annotations
 
 import os
 import json
-from typing import Any, Dict, List
+import re
+import asyncio
+from typing import Any, Dict, Optional
 
-from openai import OpenAI
+import httpx
 
-# 主要/備援多模態模型
-PRIMARY_MODEL = os.getenv("VISION_PRIMARY_MODEL", "gpt-4o-mini")
-FALLBACK_MODEL = os.getenv("VISION_FALLBACK_MODEL", "gpt-4o")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+OPENAI_BASE = os.getenv("OPENAI_BASE", "https://api.openai.com/v1")
+PRIMARY_MODEL = os.getenv("OPENAI_VISION_MODEL_PRIMARY", "gpt-4o-mini")
+FALLBACK_MODEL = os.getenv("OPENAI_VISION_MODEL_FALLBACK", "gpt-4o")
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-# ---- 常見誤判校正 (Vision→Text 標籤) ----
-# 目的：把模型常見的錯誤標籤，修正成我們 CSV/服務端能吃的 canonical
-COMMON_CORRECTIONS: Dict[str, str] = {
-    # 豆乾絲 vs 麵條
-    "yi noodles": "shredded tofu",
-    "yi noodle": "shredded tofu",
-    "wheat noodles": "shredded tofu",
-    "noodles": "shredded tofu",
-
-    # 小黃瓜/胡瓜族
-    "gourd": "cucumber",
-    "taiwanese cucumber": "cucumber",
-    "japanese cucumber": "cucumber",
-
-    # 甜椒/辣椒族 — 視你的資料表而定
-    "red peppercorns": "red chili",
-    "sweet pepper": "red bell pepper",
+_HEADERS = {
+    "Authorization": f"Bearer {OPENAI_API_KEY}",
+    "Content-Type": "application/json",
 }
 
-# 常見「處理/切法」詞，拿掉以利對表
-PREP_TOKENS = ("shredded", "sliced", "diced", "minced", "julienned")
+# 允許的再試狀態碼
+_RETRY_STATUSES = {408, 409, 429, 500, 502, 503, 504}
 
+PROMPT = (
+    "You are a nutrition photo analyzer. Identify distinct food items you see, with Chinese names when possible. "
+    "Return ONLY a JSON object with an 'items' array. Each item: "
+    "{name: <中文或常見名>, canonical: <英文標準名>, weight_g: <估重 g 整數>, is_garnish: <true|false>}. "
+    "Keep weights realistic. No markdown code fences."
+)
 
-def _apply_corrections(label: str) -> str:
-    k = (label or "").strip().lower()
-    return COMMON_CORRECTIONS.get(k, label)
+def _strip_code_fences(s: str) -> str:
+    if not s:
+        return s
+    s = s.strip()
+    # ```json ... ``` 或 ``` ...
+    if s.startswith("```"):
+        s = re.sub(r"^```[a-zA-Z]*\s*", "", s).strip()
+        s = re.sub(r"\s*```$", "", s).strip()
+    return s
 
-
-def _strip_prep_words(s: str) -> str:
-    """拿掉切法/處理前綴，讓對表更穩定。"""
-    tokens = (s or "").strip().lower().split()
-    tokens = [t for t in tokens if t not in PREP_TOKENS]
-    out = " ".join(tokens)
-    return out if out else s
-
-
-def _safe_json_loads(text: str):
+def _force_items_dict(s: str) -> Dict[str, Any]:
+    """
+    嘗試把模型輸出解析成 dict，至少包含 {"items": [...]}
+    """
+    if not s:
+        return {"items": []}
+    text = _strip_code_fences(s)
     try:
-        return json.loads(text)
+        data = json.loads(text)
+        if isinstance(data, dict) and "items" in data and isinstance(data["items"], list):
+            return data
+        if isinstance(data, list):
+            return {"items": data}
+        # 不是 dict/list，回空
+        return {"items": []}
     except Exception:
-        return None
+        # 嘗試抓出最像 JSON 的片段
+        m = re.search(r"\{.*\}", text, flags=re.S)
+        if m:
+            try:
+                data = json.loads(m.group(0))
+                if isinstance(data, dict) and "items" in data and isinstance(data["items"], list):
+                    return data
+            except Exception:
+                pass
+        return {"items": []}
 
-
-SYSTEM_PROMPT = (
-    "You are a food-ingredient detector for nutrition analysis. "
-    "Return a compact JSON with an array 'items'. Each item must include: "
-    "{name, canonical, weight_g, is_garnish}. "
-    "Use common English ingredient names for 'canonical'. "
-    "If something looks like Taiwanese '豆乾絲', label canonical as 'shredded tofu'. "
-    "If cucumber variants appear, canonical should be 'cucumber'. "
-    "Weights are rough estimates in grams. Keep is_garnish true for tiny condiments."
-)
-
-USER_PROMPT = (
-    "Analyze this single photo and list main edible ingredients only. "
-    "Do not include plate, plastic wrap, or background. "
-    "Return JSON like: {\"items\":[{\"name\":\"...\",\"canonical\":\"...\",\"weight_g\":123,\"is_garnish\":false}, ...]}"
-)
-
-
-def vision_analyze_base64(image_b64: str) -> Dict[str, Any]:
+async def _chat_json(image_b64: str, *, model: str, temp: float = 0.25, max_tokens: int = 600, retries: int = 3) -> Dict[str, Any]:
     """
-    1) 呼叫 OpenAI Vision 取得結構化 JSON
-    2) 修正常見誤判 + 去除切法前綴
-    3) 回傳 items (name/canonical/weight_g/is_garnish)
+    呼叫 Chat Completions 取得 JSON 結果（含重試與解析）
     """
-    def _ask(model: str) -> str:
-        # 用「multi-modal」格式：text + image(base64 data url）
-        resp = client.chat.completions.create(
-            model=model,
-            temperature=0.0,
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "text", "text": USER_PROMPT},
-                        {
-                            "type": "image_url",
-                            "image_url": {"url": f"data:image/jpeg;base64,{image_b64}"},
-                        },
-                    ],
-                },
-            ],
-        )
-        return resp.choices[0].message.content or ""
+    if not OPENAI_API_KEY:
+        raise RuntimeError("OPENAI_API_KEY is missing")
 
-    raw = _ask(PRIMARY_MODEL)
-    if not raw and FALLBACK_MODEL:
-        raw = _ask(FALLBACK_MODEL)
-
-    # 嘗試把模型回覆中的 JSON 擷取出來
-    data = _safe_json_loads(raw)
-    if not data:
-        start = raw.find("{")
-        end = raw.rfind("}")
-        if start != -1 and end != -1 and end > start:
-            data = _safe_json_loads(raw[start:end + 1]) or {"items": []}
-        else:
-            data = {"items": []}
-
-    items: List[Dict[str, Any]] = []
-    for it in (data.get("items") or []):
-        name = str(it.get("name") or "").strip()
-        canonical = str(it.get("canonical") or name)
-
-        # 套用修正與切法清理
-        name = _apply_corrections(name)
-        canonical = _apply_corrections(canonical)
-
-        name = _strip_prep_words(name)
-        canonical = _strip_prep_words(canonical)
-
-        weight_g = float(it.get("weight_g") or 0.0)
-        is_garnish = bool(it.get("is_garnish") or False)
-
-        items.append(
+    payload = {
+        "model": model,
+        "temperature": temp,
+        "max_tokens": max_tokens,
+        "response_format": {"type": "json_object"},
+        "messages": [
+            {"role": "system", "content": PROMPT},
             {
-                "name": name,
-                "canonical": canonical,
-                "weight_g": weight_g,
-                "is_garnish": is_garnish,
-            }
-        )
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": "Analyze this food photo."},
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            # 正確的資料 URL 格式
+                            "url": f"data:image/jpeg;base64,{image_b64}"
+                        },
+                    },
+                ],
+            },
+        ],
+    }
 
-    return {"items": items}
+    backoff = 3
+    last_err = None
+
+    async with httpx.AsyncClient(timeout=60) as client:
+        for attempt in range(1, retries + 1):
+            try:
+                r = await client.post(f"{OPENAI_BASE}/chat/completions", headers=_HEADERS, json=payload)
+                if r.status_code == 200:
+                    data = r.json()
+                    content = data["choices"][0]["message"]["content"]
+                    return _force_items_dict(content)
+                # 非 200
+                if r.status_code in _RETRY_STATUSES:
+                    print(f"[openai] transient {r.status_code}, retry {attempt}/{retries} in {backoff}s…")
+                    await asyncio.sleep(backoff)
+                    backoff *= 2
+                    continue
+                # 其他直接報錯（但回傳錯誤內容方便除錯）
+                try:
+                    print(f"[openai] HTTP error ({model}): {r.status_code} {r.text[:300]}")
+                except Exception:
+                    print(f"[openai] HTTP error ({model}): {r.status_code}")
+                r.raise_for_status()
+            except Exception as e:
+                last_err = e
+                if attempt < retries:
+                    print(f"[openai] exception {e}, retry {attempt}/{retries} in {backoff}s…")
+                    await asyncio.sleep(backoff)
+                    backoff *= 2
+                else:
+                    break
+
+    raise RuntimeError(f"OpenAI API failed after retries (model={model})") from last_err
+
+async def vision_analyze_base64(image_b64: str) -> Dict[str, Any]:
+    """
+    先用 primary，再 fallback。統一回傳 dict 形式，至少含 items 陣列。
+    """
+    try:
+        return await _chat_json(image_b64, model=PRIMARY_MODEL, temp=0.25, max_tokens=550, retries=3)
+    except Exception as e1:
+        print(f"[vision] primary {PRIMARY_MODEL} failed: {e1}, fallback to {FALLBACK_MODEL}")
+        try:
+            return await _chat_json(image_b64, model=FALLBACK_MODEL, temp=0.3, max_tokens=600, retries=3)
+        except Exception as e2:
+            print(f"[vision] fallback {FALLBACK_MODEL} failed too: {e2}")
+            # 最終失敗：回傳空 items，讓上層不會 502
+            return {"items": [], "error": f"vision_failed: {str(e2)}"}
