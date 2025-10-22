@@ -1,37 +1,24 @@
-# backend/main.py
+# backend/app/main.py
 from __future__ import annotations
 
 import os
-from typing import Callable
-
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse
 
-# --------------------------
-# 建立 FastAPI App
-# --------------------------
+# ----------------- 建立 App -----------------
 app = FastAPI(title="eatlyze-backend", version="1.0.0")
 
-# --------------------------
-# 簡單請求日誌
-# --------------------------
+# ----------------- 簡單請求日誌 -----------------
 @app.middleware("http")
-async def log_requests(request: Request, call_next: Callable):
+async def log_requests(request: Request, call_next):
     print(f">>> {request.method} {request.url.path}")
-    try:
-        response = await call_next(request)
-    except Exception as e:
-        # 統一攔住避免 bytes 造成 JSON encode 失敗
-        print(f"[ERROR] {request.url.path}: {e}")
-        return JSONResponse({"error": "internal error"}, status_code=500)
-    print(f"<<< {response.status_code} {request.url.path}")
-    return response
+    resp = await call_next(request)
+    print(f"<<< {resp.status_code} {request.url.path}")
+    return resp
 
-# --------------------------
-# CORS
-# --------------------------
+# ----------------- CORS -----------------
 _allowed = os.getenv(
     "ALLOWED_ORIGINS",
     "http://localhost:5173,https://eatlyze-mvp-frontend.onrender.com",
@@ -47,35 +34,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --------------------------
-# 靜態檔／圖片
-# --------------------------
-UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "app", "uploads")
+# ----------------- 靜態檔案：上傳目錄 -----------------
+UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 app.mount("/image", StaticFiles(directory=UPLOAD_DIR), name="image")
 
-# --------------------------
-# 提供 CSV 給前端直接讀
-# GET /data/foods_tw.csv
-# --------------------------
+# ----------------- 直接提供 CSV 給前端讀 -----------------
+CSV_PATH = os.path.normpath(os.path.join(os.path.dirname(__file__), "data", "foods_tw.csv"))
+
 @app.get("/data/foods_tw.csv")
 def get_foods_csv():
-    csv_path = os.path.join(os.path.dirname(__file__), "app", "data", "foods_tw.csv")
-    if not os.path.exists(csv_path):
-        return JSONResponse({"error": "foods_tw.csv not found"}, status_code=404)
-    # 直接回傳檔案
-    return FileResponse(csv_path, media_type="text/csv")
+    if not os.path.exists(CSV_PATH):
+        return {"error": "foods_tw.csv not found"}
+    return FileResponse(CSV_PATH, media_type="text/csv")
 
-# --------------------------
-# 健康檢查
-# --------------------------
+# ----------------- 路由註冊 -----------------
+# 注意：檔案放在 backend/app/routers/analyze.py
+from app.routers import analyze as analyze_router  # noqa: E402
+app.include_router(analyze_router.router)
+
+# ----------------- 健康檢查 -----------------
 @app.get("/")
 def root():
     return {"status": "ok", "service": "eatlyze-backend"}
-
-# --------------------------
-# 掛上 /analyze 路由
-# --------------------------
-from app.routers import analyze as analyze_router  # noqa: E402
-
-app.include_router(analyze_router.router, prefix="/analyze", tags=["analyze"])

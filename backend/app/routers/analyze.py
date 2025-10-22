@@ -1,102 +1,114 @@
+# backend/app/routers/analyze.py
 from __future__ import annotations
-import base64, traceback
-from typing import Any, Dict, List
 
-from fastapi import APIRouter, HTTPException, Request
-from fastapi.responses import JSONResponse
+from typing import List, Optional, Dict, Any
+from pydantic import BaseModel, Field
+from fastapi import APIRouter, HTTPException
 
-from app.services.openai_client import vision_analyze_base64
+# ---- 嘗試載入新版營養模組；失敗就退回舊版 ----
 try:
     from app.services import nutrition_service_v2 as nutrition
 except Exception:
-    from app.services import nutrition_service as nutrition  # 後備
+    from app.services import nutrition_service as nutrition  # type: ignore
 
-router = APIRouter(prefix="/analyze", tags=["Analyze"])
+# ---- OpenAI 視覺端：允許缺席時仍可回應（回傳空項目讓前端顯示提示）----
+try:
+    from app.services.openai_client import vision_analyze_base64
+except Exception:
+    vision_analyze_base64 = None  # type: ignore
+
+
+# ----------------- 請求/回應模型（只用基礎型別，避免 bytes） -----------------
+class ItemIn(BaseModel):
+    name: Optional[str] = None
+    canonical: Optional[str] = None
+    weight_g: float = Field(ge=0, default=0)
+    is_garnish: bool = False
+
+
+class AnalyzeRequest(BaseModel):
+    image_base64: str
+    include_garnish: bool = False
+
+
+class AnalyzeResponse(BaseModel):
+    items: List[Dict[str, Any]]
+    totals: Dict[str, float]
+
+
+# ----------------- Router 本體 -----------------
+router = APIRouter(prefix="/analyze", tags=["analyze"])
 
 
 @router.get("/ping")
 def ping():
-    return {"pong": True}
+    return {"ok": True}
 
 
-def ok(payload: Dict[str, Any]) -> JSONResponse:
-    return JSONResponse({"status": "ok", **payload}, status_code=200)
-
-
-def err(where: str, exc: Exception) -> JSONResponse:
-    tb = "".join(traceback.format_exc())
-    print(f"[analyze][ERROR] {where}: {exc}\n{tb}")
-    return JSONResponse(
-        {"status": "error", "where": where, "error": str(exc)},
-        status_code=200,  # 以 200 回避前端因 500 中斷流程
-    )
-
-
-def run_pipeline(img_b64: str) -> JSONResponse:
-    # 1) Vision
-    try:
-        result = vision_analyze_base64(img_b64)  # 預期 {"items":[...]}
-    except Exception as e:
-        return err("vision", e)
-
-    items: List[Dict[str, Any]] = result.get("items") or []
-    print(f"[analyze] vision items = {len(items)} -> {items[:3]}...")
-
-    # 2) Nutrition
-    try:
-        enriched, totals = nutrition.calc(items, include_garnish=False)
-    except Exception as e:
-        return err("nutrition", e)
-
-    print(f"[analyze] totals = {totals}")
-    return ok({"data": {"items": enriched, "summary": totals}})
-
-
-@router.post("/image")
-async def analyze_image(request: Request):
+@router.post("/image", response_model=AnalyzeResponse)
+def analyze_image(req: AnalyzeRequest):
     """
-    支援：
-      - application/json  : {"image_base64": "..."} 或 {"image_b64": "..."}
-      - multipart/form-data: 欄位 "file"
-    回傳：
-      { "status":"ok", "data": { "items":[...], "summary": {...} } }
-      或 { "status":"error", "where":"...", "error":"..." }
+    前端送 base64 圖 → 視覺模型 → 食材清單 → 營養加總。
+    回傳只含字串/數字/布林，避免 bytes 造成 500。
     """
-    ctype = (request.headers.get("content-type") or "").lower()
-
-    # JSON
-    if "application/json" in ctype:
+    # 1) 用 LLM 視覺抓食材（允許失敗）
+    items: List[Dict[str, Any]] = []
+    if vision_analyze_base64 is not None:
         try:
-            body = await request.json()
+            items = vision_analyze_base64(req.image_base64)
+            if not isinstance(items, list):
+                items = []
         except Exception as e:
-            return err("read_json", e)
-        b64 = body.get("image_base64") or body.get("image_b64")
-        if not isinstance(b64, str) or not b64.strip():
-            return JSONResponse(
-                {"status": "error", "where": "validate_json", "error": "image_base64 (or image_b64) is required"},
-                status_code=200,
+            # 模型失敗 → 讓前端顯示提示，仍繼續下去
+            print(f"[vision] warn: {e}")
+            items = []
+    else:
+        # 沒有 openai_client，回傳空清單
+        items = []
+
+    # 2) 防守：把欄位收斂到我們要的鍵，避免奇怪型別
+    clean_items: List[Dict[str, Any]] = []
+    for it in items:
+        clean_items.append(
+            {
+                "name": (it.get("name") or "")[:200],
+                "canonical": (it.get("canonical") or "")[:200],
+                "weight_g": float(it.get("weight_g") or 0),
+                "is_garnish": bool(it.get("is_garnish") or False),
+            }
+        )
+
+    # 3) 交給營養引擎計算（會處理別名、fuzzy/embedding、有/無配菜是否計入）
+    try:
+        enriched, totals = nutrition.calc(clean_items, include_garnish=req.include_garnish)
+    except Exception as e:
+        # 萬一 CSV 或服務有問題，回 500 但訊息乾淨
+        print(f"[nutrition] error: {e}")
+        raise HTTPException(status_code=500, detail="nutrition service failed")
+
+    # 4) 確保回傳都是可 JSON 的基本型別
+    safe_items: List[Dict[str, Any]] = []
+    for it in enriched:
+        safe_items.append(
+            dict(
+                name=it.get("name") or "",
+                label=it.get("label") or (it.get("name") or ""),
+                canonical=it.get("canonical") or "",
+                weight_g=float(it.get("weight_g") or 0),
+                is_garnish=bool(it.get("is_garnish") or False),
+                kcal=float(it.get("kcal") or 0),
+                protein_g=float(it.get("protein_g") or 0),
+                fat_g=float(it.get("fat_g") or 0),
+                carb_g=float(it.get("carb_g") or 0),
+                matched=bool(it.get("matched") or False),
             )
-        return run_pipeline(b64.strip())
+        )
 
-    # Multipart
-    if "multipart/form-data" in ctype:
-        try:
-            form = await request.form()
-            up = form.get("file")
-            if up is None:
-                return JSONResponse(
-                    {"status": "error", "where": "validate_form", "error": "file is required"},
-                    status_code=200,
-                )
-            data = await up.read()  # type: ignore[attr-defined]
-            b64 = base64.b64encode(data).decode("ascii")
-        except Exception as e:
-            return err("read_form", e)
-        return run_pipeline(b64)
-
-    # 其它
-    return JSONResponse(
-        {"status": "error", "where": "content_type",
-         "error": "Unsupported Content-Type. Use application/json or multipart/form-data."},
-        status_code=200,
+    safe_totals = dict(
+        kcal=float(totals.get("kcal") or 0),
+        protein_g=float(totals.get("protein_g") or 0),
+        fat_g=float(totals.get("fat_g") or 0),
+        carb_g=float(totals.get("carb_g") or 0),
     )
+
+    return AnalyzeResponse(items=safe_items, totals=safe_totals)
