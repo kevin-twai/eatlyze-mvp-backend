@@ -7,7 +7,7 @@ from typing import Any, Dict, Tuple
 from fastapi import APIRouter, Request
 from starlette.responses import JSONResponse
 
-from app.services.openai_client import vision_analyze_base64  # 同步函式
+from app.services.openai_client import vision_analyze_base64
 from app.services import nutrition_service_v2 as nutrition
 
 router = APIRouter(prefix="/analyze", tags=["analyze"])
@@ -22,10 +22,7 @@ def _empty_payload() -> Dict[str, Any]:
 
 
 def _strip_data_url_prefix(b64: str) -> str:
-    """
-    剝掉 data URL 前綴，例如：
-    data:image/jpeg;base64,/9j/4AAQSk... -> /9j/4AAQSk...
-    """
+    """移除 data:image/...;base64, 前綴"""
     if not b64:
         return b64
     s = b64.strip()
@@ -37,14 +34,11 @@ def _strip_data_url_prefix(b64: str) -> str:
 
 
 async def _parse_image_b64(request: Request) -> Tuple[str, bool]:
-    """
-    盡量容錯地把請求體轉成 base64 字串，並回傳 include_garnish。
-    支援 JSON、multipart/form-data、octet-stream/raw。
-    """
+    """容錯解析圖片 base64"""
     ct = (request.headers.get("content-type") or "").lower()
     include_garnish = False
 
-    # 1) JSON
+    # JSON
     if "application/json" in ct:
         try:
             data = await request.json()
@@ -65,9 +59,9 @@ async def _parse_image_b64(request: Request) -> Tuple[str, bool]:
                     b64 = b64.decode("utf-8", errors="ignore")
                 return _strip_data_url_prefix(b64 or ""), include_garnish
         except Exception:
-            pass  # fallthrough to raw parsing
+            pass
 
-    # 2) multipart/form-data
+    # multipart/form-data
     if "multipart/form-data" in ct:
         try:
             form = await request.form()
@@ -94,11 +88,11 @@ async def _parse_image_b64(request: Request) -> Tuple[str, bool]:
                 b64 = b64.decode("utf-8", errors="ignore")
             return _strip_data_url_prefix(b64 or ""), include_garnish
         except Exception:
-            pass  # fallthrough to raw parsing
+            pass
 
-    # 3) 其他（octet-stream 或 raw）
+    # raw bytes
     try:
-        raw = await request.body()  # bytes
+        raw = await request.body()
         if not raw:
             return "", include_garnish
         try:
@@ -127,14 +121,23 @@ async def analyze_image(request: Request) -> JSONResponse:
             payload["error"] = "no_image"
             return JSONResponse(payload, status_code=200)
 
-        # 1) 視覺辨識（注意：此函式為同步，不能 await）
+        # === Step 1. 視覺辨識 ===
         try:
-            detected_items = vision_analyze_base64(image_b64)
+            detected_result = vision_analyze_base64(image_b64)
+            print("[DEBUG] Vision output:", detected_result)  # ← 加上 debug log
+
+            detected_items = (
+                detected_result.get("items", [])
+                if isinstance(detected_result, dict)
+                else []
+            )
+            if not detected_items:
+                payload["error"] = "no_items_detected"
         except Exception as e:
             detected_items = []
             payload["error"] = f"vision_error:{type(e).__name__}"
 
-        # 2) 營養計算
+        # === Step 2. 營養計算 ===
         try:
             enriched, totals = nutrition.calc(
                 detected_items, include_garnish=include_garnish
