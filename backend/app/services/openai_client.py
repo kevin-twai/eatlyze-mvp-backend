@@ -45,14 +45,20 @@ SYSTEM_PROMPT = (
     "- canonical: lowercase english key usable to join nutrition table (e.g. 'silken tofu', 'cucumber')\n"
     "- weight_g: best estimate in grams\n"
     "- is_garnish: True for tiny toppings (spring onion, parsley, bonito flakes, etc.)\n"
-    "If unsure, keep the list small. For miso soup, typical components may be "
-    "['silken tofu', 'miso paste', 'spring onion', 'wakame', 'dashi'] with reasonable weights."
+    "If unsure, keep the list small.\n"
+    "⚠️ Do NOT confuse soy-based shredded tofu (豆干絲/豆乾絲; dried tofu strips; bean curd strips) with noodles. "
+    "If strands look pale beige, slightly rough/fibrous, or appear in a cold side dish with carrot shreds, "
+    "treat it as 'shredded tofu' instead of any kind of noodles.\n"
+    "For miso soup, typical components may be ['silken tofu','miso paste','spring onion','wakame','dashi'] "
+    "with reasonable weights."
 )
 
 # 常見品項 → 建議 canonical（收斂大小寫/同義詞）
-_CANON_SUGGEST = {
+_CANON_SUGGEST: Dict[str, str] = {
     # soups / Japanese
     "miso soup": "miso soup",
+    "miso": "miso paste",
+    "miso paste": "miso paste",
     "tofu": "silken tofu",
     "silken tofu": "silken tofu",
     "firm tofu": "firm tofu",
@@ -62,20 +68,36 @@ _CANON_SUGGEST = {
     "wakame": "wakame",
     "seaweed": "wakame",
     "dashi": "dashi",
+
     # salads / cold plates
     "cucumber": "cucumber",
     "cucumbers": "cucumber",
     "carrot": "carrot",
     "shredded carrot": "carrot",
+
+    # shredded tofu（豆干絲/豆乾絲）相關別名
     "shredded tofu": "shredded tofu",
     "bean curd strips": "shredded tofu",
     "bean curd threads": "shredded tofu",
+    "dried tofu strips": "shredded tofu",
+    "tofu strips": "shredded tofu",
+    "tofu noodles": "shredded tofu",   # 常被誤標
+    "soy noodles": "shredded tofu",
+
+    # peppers
     "red pepper": "red pepper",
     "sweet pepper": "red pepper",
+
     # seafood quick map
     "shrimp": "shrimp",
     "prawn": "shrimp",
     "fish fillet": "fish fillet",
+
+    # 常見麵名詞（若確定是麵才保留；後處理還會再判斷）
+    "noodles": "noodles",
+    "wheat noodles": "noodles",
+    "egg noodles": "noodles",
+    "yi noodles": "noodles",
 }
 
 
@@ -84,29 +106,59 @@ def _norm(s: str) -> str:
     return " ".join(s.replace("_", " ").split())
 
 
+def _looks_like_soup(all_canon: List[str]) -> bool:
+    """是否看起來像湯品（用來避免把湯麵誤改成豆干絲）。"""
+    soup_keys = {"soup", "miso", "miso soup", "miso paste", "broth", "dashi"}
+    return any(key in c for c in all_canon for key in soup_keys)
+
+
 def _post_fixup(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """將模型輸出做最小校正，確保欄位完整可序列化。"""
-    fixed: List[Dict[str, Any]] = []
+    """
+    將模型輸出做最小校正，確保欄位完整可序列化。
+    並加入『麵條→豆干絲』的保守矯正（非湯品時）。
+    """
+    # 先做第一輪正規化，方便整體判斷
+    prelim: List[Dict[str, Any]] = []
     for it in items or []:
         name = str(it.get("name") or "").strip()
         canon_raw = str(it.get("canonical") or name).strip()
-        weight = it.get("weight_g", 0)
-        is_garnish = bool(it.get("is_garnish", False))
-
         nkey = _norm(canon_raw or name)
         canonical = _CANON_SUGGEST.get(nkey, nkey) or "item"
 
+        weight = it.get("weight_g", 0)
         try:
             weight = float(weight) if weight is not None else 0.0
         except Exception:
             weight = 0.0
 
-        fixed.append(
+        prelim.append(
             {
                 "name": name or canonical,
                 "canonical": canonical,
-                "weight_g": round(weight, 1),
-                "is_garnish": bool(is_garnish),
+                "weight_g": weight,
+                "is_garnish": bool(it.get("is_garnish", False)),
+            }
+        )
+
+    # 第二步：若出現「noodles」但不是湯品，傾向矯正為 shredded tofu（豆干絲）
+    canon_list = [p["canonical"] for p in prelim]
+    soup_like = _looks_like_soup(canon_list)
+
+    fixed: List[Dict[str, Any]] = []
+    for p in prelim:
+        canonical = p["canonical"]
+        name = p["name"]
+
+        if (("noodle" in canonical) or canonical == "noodles") and not soup_like:
+            canonical = "shredded tofu"
+            name = "shredded tofu"
+
+        fixed.append(
+            {
+                "name": name,
+                "canonical": canonical,
+                "weight_g": round(float(p["weight_g"] or 0.0), 1),
+                "is_garnish": bool(p["is_garnish"]),
             }
         )
     return fixed
