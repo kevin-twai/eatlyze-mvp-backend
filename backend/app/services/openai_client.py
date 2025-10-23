@@ -37,67 +37,91 @@ def _strip_data_url_prefix(b64: str) -> str:
     return s
 
 
+# === 提示：以「整體菜餚 + 關鍵食材」為主，嚴格 JSON ===
 SYSTEM_PROMPT = (
-    "You are a nutrition vision assistant. Look at the photo and extract a SHORT list "
-    "of food items with weights (in grams). Output STRICT JSON with this schema only:\n"
+    "You are a professional food nutrition vision assistant.\n"
+    "Look at the meal photo and identify the overall dish type and only its major components. "
+    "Output STRICT JSON ONLY with this schema:\n"
     '{ "items": [ {"name": string, "canonical": string, "weight_g": number, "is_garnish": boolean} ] }\n'
-    "- name: human-readable label (English)\n"
-    "- canonical: lowercase english key usable to join nutrition table (e.g. 'silken tofu', 'cucumber')\n"
-    "- weight_g: best estimate in grams\n"
-    "- is_garnish: True for tiny toppings (spring onion, parsley, bonito flakes, etc.)\n"
-    "If unsure, keep the list small.\n"
-    "⚠️ Do NOT confuse soy-based shredded tofu (豆干絲/豆乾絲; dried tofu strips; bean curd strips) with noodles. "
-    "If strands look pale beige, slightly rough/fibrous, or appear in a cold side dish with carrot shreds, "
-    "treat it as 'shredded tofu' instead of any kind of noodles.\n"
-    "For miso soup, typical components may be ['silken tofu','miso paste','spring onion','wakame','dashi'] "
-    "with reasonable weights."
+    "- Keep the list short and realistic (2–6 items).\n"
+    "- Use lowercase english for `canonical` that can join a nutrition table "
+    "(e.g. 'fried noodles', 'noodles', 'fried egg', 'silken tofu', 'bean sprouts', 'carrot').\n"
+    "- Estimate weights in grams.\n"
+    "- Mark tiny toppings as is_garnish=true (spring onion, parsley, red pepper flakes, etc.).\n"
+    "- Composite dishes should be recognized as a dish, not as many tiny fragments.\n"
+    "Examples:\n"
+    "• Taiwanese fried noodles with a fried egg and bean sprouts → "
+    'items ≈ [{"canonical":"fried noodles"}, {"canonical":"fried egg"}, {"canonical":"bean sprouts"}, {"canonical":"carrot","is_garnish":true}]\n'
+    "• miso soup with tofu, wakame and spring onion → "
+    'items ≈ [{"canonical":"miso soup"}, {"canonical":"silken tofu"}, {"canonical":"wakame","is_garnish":true}, {"canonical":"spring onion","is_garnish":true}]\n"
+    "⚠️ Do NOT confuse fried/stir-fried noodles with soy-based shredded tofu (豆干絲/bean curd strips). "
+    "If you see oily noodles with egg/meat/sprouts/greens, classify as 'fried noodles' or 'noodles', not 'shredded tofu'.\n"
 )
 
-# 常見品項 → 建議 canonical（收斂大小寫/同義詞）
+# === 同義詞收斂（canonical） ===
 _CANON_SUGGEST: Dict[str, str] = {
-    # soups / Japanese
-    "miso soup": "miso soup",
-    "miso": "miso paste",
-    "miso paste": "miso paste",
-    "tofu": "silken tofu",
-    "silken tofu": "silken tofu",
-    "firm tofu": "firm tofu",
+    # noodles / dishes
+    "noodle": "noodles",
+    "noodles": "noodles",
+    "wheat noodles": "noodles",
+    "egg noodles": "noodles",
+    "yi noodles": "noodles",
+    "yimin": "noodles",
+    "yimin noodles": "noodles",
+    "ramen": "noodles",
+    "udon": "noodles",
+    "spaghetti": "noodles",
+    "lo mein": "fried noodles",
+    "chow mein": "fried noodles",
+    "fried noodles": "fried noodles",
+    "stir-fried noodles": "fried noodles",
+    "taiwanese fried noodles": "fried noodles",
+
+    # eggs
+    "egg": "egg",
+    "fried egg": "fried egg",
+    "sunny side up": "fried egg",
+    "omelette": "omelette",
+
+    # vegetables
+    "bean sprouts": "bean sprouts",
+    "soybean sprouts": "bean sprouts",
+    "mung bean sprouts": "bean sprouts",
+    "carrot": "carrot",
+    "shredded carrot": "carrot",
+    "cucumber": "cucumber",
+    "red pepper": "red pepper",
+    "sweet pepper": "red pepper",
     "spring onion": "spring onion",
     "green onion": "spring onion",
     "scallion": "spring onion",
-    "wakame": "wakame",
-    "seaweed": "wakame",
-    "dashi": "dashi",
+    "vegetables": "vegetables",
 
-    # salads / cold plates
-    "cucumber": "cucumber",
-    "cucumbers": "cucumber",
-    "carrot": "carrot",
-    "shredded carrot": "carrot",
-
-    # shredded tofu（豆干絲/豆乾絲）相關別名
+    # tofu / soy
+    "tofu": "silken tofu",
+    "silken tofu": "silken tofu",
+    "firm tofu": "firm tofu",
     "shredded tofu": "shredded tofu",
     "bean curd strips": "shredded tofu",
     "bean curd threads": "shredded tofu",
     "dried tofu strips": "shredded tofu",
     "tofu strips": "shredded tofu",
-    "tofu noodles": "shredded tofu",   # 常被誤標
-    "soy noodles": "shredded tofu",
 
-    # peppers
-    "red pepper": "red pepper",
-    "sweet pepper": "red pepper",
+    # soups / broth
+    "miso soup": "miso soup",
+    "miso": "miso paste",
+    "miso paste": "miso paste",
+    "broth": "broth",
+    "dashi": "dashi",
+    "wakame": "wakame",
 
-    # seafood quick map
+    # seafood / meats (常見)
     "shrimp": "shrimp",
     "prawn": "shrimp",
     "fish fillet": "fish fillet",
-
-    # 常見麵名詞（若確定是麵才保留；後處理還會再判斷）
-    "noodles": "noodles",
-    "wheat noodles": "noodles",
-    "egg noodles": "noodles",
-    "yi noodles": "noodles",
+    "ground pork": "ground pork",
+    "minced pork": "ground pork",
+    "pork mince": "ground pork",
 }
 
 
@@ -106,28 +130,40 @@ def _norm(s: str) -> str:
     return " ".join(s.replace("_", " ").split())
 
 
-def _looks_like_soup(all_canon: List[str]) -> bool:
-    """是否看起來像湯品（用來避免把湯麵誤改成豆干絲）。"""
-    soup_keys = {"soup", "miso", "miso soup", "miso paste", "broth", "dashi"}
-    return any(key in c for c in all_canon for key in soup_keys)
+def _looks_like_soup(canon_list: List[str]) -> bool:
+    soup_keys = {"miso soup", "broth", "dashi", "soup"}
+    return any(c in soup_keys for c in canon_list)
+
+
+def _is_cold_shredded_tofu_pattern(canon_list: List[str], total_weight: float) -> bool:
+    """
+    判斷是否像「冷盤豆干絲」：
+    - 有 shredded tofu/bean curd strips 同時有 carrot/cucumber/red pepper
+    - 沒有蛋/肉/豆芽/炒麵等熱炒特徵
+    - 總重量偏小（例如 < 250g）
+    """
+    s = set(canon_list)
+    has_tofu_shredded = "shredded tofu" in s
+    has_cold_garnish = bool(
+        {"carrot", "cucumber", "red pepper"} & s
+    )
+    hot_cues = {"fried egg", "egg", "ground pork", "bean sprouts", "fried noodles", "noodles"}
+    has_hot_cues = bool(s & hot_cues)
+    return has_tofu_shredded and has_cold_garnish and not has_hot_cues and (total_weight < 250)
 
 
 def _post_fixup(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """
-    將模型輸出做最小校正，確保欄位完整可序列化。
-    並加入『麵條→豆干絲』的保守矯正（非湯品時）。
-    """
-    # 先做第一輪正規化，方便整體判斷
+    """收斂同義詞、估重、移除明顯誤判；偏向保留麵而非豆干絲。"""
     prelim: List[Dict[str, Any]] = []
     for it in items or []:
         name = str(it.get("name") or "").strip()
         canon_raw = str(it.get("canonical") or name).strip()
-        nkey = _norm(canon_raw or name)
-        canonical = _CANON_SUGGEST.get(nkey, nkey) or "item"
+        canon_key = _norm(canon_raw or name)
+        canonical = _CANON_SUGGEST.get(canon_key, canon_key) or "item"
 
-        weight = it.get("weight_g", 0)
+        w = it.get("weight_g", 0)
         try:
-            weight = float(weight) if weight is not None else 0.0
+            weight = float(w) if w is not None else 0.0
         except Exception:
             weight = 0.0
 
@@ -140,23 +176,31 @@ def _post_fixup(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
             }
         )
 
-    # 第二步：若出現「noodles」但不是湯品，傾向矯正為 shredded tofu（豆干絲）
+    if not prelim:
+        return []
+
     canon_list = [p["canonical"] for p in prelim]
+    total_weight = sum(float(p.get("weight_g") or 0.0) for p in prelim)
     soup_like = _looks_like_soup(canon_list)
 
+    # 若同時存在 noodles 與 shredded tofu，預設保留麵、移除誤判的 shredded tofu
+    has_noodles = any(c in {"noodles", "fried noodles"} for c in canon_list)
+    if has_noodles and "shredded tofu" in canon_list and not soup_like:
+        prelim = [p for p in prelim if p["canonical"] != "shredded tofu"]
+
+    # 只有在明顯像「冷盤豆干絲」時才保留 shredded tofu
+    if "shredded tofu" in [p["canonical"] for p in prelim] and not soup_like:
+        if not _is_cold_shredded_tofu_pattern([p["canonical"] for p in prelim], total_weight):
+            # 不是冷盤 → 偏向移除豆干絲，避免把炒麵看成豆干絲
+            prelim = [p for p in prelim if p["canonical"] != "shredded tofu"]
+
+    # 整理輸出
     fixed: List[Dict[str, Any]] = []
     for p in prelim:
-        canonical = p["canonical"]
-        name = p["name"]
-
-        if (("noodle" in canonical) or canonical == "noodles") and not soup_like:
-            canonical = "shredded tofu"
-            name = "shredded tofu"
-
         fixed.append(
             {
-                "name": name,
-                "canonical": canonical,
+                "name": p["name"],
+                "canonical": p["canonical"],
                 "weight_g": round(float(p["weight_g"] or 0.0), 1),
                 "is_garnish": bool(p["is_garnish"]),
             }
@@ -176,7 +220,7 @@ def _call_model(client: OpenAI, model: str, image_b64: str) -> Dict[str, Any]:
             {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": "Extract food items as the schema."},
+                    {"type": "text", "text": "Identify the dish and list only major components with grams."},
                     {
                         "type": "image_url",
                         "image_url": {"url": f"data:image/jpeg;base64,{pure_b64}"},
