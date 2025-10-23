@@ -22,28 +22,60 @@ CARB_KEYS = ("carb_g", "碳水(g)", "碳水化合物", "碳水")
 ALIAS_RAW: Dict[str, str] = {
     # 常見蔬菜
     "cucumber": "小黃瓜",
+    "cucumbers": "小黃瓜",
     "carrot": "紅蘿蔔",
     "red pepper": "紅甜椒",
+    "sweet pepper": "紅甜椒",
     "spring onion": "蔥花",
     "green onion": "蔥花",
     "scallion": "蔥花",
-    # 豆類
+
+    # 豆類 / 盤菜
     "silken tofu": "嫩豆腐",
     "firm tofu": "板豆腐",
     "shredded tofu": "豆干絲",
     "bean curd strips": "豆干絲",
+    "bean curd threads": "豆干絲",
+    "tofu strips": "豆干絲",
+    "dried tofu strips": "豆干絲",
+
     # 湯料 / 日式
     "miso soup": "味噌湯",
     "miso paste": "味噌",
     "wakame": "海帶芽",
     "dashi": "高湯",
+    "broth": "高湯",
+    "vegetarian broth": "素食高湯",
+
     # 其他
     "katsuobushi": "柴魚片",
     "bonito flakes": "柴魚片",
 }
 
+# === 內建預設(per-100g)營養值（CSV 找不到時使用） ===
+# 來源：以你提供截圖/一般資料推估的合理近似，用於容錯。若 CSV 補齊會自動覆蓋。
+DEFAULTS_PER100: Dict[str, Dict[str, float]] = {
+    # 豆干絲：你 150 g 例子 255.1 kcal, P 27.5, F 12.9, C 7.2  ->  per100 近似
+    "shredded tofu": {"kcal": 170.1, "protein_g": 18.3, "fat_g": 8.6, "carb_g": 4.8},
+
+    # 味噌（糊）：你 10 g 例子 21.5 kcal, P 1.1, F 0.5, C 3.3 -> per100
+    "miso paste": {"kcal": 215.0, "protein_g": 11.0, "fat_g": 5.0, "carb_g": 33.0},
+
+    # 海帶芽（泡發）粗估：低熱量
+    "wakame": {"kcal": 45.0, "protein_g": 3.0, "fat_g": 0.5, "carb_g": 9.0},
+
+    # 高湯（含素高湯）：你 200 g 例子 34 kcal, C 8 g -> per100 近似
+    "dashi": {"kcal": 17.0, "protein_g": 0.0, "fat_g": 0.0, "carb_g": 4.0},
+    "vegetarian broth": {"kcal": 17.0, "protein_g": 0.0, "fat_g": 0.0, "carb_g": 4.0},
+}
+
+# ---------- 小工具 ----------
+
 def _strip_parens(s: str) -> str:
-    return re.sub(r"$begin:math:text$.*?$end:math:text$", "", s or "").strip()
+    """去掉中英文括號內容。"""
+    if not s:
+        return s
+    return re.sub(r"[（(].*?[)）]", "", s).strip()
 
 def _norm(s: str) -> str:
     s = (s or "").strip().lower()
@@ -178,6 +210,27 @@ def _coerce_items(items):
         return []
     return items
 
+def _defaults_row_for(canonical_en: str) -> Optional[dict]:
+    """若 CSV 找不到，回傳一個內建的 per-100g 資料列（與 CSV 欄位相容）。"""
+    if not canonical_en:
+        return None
+    key = _norm(canonical_en)
+    # 映射成我們 DEFAULTS 的 key
+    for k in DEFAULTS_PER100.keys():
+        if _norm(k) == key:
+            per100 = DEFAULTS_PER100[k]
+            return {
+                "canonical": k,
+                "英文名": k,
+                "name": _alias_to_zh(k),
+                "食品名稱": _alias_to_zh(k),
+                "kcal": per100["kcal"],
+                "protein_g": per100["protein_g"],
+                "fat_g": per100["fat_g"],
+                "carb_g": per100["carb_g"],
+            }
+    return None
+
 def calc(items: List[Dict], include_garnish: bool = False):
     """
     items: [{'name':..., 'canonical':..., 'weight_g':..., 'is_garnish':bool}, ...]
@@ -202,7 +255,11 @@ def calc(items: List[Dict], include_garnish: bool = False):
 
         nm = str(it.get("name") or "").strip()
         cano = str(it.get("canonical") or "").strip()
+
+        # 先嘗試 CSV，找不到再用內建預設
         row = _find_row(nm) or _find_row(cano) or _find_row(_alias_to_zh(cano))
+        if row is None:
+            row = _defaults_row_for(cano)
 
         w = _as_float(it.get("weight_g", 0.0), 0.0)
         if w < 0:
