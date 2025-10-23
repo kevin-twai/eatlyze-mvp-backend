@@ -47,15 +47,19 @@ ALIAS_RAW: Dict[str, str] = {
     "broth": "高湯",
     "vegetarian broth": "素食高湯",
 
-    # 其他
+    # 其他常見（補你最近案例）
     "katsuobushi": "柴魚片",
     "bonito flakes": "柴魚片",
+    "fried noodles": "台式炒麵",
+    "fried egg": "荷包蛋",
+    "bean sprouts": "黃豆芽",
+    "ground meat": "豬絞肉",
 }
 
 # === 內建預設(per-100g)營養值（CSV 找不到時使用） ===
-# 來源：以你提供截圖/一般資料推估的合理近似，用於容錯。若 CSV 補齊會自動覆蓋。
+# 來源：你提供的案例 + 一般合理近似（僅用於 CSV 缺失時的容錯；一旦 CSV 有資料會優先使用 CSV）
 DEFAULTS_PER100: Dict[str, Dict[str, float]] = {
-    # 豆干絲：你 150 g 例子 255.1 kcal, P 27.5, F 12.9, C 7.2  ->  per100 近似
+    # 豆干絲：你 150 g 例子 255.1 kcal, P 27.5, F 12.9, C 7.2  -> per100 近似
     "shredded tofu": {"kcal": 170.1, "protein_g": 18.3, "fat_g": 8.6, "carb_g": 4.8},
 
     # 味噌（糊）：你 10 g 例子 21.5 kcal, P 1.1, F 0.5, C 3.3 -> per100
@@ -64,9 +68,15 @@ DEFAULTS_PER100: Dict[str, Dict[str, float]] = {
     # 海帶芽（泡發）粗估：低熱量
     "wakame": {"kcal": 45.0, "protein_g": 3.0, "fat_g": 0.5, "carb_g": 9.0},
 
-    # 高湯（含素高湯）：你 200 g 例子 34 kcal, C 8 g -> per100 近似
+    # 高湯（含素高湯）
     "dashi": {"kcal": 17.0, "protein_g": 0.0, "fat_g": 0.0, "carb_g": 4.0},
     "vegetarian broth": {"kcal": 17.0, "protein_g": 0.0, "fat_g": 0.0, "carb_g": 4.0},
+
+    # 你剛剛要補進 CSV 的 4 個常見項目（若 CSV 已有，會自動用 CSV 覆蓋）
+    "fried noodles": {"kcal": 210.0, "protein_g": 6.5, "fat_g": 8.0, "carb_g": 28.0},
+    "fried egg": {"kcal": 190.0, "protein_g": 13.3, "fat_g": 14.1, "carb_g": 0.8},
+    "bean sprouts": {"kcal": 40.0, "protein_g": 4.5, "fat_g": 2.1, "carb_g": 3.1},
+    "ground meat": {"kcal": 270.0, "protein_g": 17.5, "fat_g": 22.0, "carb_g": 0.0},
 }
 
 # ---------- 小工具 ----------
@@ -86,6 +96,16 @@ def _norm(s: str) -> str:
     elif len(s) > 3 and s.endswith("s"):
         s = s[:-1]
     return s
+
+def _num(s, default=0.0) -> float:
+    """更強韌的數字轉換（容許 '1,234' 或空字串）。"""
+    try:
+        txt = str(s).strip().replace(",", "")
+        if txt == "":
+            return float(default)
+        return float(txt)
+    except Exception:
+        return float(default)
 
 # 正規化別名表
 _ALIAS_NORM: Dict[str, str] = {}
@@ -110,15 +130,29 @@ def _col(row: dict, keys: Tuple[str, ...], default=None):
             return row[k]
     return default
 
-def _as_float(x, default=0.0):
-    try:
-        return float(str(x).strip())
-    except Exception:
-        return default
-
 def _load_csv(path: str) -> List[dict]:
-    with open(path, "r", encoding="utf-8") as f:
-        return [dict(r) for r in csv.DictReader(f)]
+    """
+    以 utf-8-sig 讀取以避免 BOM 造成欄名 '\ufeffname' 問題；
+    並把欄名做一次標準化，解決大小寫/空白/底線差異。
+    """
+    with open(path, "r", encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        rows: List[dict] = []
+
+        # 標頭正規化：去除 BOM 與空白
+        field_map = {}
+        for h in reader.fieldnames or []:
+            hh = (h or "").strip()
+            hh = hh.replace("\ufeff", "")
+            field_map[h] = hh
+
+        for r in reader:
+            nr = {}
+            for k, v in r.items():
+                nk = field_map.get(k, k)
+                nr[nk] = v
+            rows.append(nr)
+        return rows
 
 _FOODS: List[dict] = []
 
@@ -215,15 +249,16 @@ def _defaults_row_for(canonical_en: str) -> Optional[dict]:
     if not canonical_en:
         return None
     key = _norm(canonical_en)
-    # 映射成我們 DEFAULTS 的 key
     for k in DEFAULTS_PER100.keys():
         if _norm(k) == key:
             per100 = DEFAULTS_PER100[k]
+            zh = _alias_to_zh(k)
             return {
                 "canonical": k,
-                "英文名": k,
-                "name": _alias_to_zh(k),
-                "食品名稱": _alias_to_zh(k),
+                "英文名": k,               # 兼容可能存在的欄位
+                "name": zh,
+                "食品名稱": zh,
+                "canonical_zh": zh,
                 "kcal": per100["kcal"],
                 "protein_g": per100["protein_g"],
                 "fat_g": per100["fat_g"],
@@ -261,15 +296,15 @@ def calc(items: List[Dict], include_garnish: bool = False):
         if row is None:
             row = _defaults_row_for(cano)
 
-        w = _as_float(it.get("weight_g", 0.0), 0.0)
+        w = _num(it.get("weight_g", 0.0), 0.0)
         if w < 0:
             w = 0.0
 
         if row:
-            per100_kcal = _as_float(_col(row, KCAL_KEYS, 0))
-            per100_p = _as_float(_col(row, PROT_KEYS, 0))
-            per100_f = _as_float(_col(row, FAT_KEYS, 0))
-            per100_c = _as_float(_col(row, CARB_KEYS, 0))
+            per100_kcal = _num(_col(row, KCAL_KEYS, 0))
+            per100_p = _num(_col(row, PROT_KEYS, 0))
+            per100_f = _num(_col(row, FAT_KEYS, 0))
+            per100_c = _num(_col(row, CARB_KEYS, 0))
             ratio = w / 100.0
             kcal = round(per100_kcal * ratio, 1)
             p = round(per100_p * ratio, 1)
